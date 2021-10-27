@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Screen from './Screen'
 
-const SearchScreen = () => {
+const ArticlesScreen = () => {
     return (
         <Screen>
-            <Text>Search Bar SS</Text>
+            <Text>Articles Screen</Text>
         </Screen>
     )
 }
 
-export default SearchScreen
+export default ArticlesScreen
 
 const styles = StyleSheet.create({})

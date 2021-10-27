@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Screen from './Screen'
 
-const SearchScreen = () => {
+const ChatWithAIScreen = () => {
     return (
         <Screen>
-            <Text>Search Bar SS</Text>
+            <Text>Chat with AI Screen</Text>
         </Screen>
     )
 }
 
-export default SearchScreen
+export default ChatWithAIScreen
 
 const styles = StyleSheet.create({})

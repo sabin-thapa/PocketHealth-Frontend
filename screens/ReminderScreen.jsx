@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Screen from './Screen'
 
-const SearchScreen = () => {
+const ReminderScreen = () => {
     return (
         <Screen>
-            <Text>Search Bar SS</Text>
+            <Text>Reminder Screen</Text>
         </Screen>
     )
 }
 
-export default SearchScreen
+export default ReminderScreen
 
 const styles = StyleSheet.create({})

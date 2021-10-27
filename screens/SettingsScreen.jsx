@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-
+import Screen from './Screen' 
 const SettingsScreen = () => {
     return (
-        <View>
+        <Screen>
             <Text>Settings Screen</Text>
-        </View>
+        </Screen>
     )
 }
 

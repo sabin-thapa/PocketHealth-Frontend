@@ -1,11 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import Screen from './Screen'
 
 const NotificationScreen = () => {
     return (
-        <View>
+        <Screen>
             <Text>Notification Screen</Text>
-        </View>
+        </Screen>
     )
 }
 

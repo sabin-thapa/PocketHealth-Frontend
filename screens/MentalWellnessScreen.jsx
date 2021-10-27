@@ -2,14 +2,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Screen from './Screen'
 
-const SearchScreen = () => {
+const MentalWellnessScreen = () => {
     return (
         <Screen>
-            <Text>Search Bar SS</Text>
+            <Text>Mental Wellness</Text>
         </Screen>
     )
 }
 
-export default SearchScreen
+export default MentalWellnessScreen
 
 const styles = StyleSheet.create({})

@@ -46,7 +46,7 @@ const SignUp = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <BackSquare />
+      <BackSquare />
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.navigate("Home")}
