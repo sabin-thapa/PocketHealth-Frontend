@@ -25,8 +25,8 @@ const AppNavigator = () => {
         <NavigationContainer>
             
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Home" component={HomeScreen}/>
-                <Stack.Screen name="Search" component={SearchScreen}/>
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Search" component={SearchScreen} options={{headerShown: true}}/>
                 <Stack.Screen name="BMI" component={BMICalculatorScreen}/>
                 <Stack.Screen name="BMIDetail" component={BMIDetailScreen}/>
                 <Stack.Screen name="Notification" component={NotificationScreen}/>
