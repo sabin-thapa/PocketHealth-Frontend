@@ -52,7 +52,7 @@ const BMIDETAILS = [
   },
   {
     value: "Obese Class I",
-    color: "#E68364",
+    color: "#CD7D7D",
     range: "30.0-34.9",
   },
   {
@@ -64,43 +64,43 @@ const BMIDETAILS = [
 
 const bmiLables = [];
 for (let i = 0; i < 40; i++) {
-  if (i < 16) {
+  if (i >=10 && i<17) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#A3ABFF",
       activeBarColor: "#A3ABFF",
     });
-  } else if (i >= 16 && i < 17) {
+  } else if (i >= 17 && i < 18) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#59ABE3",
       activeBarColor: "#59ABE3",
     });
-  } else if (i >= 17 && i < 18) {
+  } else if (i >= 18 && i < 19) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#8484d1",
       activeBarColor: "#8484d1",
     });
-  } else if (i >= 18 && i < 23) {
+  } else if (i >= 19 && i < 25) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#8DB255",
       activeBarColor: "#8DB255",
     });
-  } else if (i >= 23 && i < 27) {
+  } else if (i >= 25 && i < 29) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#ff9933",
       activeBarColor: "#ff9933",
     });
-  } else if (i >= 27 && i < 31) {
+  } else if (i >= 29 && i < 33) {
     bmiLables.push({
       name: " ".repeat(i),
-      labelColor: "#E68364",
-      activeBarColor: "#E68364",
+      labelColor: "#CD7D7D",
+      activeBarColor: "#CD7D7D",
     });
-  } else if (i >= 27) {
+  } else if (i >= 27 && i<40) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#FA6E5A",
@@ -224,8 +224,8 @@ const BMICalculatorScreen = ({ navigation }) => {
       </View>
       <RNSpeedometer
         size={300}
-        minValue={0}
-        maxValue={42}
+        minValue={10}
+        maxValue={40}
         labels={bmiLables}
         allowedDecimals={1}
         value={bmiValue}
