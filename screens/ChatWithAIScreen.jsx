@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const ChatWithAIScreen = () => {
-    return (
-        <Screen>
-            <Text>Chat with AI Screen</Text>
-        </Screen>
-    )
-}
+const ChatWithAIScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="Chat with Sophia" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default ChatWithAIScreen
+export default ChatWithAIScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

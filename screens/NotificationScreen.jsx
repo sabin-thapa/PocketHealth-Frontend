@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const NotificationScreen = () => {
-    return (
-        <Screen>
-            <Text>Notification Screen</Text>
-        </Screen>
-    )
-}
+const NotificationScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="Notifications" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default NotificationScreen
+export default NotificationScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

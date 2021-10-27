@@ -10,7 +10,6 @@ import {
 import Screen from "./Screen";
 import { Ionicons } from "@expo/vector-icons";
 import { LineChart } from "react-native-chart-kit";
-import { BMIList } from "./BMICalculatorScreen";
 import colors from "../utils/colors";
 import { Rect, Ellipse, Text as TextSVG, Svg } from "react-native-svg";
 import RNPickerSelect from "react-native-picker-select";

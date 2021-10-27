@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const MentalWellnessScreen = () => {
-    return (
-        <Screen>
-            <Text>Mental Wellness</Text>
-        </Screen>
-    )
-}
+const MentalWellnessScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="Mental Wellness" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default MentalWellnessScreen
+export default MentalWellnessScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

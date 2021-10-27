@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const SymptomsCheckerScreen = () => {
-    return (
-        <Screen>
-            <Text>SymptomsCheckerScreen</Text>
-        </Screen>
-    )
-}
+const SymptomsCheckerScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="Symptoms Checker" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default SymptomsCheckerScreen
+export default SymptomsCheckerScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

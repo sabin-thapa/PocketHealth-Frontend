@@ -49,7 +49,7 @@ const SignUp = ({ navigation }) => {
       <BackSquare />
       <TouchableOpacity
         style={styles.backBtn}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.pop()}
       >
         <Ionicons name="arrow-back" size={30} color={colors.primary} />
       </TouchableOpacity>

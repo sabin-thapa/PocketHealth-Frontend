@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const ChatsScreen = () => {
-    return (
-        <Screen>
-            <Text>Chats screen</Text>
-        </Screen>
-    )
-}
+const ChatsScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="Chats" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default ChatsScreen
+export default ChatsScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -1,11 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import TopBar from '../components/TopBar'
 import Screen from './Screen'
 
-const ReminderScreen = () => {
+const ReminderScreen = ({navigation}) => {
     return (
         <Screen>
-            <Text>Reminder Screen</Text>
+            <TopBar title="Reminder" navigation={navigation} />
         </Screen>
     )
 }

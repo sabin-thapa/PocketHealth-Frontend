@@ -1,15 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Screen from './Screen'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Screen from "./Screen";
+import TopBar from "../components/TopBar";
 
-const QnAScreen = () => {
-    return (
-        <Screen>
-            <Text>QnA</Text>
-        </Screen>
-    )
-}
+const QnAScreen = ({ navigation }) => {
+  return (
+    <Screen>
+      <TopBar title="QnA" navigation={navigation} />
+    </Screen>
+  );
+};
 
-export default QnAScreen
+export default QnAScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
