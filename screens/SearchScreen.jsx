@@ -5,6 +5,9 @@ import Data from "./data.json";
 import PlaceholderSearch from "../components/PlaceHolderSearch";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import DrawerTopBar from "../components/DrawerTopBar";
+import TopBar from "../components/TopBar";
+import Constants from "expo-constants";
 
 const data = Data;
 
@@ -18,7 +21,7 @@ const RECOMMENDATIONS = [
     'Ulcer',
 ]
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation, route}) => {
   const [filteredData, setFilteredData] = useState([]);
   const [queryText, setQueryText] = useState("");
   const [placeholderVisible, setPlaceholderVisible] = useState(true);
@@ -41,7 +44,6 @@ const SearchScreen = () => {
     });
     if (text.length != 0) {
       setPlaceholderVisible(false);
-      console.log(newData);
       setFilteredData(newData);
     } else {
       setPlaceholderVisible(true);
@@ -62,7 +64,9 @@ const SearchScreen = () => {
   };
 
   return (
-    <Screen style={styles.container}>
+    
+    <View style={styles.container}>
+      {route.params.from ==='stack'?<TopBar title="Search" navigation={navigation} />: <DrawerTopBar title="Search" navigation={navigation}/>}
       <View style={styles.boxContainer}>
         {placeholderVisible && (
           <PlaceholderSearch placeholders={placeholders} />
@@ -123,7 +127,7 @@ const SearchScreen = () => {
               </View>
           </View>
       )}
-    </Screen>
+    </View>
   );
 };
 
@@ -155,7 +159,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
   container: {
-    alignItems: "center",
+    marginTop: Constants.statusBarHeight,
+    paddingHorizontal: 12
   },
   title: {
     fontSize: 17,
@@ -184,6 +189,8 @@ const styles = StyleSheet.create({
     borderColor: "#555",
     width: "90%",
     backgroundColor: "#fff",
+    alignSelf: "center",
+    marginTop: 15,
   },
   inputBox: {
     height: 50,

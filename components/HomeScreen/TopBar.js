@@ -8,17 +8,17 @@ import notificationIcon from "../../assets/notification.png";
 const TopBar = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
         <Image style={styles.hamburgerIcon} source={hanburgerIcon} />
       </TouchableOpacity>
       <View style={styles.rightTopSection}>
-        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+        <TouchableOpacity onPress={() => navigation.navigate({name: "Search", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={searchIcon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
           <Image style={styles.otherIcon} source={notificationIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+        <TouchableOpacity onPress={() => navigation.navigate({name: "Settings", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={settingsIcon} />
         </TouchableOpacity>
       </View>
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   hamburgerIcon: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
   },
   rightTopSection: {
     flexDirection: "row",

@@ -1,19 +1,20 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import hamburgerIcon from "../assets/hamburger.png";
 
-const TopBar = ({ title, navigation, style:s }) => {
+const DrawerTopBar = ({ title, navigation }) => {
   return (
     <>
       <View
-        style={[s,{
+        style={{
           flexDirection: "row",
           paddingHorizontal: 5,
           marginTop: 17
-        }]}
+        }}
       >
-        <TouchableOpacity onPress={() => navigation.pop()}>
-          <Ionicons name="arrow-back" size={26} color="black" />
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <Image style={styles.hamburgerIcon} source={hamburgerIcon} /> 
         </TouchableOpacity>
         <Text style={styles.titleText}>{title}</Text>
       </View>
@@ -22,14 +23,14 @@ const TopBar = ({ title, navigation, style:s }) => {
   );
 };
 
-export default TopBar;
+export default DrawerTopBar;
 
 const styles = StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontWeight: 'bold' ,
     marginTop: 1,
-    marginLeft: 20,
+    marginLeft: 30,
     letterSpacing: 0.3
   },
   hr:{
@@ -39,5 +40,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     width: '95%',
     alignSelf: 'center',
+},
+hamburgerIcon: {
+  width: 22,
+  height: 22,
+  marginTop: 1
 },
 });

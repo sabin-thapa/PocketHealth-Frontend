@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AuthNavigator from './navigation/AuthNavigator';
 import AppNavigator from './navigation/AppNavigator';
+import DrawerNavigator from './navigation/Drawer/DrawerNavigator';
 
 export default function App() {
   const [authenticatd, setAuthenticatd] = useState(true)
   return (
     <View style={styles.container}>
-      {!authenticatd? <AuthNavigator />: <AppNavigator />}
+      {!authenticatd? <AuthNavigator />: <DrawerNavigator />}
     </View>
   );
 }
