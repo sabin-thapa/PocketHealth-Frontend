@@ -30,7 +30,7 @@ const options = [
     labelColor: "#FEF9F3",
     height: 170,
     imageSize: { width: 90, height: 90 },
-    link: 'MentalWellness'
+    link: "MentalWellness",
   },
   {
     title: "BMI Calculator",
@@ -39,7 +39,7 @@ const options = [
     labelColor: "#FEF9F3",
     height: 135,
     imageSize: { width: 60, height: 60 },
-    link: 'BMI'
+    link: "BMI",
   },
   {
     title: "Symptom Checker",
@@ -48,7 +48,7 @@ const options = [
     labelColor: "#3F414E",
     height: 135,
     imageSize: { width: 60, height: 60 },
-    link: 'SymptomsChecker'
+    link: "SymptomsChecker",
   },
   {
     title: "Aricles",
@@ -57,7 +57,7 @@ const options = [
     labelColor: "#3F414E",
     height: 170,
     imageSize: { width: 90, height: 90 },
-    link: 'ArticlesScreen'
+    link: "ArticlesScreen",
   },
   {
     title: "Reminder",
@@ -66,7 +66,7 @@ const options = [
     labelColor: "#FFECCC",
     height: 170,
     imageSize: { width: 80, height: 80 },
-    link:'Reminder'
+    link: "Reminder",
   },
   {
     title: "Chats",
@@ -75,7 +75,7 @@ const options = [
     labelColor: "#EBEAEC",
     height: 135,
     imageSize: { width: 60, height: 60 },
-    link:'Chats'
+    link: "Chats",
   },
   {
     title: "Chat with AI",
@@ -84,7 +84,7 @@ const options = [
     labelColor: "#3F414E",
     height: 135,
     imageSize: { width: 60, height: 60 },
-    link: 'ChatWithAI'
+    link: "ChatWithAI",
   },
   {
     title: "QnA",
@@ -93,7 +93,7 @@ const options = [
     labelColor: "#3F414E",
     height: 170,
     imageSize: { width: 90, height: 90 },
-    link: 'QnA'
+    link: "QnA",
   },
 ];
 
@@ -118,28 +118,35 @@ const HomeScreen = ({ navigation }) => {
             {options.map((item, index) => {
               if (index % 2 == 0) {
                 return (
-                    <TouchableOpacity activeOpacity={0.7} key={`cardItem - ${index}`} onPress={()=>navigation.navigate(item.link)}>
-                        <View
-                            style={[
-                            styles.card,
-                            { backgroundColor: item.background, height: item.height },
-                            ]}
-                        >
-                            <Image
-                            style={[
-                                styles.cardImage,
-                                {
-                                width: item.imageSize.width,
-                                height: item.imageSize.height,
-                                },
-                            ]}
-                            source={item.url}
-                            />
-                            <Text style={[styles.label, { color: item.labelColor }]}>
-                            {item.title}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    key={`cardItem - ${index}`}
+                    onPress={() => navigation.navigate(item.link)}
+                  >
+                    <View
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: item.background,
+                          height: item.height,
+                        },
+                      ]}
+                    >
+                      <Image
+                        style={[
+                          styles.cardImage,
+                          {
+                            width: item.imageSize.width,
+                            height: item.imageSize.height,
+                          },
+                        ]}
+                        source={item.url}
+                      />
+                      <Text style={[styles.label, { color: item.labelColor }]}>
+                        {item.title}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 );
               }
             })}
@@ -148,28 +155,35 @@ const HomeScreen = ({ navigation }) => {
             {options.map((item, index) => {
               if (index % 2 != 0) {
                 return (
-                    <TouchableOpacity activeOpacity={0.7} key={`cardItem - ${index}`} onPress={()=>navigation.navigate(item.link)}>
-                        <View
-                            style={[
-                            styles.card,
-                            { backgroundColor: item.background, height: item.height },
-                            ]}
-                        >
-                            <Image
-                            style={[
-                                styles.cardImage,
-                                {
-                                width: item.imageSize.width,
-                                height: item.imageSize.height,
-                                },
-                            ]}
-                            source={item.url}
-                            />
-                            <Text style={[styles.label, { color: item.labelColor }]}>
-                            {item.title}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    key={`cardItem - ${index}`}
+                    onPress={() => navigation.navigate(item.link)}
+                  >
+                    <View
+                      style={[
+                        styles.card,
+                        {
+                          backgroundColor: item.background,
+                          height: item.height,
+                        },
+                      ]}
+                    >
+                      <Image
+                        style={[
+                          styles.cardImage,
+                          {
+                            width: item.imageSize.width,
+                            height: item.imageSize.height,
+                          },
+                        ]}
+                        source={item.url}
+                      />
+                      <Text style={[styles.label, { color: item.labelColor }]}>
+                        {item.title}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
                 );
               }
             })}
@@ -178,7 +192,10 @@ const HomeScreen = ({ navigation }) => {
         <View style={[styles.recommendedWrapper]}>
           <View style={[styles.recommendationHeader]}>
             <Text style={[styles.subHeading]}>Recommended For You</Text>
-            <TouchableOpacity activeOpacity={0.7} onPress={()=>navigation.navigate('Recommendations')}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate("Recommendations")}
+            >
               <Text style={{ color: colors.primary, marginTop: 4 }}>
                 See all >>
               </Text>

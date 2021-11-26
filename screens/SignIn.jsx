@@ -34,7 +34,6 @@ const SignIn = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <BackSquare />
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.pop()}
@@ -61,7 +60,7 @@ const SignIn = ({ navigation }) => {
         style={{ marginTop: 17 }}
         onPress={() => navigation.navigate("SignUp")}
       >
-        <Text style={{ color: "white", fontSize: 14 }}>
+        <Text style={{ color: "#555", fontSize: 14 }}>
           Don't have an account? Sign Up
         </Text>
       </TouchableOpacity>
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: colors.primary,
+    backgroundColor: '#DDD',
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

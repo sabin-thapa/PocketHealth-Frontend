@@ -46,7 +46,6 @@ const SignUp = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <BackSquare />
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.pop()}
@@ -56,7 +55,7 @@ const SignUp = ({ navigation }) => {
       
       <Image
         source={SignUpIcon}
-        style={{ width: width / 4, height: width / 4, marginBottom: 20 }}
+        style={{ width: width / 4, height: width / 4,  }}
       />
       <AuthHeader title="Create an account" />
       <AppForm
@@ -83,7 +82,7 @@ const SignUp = ({ navigation }) => {
         style={{ marginTop: 17}}
         onPress={() => navigation.navigate("SignIn")}
       >
-        <Text style={{color: "white", fontSize: 14}}>Already have an account? Sign In</Text>
+        <Text style={{color: '#555', fontSize: 14}}>Already have an account? Sign In</Text>
       </TouchableOpacity>
       <SocialIcons screen="Sign Up" />
     </View>
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: colors.primary,
+    backgroundColor: '#DDD',
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

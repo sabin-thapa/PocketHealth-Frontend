@@ -1,87 +1,92 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { Drawer, Avatar, Title, Caption, Paragraph } from "react-native-paper";
+import Constants from "expo-constants";
+import userIcon from "../../assets/user.png";
 import {
   FontAwesome,
   MaterialCommunityIcons,
-  Entypo,
+  Ionicons,
 } from "@expo/vector-icons";
 import colors from "../../utils/colors";
 
 const DrawerContent = (props) => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <DrawerContentScrollView {...props}>
-        <Drawer.Section style={styles.topDrawerSection}>
+        <View style={styles.userInfo}>
+          <Image source={userIcon} style={{width: 60, height: 60, marginRight: 15}} />
+          <Text style={{fontSize:20, fontWeight: 'bold', color: colors.darkgray}}>Sajan Mahat</Text>
+        </View>
+        <View style={styles.topDrawerSection}>
           <DrawerItem
-            icon={({ size }) => (
-              <FontAwesome name="home" size={size / 1.2} color={colors.black} />
+            icon={() => (
+              <FontAwesome name="home" size={25} color={colors.primary} />
             )}
-            label="Home"
+            label={() => <Text style={styles.label}>Home</Text>}
             onPress={() => props.navigation.navigate("Home")}
           />
           <DrawerItem
-            icon={({ size }) => (
-              <FontAwesome
-                name="user-circle"
-                size={size / 1.2}
-                color={colors.black}
-              />
+            icon={() => (
+              <FontAwesome name="user" size={30} color={colors.primary} />
             )}
-            label="Profile"
+            label={() => <Text style={styles.label}>Profile</Text>}
             onPress={() => props.navigation.navigate("Profile")}
           />
           <DrawerItem
-            icon={({ size }) => (
-              <FontAwesome
-                name="group"
-                size={size / 1.2}
-                color={colors.black}
-              />
+            icon={() => (
+              <FontAwesome name="search" size={25} color={colors.primary} />
             )}
-            label="Search Articles"
+            label={() => <Text style={styles.label}>Search Articles</Text>}
             onPress={() =>
-              props.navigation.navigate({name: "Search Articles", params: {from: 'drawer'}})
+              props.navigation.navigate({
+                name: "Search Articles",
+                params: { from: "drawer" },
+              })
             }
           />
           <DrawerItem
-            icon={({ size }) => (
-              <Entypo
-                name="help-with-circle"
-                size={size / 1.2}
-                color={colors.black}
-              />
+            icon={() => (
+              <FontAwesome name="sticky-note" size={28} color={colors.primary} />
             )}
-            label="Notes"
+            label={() => <Text style={styles.label}>Notes</Text>}
             onPress={() => props.navigation.navigate("Notes")}
           />
           <DrawerItem
-            icon={({ size }) => (
-              <Entypo
-                name="help-with-circle"
-                size={size / 1.2}
-                color={colors.black}
-              />
+            icon={() => (
+              <Ionicons name="settings" size={25} color={colors.primary} />
             )}
-            label="Settings"
-            onPress={() => props.navigation.navigate({name: "Settings", params: {from: 'drawer'}})}
+            label={() => <Text style={styles.label}>Settings</Text>}
+            onPress={() =>
+              props.navigation.navigate({
+                name: "Settings",
+                params: { from: "drawer" },
+              })
+            }
           />
-        </Drawer.Section>
+        </View>
       </DrawerContentScrollView>
 
-      <Drawer.Section style={styles.bottomDrawerSection}>
+      <View style={styles.bottomDrawerSection}>
         <DrawerItem
-          icon={({ size }) => (
+          icon={() => (
             <MaterialCommunityIcons
               name="logout"
-              size={size}
+              size={25}
               color={colors.danger}
             />
           )}
-          label="Log Out"
+          label={() => (
+            <Text style={[styles.label, { color: colors.danger }]}>
+              Log Out
+            </Text>
+          )}
+          onPress={() => console.log("logged out")}
         />
-      </Drawer.Section>
+        <Text style={styles.copyRightText}>
+          Copyright @ 2021 PocketHealth, Inc.All Rights Reserved{" "}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -89,14 +94,32 @@ const DrawerContent = (props) => {
 export default DrawerContent;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.light,
+    borderBottomRightRadius: 30,
+    borderTopRightRadius: 30,
+    paddingTop: Constants.statusBarHeight,
+  },
+  copyRightText: {
+    fontSize: 10,
+    alignSelf: "center",
+    paddingTop: 20,
+    color: colors.darkgray,
+  },
+  label: {
+    color: colors.darkgray,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   bottomDrawerSection: {
     marginBottom: 15,
-    borderTopColor: "#f4f4f4",
-    borderTopWidth: 1,
+    borderTopColor: "#999",
+    borderTopWidth: 0.4,
   },
   topDrawerSection: {
-    borderTopColor: "#f4f4f4",
-    borderTopWidth: 2,
+    borderTopColor: "#999",
+    borderTopWidth: 0.4,
   },
   drawerContent: {
     marginLeft: 10,
@@ -104,19 +127,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
-
-  count: {
-    fontWeight: "bold",
-  },
-  followerSection: {
+  userInfo:{
+    display: "flex",
     flexDirection: "row",
-    marginVertical: 10,
-    marginRight: 20,
-  },
-  drawerText: {
-    marginLeft: 10,
-  },
-  enrolledGroup: {
-    marginVertical: 5,
-  },
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingBottom: 30
+  }
 });

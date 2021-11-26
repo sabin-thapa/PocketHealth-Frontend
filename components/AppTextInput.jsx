@@ -1,33 +1,46 @@
-import React from 'react'
-import {StyleSheet, Text, View } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
-import colors from '../utils/colors'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { TextInput } from "react-native-paper";
+import colors from "../utils/colors";
 
-const AppTextInput = ({placeholder, ...otherProps}) => {
-    return (
-        <View style={styles.container}>
-            <TextInput style={styles.inputText} placeholder={placeholder} placeholderTextColor={colors.gray} {...otherProps}/>
-        </View>
-    )
-}
+const AppTextInput = ({ placeholder, ...otherProps }) => {
+  return (
+    <View style={styles.container}>
+      <TextInput
+        underlineColor="#000"
+        mode="outlined"
+        theme={{
+          colors: {
+            text: "#000",
+            underlineColor: "#000",
+            primary: "#000",
+            background: "#DDD",
+          },
+          roundness: 10,
+        }}
+        style={styles.inputText}
+        label={placeholder}
+        placeholderTextColor={colors.gray}
+        {...otherProps}
+      />
+    </View>
+  );
+};
 
-export default AppTextInput
+export default AppTextInput;
 
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor: colors.light,
-        borderRadius:35,
-        width:"90%",
-        paddingVertical:10,
-        paddingHorizontal:20,
-        marginVertical:7
-    },
-    inputText:{
-        fontSize:16,
-        width:"100%"
-    },
-    icon:{
-        marginRight:10
-    },
-    
-})
+  container: {
+    borderRadius: 35,
+    width: "90%",
+    marginVertical: 7,
+  },
+  inputText: {
+    fontSize: 16,
+    width: "100%",
+    height: 50,
+  },
+  icon: {
+    marginRight: 10,
+  },
+});

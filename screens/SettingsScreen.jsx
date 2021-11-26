@@ -6,7 +6,11 @@ import DrawerTopBar from "../components/DrawerTopBar";
 const SettingsScreen = ({ navigation, route }) => {
   return (
     <Screen>
-      {route.params.from ==='stack'?<TopBar title="Settings" navigation={navigation} />: <DrawerTopBar title="Settings" navigation={navigation}/>}
+      {route.params.from === "stack" ? (
+        <TopBar title="Settings" navigation={navigation} />
+      ) : (
+        <DrawerTopBar title="Settings" navigation={navigation} />
+      )}
     </Screen>
   );
 };

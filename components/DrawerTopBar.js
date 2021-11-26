@@ -1,5 +1,4 @@
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import hamburgerIcon from "../assets/hamburger.png";
 
