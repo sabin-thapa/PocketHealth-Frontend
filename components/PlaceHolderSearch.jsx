@@ -72,7 +72,7 @@ const PlaceholderSearch = ({ placeholders }) => {
       });
       return ()=> {cancel=true}
     };
-    const changePlaceholderEvery2s = setInterval(changePlaceholder, 4000);
+    const changePlaceholderEvery2s = setInterval(changePlaceholder, 3000);
     return () => clearInterval(changePlaceholderEvery2s);
   }, []);
 

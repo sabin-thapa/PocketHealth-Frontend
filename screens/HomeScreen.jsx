@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -98,6 +98,18 @@ const options = [
 ];
 
 const HomeScreen = ({ navigation }) => {
+  const [time, setTime] = useState("");
+
+  const findTime = () => {
+    const hrs = new Date().getHours();
+    if (hrs === 0 || hrs < 12) return setTime("Mornings");
+    if (hrs === 12 || hrs < 17) return setTime("Afternoon");
+    setTime("Evening");
+  };
+
+  useEffect(() => {
+    findTime();
+  }, []);
   return (
     <Screen style={styles.container}>
       <TopBar navigation={navigation} />
@@ -107,7 +119,7 @@ const HomeScreen = ({ navigation }) => {
         style={styles.scrollViewWrapper}
       >
         <View style={styles.titleWrapper}>
-          <Text style={styles.helloText}>Hello</Text>
+          <Text style={styles.helloText}>{`Good ${time}, User`}</Text>
           <Text style={styles.welcomeText}>
             Please choose an option to get started.
           </Text>
@@ -226,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
   },
   helloText: {
-    fontSize: 30,
+    fontSize: 23,
     color: colors.primary,
     paddingHorizontal: 5,
   },
@@ -239,7 +251,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: colors.primary,
     opacity: 0.5,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
     paddingHorizontal: 5,
   },
