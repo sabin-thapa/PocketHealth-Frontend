@@ -15,6 +15,6 @@ expo init PocketHealth-Frontend
 #### cd into that repository
  ```cd PocketHealth-Frontend```
  #### Install all dependencies using
- ```yarn install```
+ ```yarn install``` or ``` npm install ```
  #### Run the development server using
- ```yarn start```
+ ```yarn start``` or ```npm start```
