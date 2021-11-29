@@ -28,6 +28,7 @@ const NotesScreen = ({ navigation }) => {
     const updatedNotes = [...notes, note];
     setNotes(updatedNotes);
     await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
+    setModalVisible(false)
   };
   return (
     <Screen>
@@ -48,7 +49,7 @@ const NotesScreen = ({ navigation }) => {
             numColumns={2}
             columnWrapperStyle={{
               justifyContent: 'space-between',
-              marginBottom: 15,
+              marginBottom: 10,
             }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (

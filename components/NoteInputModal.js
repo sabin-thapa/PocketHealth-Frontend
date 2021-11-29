@@ -8,13 +8,19 @@ const NoteInputModal = ({ visible, onClose, onSubmit }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
+    const onPressSubmit=(title, description) =>{
+        setTitle("");
+        setDescription("");
+        onSubmit(title,description);
+    }
+
     return (
             <Modal visible={visible} animationType='slide'>
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.closeButton} onPress={onClose}><FontAwesome name="close" size={24} color={colors.secondary} /></TouchableOpacity>
                     <AppTextInput placeholder='Title' style={{ backgroundColor: 'white' }} value={title} onChangeText={(title) => setTitle(title)} />
                     <AppTextInput placeholder='Description' style={{ backgroundColor: 'white' }} value={description} onChangeText={(desc) => setDescription(desc)}  multiline={true} numberOfLines={18}/>
-                    <TouchableOpacity style={styles.submitButton} onPress={() => onSubmit(title, description)}><Text style={styles.submitText}>Submit</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.submitButton} onPress={() => onPressSubmit(title, description)}><Text style={styles.submitText}>Submit</Text></TouchableOpacity>
                 </View>
             </Modal>
     )
