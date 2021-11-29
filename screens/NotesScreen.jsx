@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import DrawerTopBar from "../components/DrawerTopBar";
 import Screen from "./Screen";
 import RoundIconBtn from "../components/RoundIconBtn";
-import NoteInputModal from "../components/NoteInputModal";
+import NoteModal from "../components/NoteModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Note from "../components/Note";
 
@@ -37,7 +37,7 @@ const NotesScreen = ({ navigation }) => {
   const openNote = note => {
     navigation.navigate('NoteDetail', { note });
   };
-  
+
   const handleSubmit = async (title, desc) => {
     const note = { id: Date.now(), title, desc, time: Date.now() };
     const updatedNotes = [...notes, note];
@@ -53,7 +53,7 @@ const NotesScreen = ({ navigation }) => {
           antIconName="plus"
           style={styles.addBtn}
         />
-        <NoteInputModal
+        <NoteModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           onSubmit={handleSubmit}

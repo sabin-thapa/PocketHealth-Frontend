@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import AppTextInput from './AppTextInput';
 import colors from '../utils/colors';
 
-const NoteInputModal = ({ visible, onClose, onSubmit }) => {
+const NoteModal = ({ visible, onClose, onSubmit }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -31,7 +31,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit }) => {
     )
 }
 
-export default NoteInputModal
+export default NoteModal
 
 const styles = StyleSheet.create({
     container: {

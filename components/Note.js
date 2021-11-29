@@ -33,7 +33,7 @@ const Note = ({ item, onPress }) => {
     computeDate(time);
 
     return (
-        <TouchableOpacity activeOpacity={0.8} onPress={onPress} style={styles.container}>
+        <TouchableOpacity activeOpacity={0.4} onPress={onPress} style={styles.container}>
             {title.length!==0 && <Text style={styles.title} numberOfLines={2}>
                 {title}
             </Text>}

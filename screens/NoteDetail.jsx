@@ -1,11 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import Screen from './Screen'
 
 const NoteDetail = () => {
     return (
-        <View>
-            <Text>meow</Text>
-        </View>
+        <Screen>
+            <Text>asdsad</Text>
+        </Screen>
     )
 }
 
