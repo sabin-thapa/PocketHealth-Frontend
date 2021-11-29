@@ -16,13 +16,28 @@ const NotesScreen = ({ navigation }) => {
     if (result !== null) {
       setNotes(JSON.parse(result));
     }
-    console.log(notes);
   };
 
   useEffect(() => {
     findNotes();
   }, [])
 
+  const reverseData = data => {
+    return data.sort((a, b) => {
+      const aInt = parseInt(a.time);
+      const bInt = parseInt(b.time);
+      if (aInt < bInt) return 1;
+      if (aInt == bInt) return 0;
+      if (aInt > bInt) return -1;
+    });
+  };
+
+  const reverseNotes = reverseData(notes)
+
+  const openNote = note => {
+    navigation.navigate('NoteDetail', { note });
+  };
+  
   const handleSubmit = async (title, desc) => {
     const note = { id: Date.now(), title, desc, time: Date.now() };
     const updatedNotes = [...notes, note];
@@ -45,7 +60,9 @@ const NotesScreen = ({ navigation }) => {
         />
         {notes.length ===0? <Text>No Notes Yet!</Text>: 
           <FlatList 
-            data={notes}
+            showsVerticalScrollIndicator={false}
+            style={{marginBottom:10}}
+            data={reverseNotes}
             numColumns={2}
             columnWrapperStyle={{
               justifyContent: 'space-between',
@@ -53,7 +70,7 @@ const NotesScreen = ({ navigation }) => {
             }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Note onPress={() => console.log('woo')} item={item} />
+              <Note onPress={() => openNote(item)} item={item} />
             )}
           />
         }
