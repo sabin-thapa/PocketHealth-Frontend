@@ -7,7 +7,9 @@ const NoteProvider = ({ children }) => {
 
   const findNotes = async () => {
     const result = await AsyncStorage.getItem('notes');
-    if (result !== null) setNotes(JSON.parse(result));
+    if (result !== null) {
+      setNotes(JSON.parse(result));
+    }
   };
 
   useEffect(() => {

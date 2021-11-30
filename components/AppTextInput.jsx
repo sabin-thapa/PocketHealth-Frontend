@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import colors from "../utils/colors";
 
-const AppTextInput = ({ placeholder, ...otherProps }) => {
+const AppTextInput = ({ style, placeholder, ...otherProps }) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -18,7 +18,7 @@ const AppTextInput = ({ placeholder, ...otherProps }) => {
           },
           roundness: 10,
         }}
-        style={styles.inputText}
+        style={[styles.inputText, style]}
         label={placeholder}
         placeholderTextColor={colors.gray}
         {...otherProps}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 16,
     width: "100%",
-    height: 50,
+    minHeight: 50,
   },
   icon: {
     marginRight: 10,
