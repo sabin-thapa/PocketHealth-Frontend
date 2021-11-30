@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity, Alert } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import AppTextInput from './AppTextInput';
 import colors from '../utils/colors';
 
-const NoteModal = ({ visible, onClose, onSubmit }) => {
+const NoteModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -15,9 +15,20 @@ const NoteModal = ({ visible, onClose, onSubmit }) => {
         else {
             setTitle("");
             setDescription("");
-            onSubmit(title, description);
+            if (isEdit) {
+                onSubmit(title, description, Date.now());}
+            else{
+                onSubmit(title, description);
+            }
         }
     }
+
+    useEffect(() => {
+        if (isEdit) {
+            setTitle(note.title);
+            setDescription(note.desc);
+          }
+    }, [isEdit])
 
     return (
         <Modal visible={visible} animationType='slide'>

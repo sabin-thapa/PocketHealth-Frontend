@@ -6,21 +6,12 @@ import RoundIconBtn from "../components/RoundIconBtn";
 import NoteModal from "../components/NoteModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Note from "../components/Note";
+import {useNotes} from "../contexts/NoteProvider"
+import colors from "../utils/colors";
 
 const NotesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [notes, setNotes] = useState([]);
-  
-  const findNotes = async () => {
-    const result = await AsyncStorage.getItem('notes');
-    if (result !== null) {
-      setNotes(JSON.parse(result));
-    }
-  };
-
-  useEffect(() => {
-    findNotes();
-  }, [])
+  const { notes, setNotes, findNotes } = useNotes();
 
   const reverseData = data => {
     return data.sort((a, b) => {
@@ -58,7 +49,7 @@ const NotesScreen = ({ navigation }) => {
           onClose={() => setModalVisible(false)}
           onSubmit={handleSubmit}
         />
-        {notes.length ===0? <Text>No Notes Yet!</Text>: 
+        {notes.length ===0? <Text style={{alignSelf: 'center', marginTop: 20, fontSize: 20, color: colors.gray}}>Tap on the plus to add a new note</Text>: 
           <FlatList 
             showsVerticalScrollIndicator={false}
             style={{marginBottom:10}}
