@@ -4,11 +4,10 @@ import { AuthProvider } from "./contexts/AuthProvider";
 import Route from "./navigation/Route";
 
 export default function App() {
- 
   return (
     <View style={styles.container}>
       <AuthProvider>
-      <Route />
+        <Route />
       </AuthProvider>
     </View>
   );

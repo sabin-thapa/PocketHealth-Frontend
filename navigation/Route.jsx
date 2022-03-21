@@ -15,6 +15,10 @@ const Route = () => {
         if(initializing) setInitializing(false);
     }
 
+    useEffect(() => {
+      console.log('changed');
+    }, [authenticated])
+
     if (loading) {
         return <Loading />
     }   
