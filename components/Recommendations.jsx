@@ -5,24 +5,24 @@ const { width, height } = Dimensions.get("screen");
 
 const recommendations = [
     {
-        title: 'meow',
-        description: 'meow'
+        title: 'Recommendation',
+        description: 'Recommendation'
     },
     {
-        title: 'meow',
-        description: 'meow'
+        title: 'Recommendation',
+        description: 'Recommendation'
     },
     {
-        title: 'meow',
-        description: 'meow'
+        title: 'Recommendation',
+        description: 'Recommendation'
     },
     {
-        title: 'meow',
-        description: 'meow'
+        title: 'Recommendation',
+        description: 'Recommendation'
     },
     {
-        title: 'meow',
-        description: 'meow'
+        title: 'Recommendation',
+        description: 'Recommendation'
     },
    
 ]

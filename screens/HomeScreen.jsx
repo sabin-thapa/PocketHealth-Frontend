@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -23,15 +23,15 @@ import QnAPic from "../assets/question1.png";
 import Recommendations from "../components/Recommendations";
 
 const options = [
-  {
-    title: "Mental Wellness",
-    url: mentalHealthPic,
-    background: "#FA6E5A",
-    labelColor: "#FEF9F3",
-    height: 170,
-    imageSize: { width: 90, height: 90 },
-    link: "MentalWellness",
-  },
+  // {
+  //   title: "Mental Wellness",
+  //   url: mentalHealthPic,
+  //   background: "#FA6E5A",
+  //   labelColor: "#FEF9F3",
+  //   height: 170,
+  //   imageSize: { width: 90, height: 90 },
+  //   link: "MentalWellness",
+  // },
   {
     title: "BMI Calculator",
     url: BMIPic,
@@ -41,24 +41,24 @@ const options = [
     imageSize: { width: 60, height: 60 },
     link: "BMI",
   },
-  {
-    title: "Symptom Checker",
-    url: SymptomCheckerPic,
-    background: "#FEB18F",
-    labelColor: "#3F414E",
-    height: 135,
-    imageSize: { width: 60, height: 60 },
-    link: "SymptomsChecker",
-  },
-  {
-    title: "Aricles",
-    url: ArticlesPic,
-    background: "#FFCF86",
-    labelColor: "#3F414E",
-    height: 170,
-    imageSize: { width: 90, height: 90 },
-    link: "ArticlesScreen",
-  },
+  // {
+  //   title: "Symptom Checker",
+  //   url: SymptomCheckerPic,
+  //   background: "#FEB18F",
+  //   labelColor: "#3F414E",
+  //   height: 135,
+  //   imageSize: { width: 60, height: 60 },
+  //   link: "SymptomsChecker",
+  // },
+  // {
+  //   title: "Aricles",
+  //   url: ArticlesPic,
+  //   background: "#FFCF86",
+  //   labelColor: "#3F414E",
+  //   height: 170,
+  //   imageSize: { width: 90, height: 90 },
+  //   link: "ArticlesScreen",
+  // },
   {
     title: "Reminder",
     url: reminderPic,
@@ -68,24 +68,24 @@ const options = [
     imageSize: { width: 80, height: 80 },
     link: "Reminder",
   },
-  {
-    title: "Chats",
-    url: chatsPic,
-    background: "#3F414E",
-    labelColor: "#EBEAEC",
-    height: 135,
-    imageSize: { width: 60, height: 60 },
-    link: "Chats",
-  },
-  {
-    title: "Chat with AI",
-    url: chatBotPic,
-    background: "#F4717F",
-    labelColor: "#3F414E",
-    height: 135,
-    imageSize: { width: 60, height: 60 },
-    link: "ChatWithAI",
-  },
+  // {
+  //   title: "Chats",
+  //   url: chatsPic,
+  //   background: "#3F414E",
+  //   labelColor: "#EBEAEC",
+  //   height: 135,
+  //   imageSize: { width: 60, height: 60 },
+  //   link: "Chats",
+  // },
+  // {
+  //   title: "Chat with AI",
+  //   url: chatBotPic,
+  //   background: "#F4717F",
+  //   labelColor: "#3F414E",
+  //   height: 135,
+  //   imageSize: { width: 60, height: 60 },
+  //   link: "ChatWithAI",
+  // },
   {
     title: "QnA",
     url: QnAPic,

@@ -16,7 +16,7 @@ const DrawerContent = (props) => {
       <DrawerContentScrollView {...props}>
         <View style={styles.userInfo}>
           <Image source={userIcon} style={{width: 60, height: 60, marginRight: 15}} />
-          <Text style={{fontSize:20, fontWeight: 'bold', color: colors.darkgray}}>Sajan Mahat</Text>
+          <Text style={{fontSize:20, fontWeight: 'bold', color: colors.darkgray}}>John Doe</Text>
         </View>
         <View style={styles.topDrawerSection}>
           <DrawerItem
@@ -33,7 +33,7 @@ const DrawerContent = (props) => {
             label={() => <Text style={styles.label}>Profile</Text>}
             onPress={() => props.navigation.navigate("Profile")}
           />
-          <DrawerItem
+          {/* <DrawerItem
             icon={() => (
               <FontAwesome name="search" size={25} color={colors.primary} />
             )}
@@ -44,7 +44,7 @@ const DrawerContent = (props) => {
                 params: { from: "drawer" },
               })
             }
-          />
+          /> */}
           <DrawerItem
             icon={() => (
               <FontAwesome name="sticky-note" size={28} color={colors.primary} />
