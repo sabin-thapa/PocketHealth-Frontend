@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  
 } from "react-native";
 import AppTextInput from "../components/AppTextInput";
 import AuthHeader from "../components/AuthHeader";
@@ -19,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
+import {AuthContext} from '../contexts/AuthProvider'
 
 const { width, height } = Dimensions.get("screen");
 
@@ -28,8 +30,14 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 const SignIn = ({ navigation }) => {
+
+  const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
+
   const LoginHandler = (values) => {
-    console.log(values);
+    console.log(values, 'login credentials');
+    //check credentials in datebase
+    setIsAuthenticated(true)
+    navigation.navigate('App', {screen: 'Home'})
   };
 
   return (
@@ -64,7 +72,7 @@ const SignIn = ({ navigation }) => {
           Don't have an account? Sign Up
         </Text>
       </TouchableOpacity>
-      <SocialIcons screen="Sign In" />
+      {/* <SocialIcons screen="Sign In" /> */}
     </View>
   );
 };
