@@ -19,6 +19,7 @@ import QnAScreen from '../screens/QnAScreen';
 import ChatWithAIScreen from '../screens/ChatWithAIScreen';
 import RecommendationsScreen from '../screens/RecommendationsScreen';
 import BMIDetailScreen from '../screens/BMIDetailScreen';
+import AuthNavigator from './AuthNavigator';
 
 
 const Stack = createStackNavigator();
@@ -26,6 +27,7 @@ const AppNavigator = () => {
     return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Auth" component={AuthNavigator} />
                 <Stack.Screen name="Search" component={SearchScreen}/>
                 <Stack.Screen name="BMI" component={BMICalculatorScreen}/>
                 <Stack.Screen name="BMIDetail" component={BMIDetailScreen}/>

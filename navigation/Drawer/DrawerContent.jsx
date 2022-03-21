@@ -81,7 +81,7 @@ const DrawerContent = (props) => {
               Log Out
             </Text>
           )}
-          onPress={() => console.log("logged out")}
+          onPress={() => props.navigation.navigate('Auth', {screen: 'Home'})}
         />
         <Text style={styles.copyRightText}>
           Copyright @ 2021 PocketHealth, Inc.All Rights Reserved{" "}

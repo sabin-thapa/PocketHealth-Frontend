@@ -26,47 +26,47 @@ const DATA = [
     description: "Welcome to your simple yet smart pocket health assistant. ",
     image: healthcareIcon,
   },
-  {
-    key: "3571747",
-    title: "Check Symptoms",
-    description:
-      "You can check your symptoms simply by answering a few questions.",
-    image: symptomsIcon,
-  },
+  // {
+  //   key: "3571747",
+  //   title: "Check Symptoms",
+  //   description:
+  //     "You can check your symptoms simply by answering a few questions.",
+  //   image: symptomsIcon,
+  // },
   {
     key: "3571680",
     title: "Scheduler",
     description: "You can schedule your medicine times and appointments.",
     image: scheduleIcon,
   },
-  {
-    key: "3571603",
-    title: "Chatbot",
-    description:
-      "An intellligent chatbot available to help you fight your disease.",
-    image: robotIcon,
-  },
-  {
-    key: "3571604",
-    title: "Mental Health",
-    description:
-      "Mental health needs a great deal of attention. It’s the final taboo and it needs to be faced and dealt with.",
-    image: mentalHealthIcon,
-  },
-  {
-    key: "3571605",
-    title: "Read Articles",
-    description:
-      "Read articles related to health and well-being that you are interested in.",
-    image: articlesIcon,
-  },
-  {
-    key: "3571606",
-    title: "Chats & QnA",
-    description:
-      "Ask questions to experts and other members or give your advices.",
-    image: QnaIcon,
-  },
+  // {
+  //   key: "3571603",
+  //   title: "Chatbot",
+  //   description:
+  //     "An intellligent chatbot available to help you fight your disease.",
+  //   image: robotIcon,
+  // },
+  // {
+  //   key: "3571604",
+  //   title: "Mental Health",
+  //   description:
+  //     "Mental health needs a great deal of attention. It’s the final taboo and it needs to be faced and dealt with.",
+  //   image: mentalHealthIcon,
+  // },
+  // {
+  //   key: "3571605",
+  //   title: "Read Articles",
+  //   description:
+  //     "Read articles related to health and well-being that you are interested in.",
+  //   image: articlesIcon,
+  // },
+  // {
+  //   key: "3571606",
+  //   title: "Chats & QnA",
+  //   description:
+  //     "Ask questions to experts and other members or give your advices.",
+  //   image: QnaIcon,
+  // },
 ];
 
 const Indicator = ({ scrollX }) => {
