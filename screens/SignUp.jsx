@@ -84,7 +84,7 @@ const SignUp = ({ navigation }) => {
       >
         <Text style={{color: '#555', fontSize: 14}}>Already have an account? Sign In</Text>
       </TouchableOpacity>
-      <SocialIcons screen="Sign Up" />
+      {/* <SocialIcons screen="Sign Up" /> */}
     </View>
   );
 };
