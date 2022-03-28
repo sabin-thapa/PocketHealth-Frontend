@@ -10,7 +10,6 @@ import ProfileNavigator from "../ProfileNavigator.jsx";
 import SettingsScreen from "../../screens/SettingsScreen";
 import SearchScreen from "../../screens/SearchScreen";
 import NotesNavigator from "../NotesNavigator";
-import AuthNavigator from '../AuthNavigator'
 
 const Drawer = createDrawerNavigator();
 
