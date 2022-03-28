@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Constants from "expo-constants";
@@ -9,8 +9,10 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import colors from "../../utils/colors";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const DrawerContent = (props) => {
+  const {setIsAuthenticated} = useContext(AuthContext)
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
@@ -81,7 +83,7 @@ const DrawerContent = (props) => {
               Log Out
             </Text>
           )}
-          onPress={() => props.navigation.navigate('Auth', {screen: 'Home'})}
+          onPress={() => setIsAuthenticated(false)}
         />
         <Text style={styles.copyRightText}>
           Copyright @ 2021 PocketHealth, Inc.All Rights Reserved{" "}
