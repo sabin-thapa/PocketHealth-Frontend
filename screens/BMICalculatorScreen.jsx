@@ -12,7 +12,7 @@ import Screen from "./Screen";
 import RNSpeedometer from "react-native-speedometer";
 import Slider from "@react-native-community/slider";
 import colors from "../utils/colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
 const { screenWidth, screenHeight } = Dimensions.get("window");
@@ -64,7 +64,7 @@ const BMIDETAILS = [
 
 const bmiLables = [];
 for (let i = 0; i < 40; i++) {
-  if (i >=10 && i<17) {
+  if (i >= 10 && i < 17) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#A3ABFF",
@@ -100,7 +100,7 @@ for (let i = 0; i < 40; i++) {
       labelColor: "#CD7D7D",
       activeBarColor: "#CD7D7D",
     });
-  } else if (i >= 27 && i<40) {
+  } else if (i >= 27 && i < 40) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#FA6E5A",
@@ -109,7 +109,7 @@ for (let i = 0; i < 40; i++) {
   }
 }
 
-const BMIList = ()=>{
+const BMIList = () => {
   return (
     <View style={styles.listContainer}>
       <FlatList
@@ -131,8 +131,8 @@ const BMIList = ()=>{
         }}
       />
     </View>
-  )
-}
+  );
+};
 
 const BMICalculatorScreen = ({ navigation }) => {
   const [bmiValue, setBmiValue] = useState(19.0);
@@ -192,8 +192,6 @@ const BMICalculatorScreen = ({ navigation }) => {
     console.log("saved");
     navigation.navigate("BMIDetail");
   };
-
-  
 
   return (
     <Screen style={styles.container}>
@@ -325,6 +323,28 @@ const BMICalculatorScreen = ({ navigation }) => {
               onValueChange={(value) => setHeightInch(value)}
               step={1}
             />
+            {/* <View style={styles.incDecBtns}>
+              <TouchableOpacity
+                onPress={() => setHeight(height - 1)}
+                style={styles.decBtn}
+              >
+                <AntDesign
+                  name="minuscircle"
+                  size={16}
+                  color={colors.secondary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setHeight(height + 1)}
+                style={styles.incBtn}
+              >
+                <AntDesign
+                  name="pluscircle"
+                  size={16}
+                  color={colors.secondary}
+                />
+              </TouchableOpacity>
+            </View> */}
           </View>
         )}
         <View style={styles.sliderHeader}>
@@ -356,6 +376,20 @@ const BMICalculatorScreen = ({ navigation }) => {
           value={weight}
           step={0.2}
         />
+        <View style={styles.incDecBtns}>
+          <TouchableOpacity
+            onPress={() => setWeight(weight - 1)}
+            style={styles.decBtn}
+          >
+            <AntDesign name="minuscircle" size={18} color={colors.secondary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setWeight(weight + 1)}
+            style={styles.incBtn}
+          >
+            <AntDesign name="pluscircle" size={18} color={colors.secondary} />
+          </TouchableOpacity>
+        </View>
       </View>
       <BMIList />
       <TouchableOpacity style={styles.saveBtn} onPress={onPressSave}>
@@ -366,7 +400,7 @@ const BMICalculatorScreen = ({ navigation }) => {
 };
 
 export default BMICalculatorScreen;
-export {BMIList}
+export { BMIList };
 
 const styles = StyleSheet.create({
   saveText: {
@@ -461,5 +495,14 @@ const styles = StyleSheet.create({
     marginTop: "20%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  incDecBtns: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: "65%",
+  },
+  incBtn: {
+    marginLeft: 12,
   },
 });
