@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, FlatList, TouchableWithoutFeedback } from "react-native";
 import Screen from "./Screen";
-import Data from "./data.json";
+import Data from "../data/data.json";
 import PlaceholderSearch from "../components/PlaceHolderSearch";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";

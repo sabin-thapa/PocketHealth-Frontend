@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AuthProvider } from "./contexts/AuthProvider";
 import Route from "./navigation/Route";
 
 export default function App() {
+  useEffect(() => {
+    console.log('Hello');
+  }, [])
   return (
     <View style={styles.container}>
       <AuthProvider>
