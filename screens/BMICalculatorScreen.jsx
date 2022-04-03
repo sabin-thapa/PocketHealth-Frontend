@@ -12,7 +12,7 @@ import Screen from "./Screen";
 import RNSpeedometer from "react-native-speedometer";
 import Slider from "@react-native-community/slider";
 import colors from "../utils/colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
 const { screenWidth, screenHeight } = Dimensions.get("window");
@@ -64,7 +64,7 @@ const BMIDETAILS = [
 
 const bmiLables = [];
 for (let i = 0; i < 40; i++) {
-  if (i >=10 && i<17) {
+  if (i >= 10 && i < 17) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#A3ABFF",
@@ -100,7 +100,7 @@ for (let i = 0; i < 40; i++) {
       labelColor: "#CD7D7D",
       activeBarColor: "#CD7D7D",
     });
-  } else if (i >= 27 && i<40) {
+  } else if (i >= 27 && i < 40) {
     bmiLables.push({
       name: " ".repeat(i),
       labelColor: "#FA6E5A",
@@ -109,7 +109,7 @@ for (let i = 0; i < 40; i++) {
   }
 }
 
-const BMIList = ()=>{
+const BMIList = () => {
   return (
     <View style={styles.listContainer}>
       <FlatList
@@ -131,8 +131,8 @@ const BMIList = ()=>{
         }}
       />
     </View>
-  )
-}
+  );
+};
 
 const BMICalculatorScreen = ({ navigation }) => {
   const [bmiValue, setBmiValue] = useState(19.0);
@@ -192,8 +192,6 @@ const BMICalculatorScreen = ({ navigation }) => {
     console.log("saved");
     navigation.navigate("BMIDetail");
   };
-
-  
 
   return (
     <Screen style={styles.container}>
@@ -259,9 +257,31 @@ const BMICalculatorScreen = ({ navigation }) => {
       >
         <View style={styles.sliderHeader}>
           <Text style={styles.sliderText}>Height </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={styles.oneLine}>
             {heightUnit === "cm" ? (
-              <Text style={styles.measure}>{height}</Text>
+              <>
+                <TouchableOpacity
+                  onPress={() => setHeight(Number(height) - 1)}
+                  style={styles.decBtn}
+                >
+                  <AntDesign
+                    name="minuscircle"
+                    size={15}
+                    color={colors.secondary}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.measure}>{height}</Text>
+                <TouchableOpacity
+                  onPress={() => setHeight(Number(height) + 1)}
+                  sstyle={styles.incBtn}
+                >
+                  <AntDesign
+                    name="pluscircle"
+                    size={15}
+                    color={colors.secondary}
+                  />
+                </TouchableOpacity>
+              </>
             ) : (
               <Text style={styles.measure}>
                 {heightFeet}' {heightInch}''
@@ -269,7 +289,7 @@ const BMICalculatorScreen = ({ navigation }) => {
             )}
             <SwitchSelector
               height={30}
-              style={{ maxWidth: 80 }}
+              style={{ maxWidth: 80, marginLeft: 20 }}
               options={heightOptions}
               initial={0}
               buttonColor={colors.secondary}
@@ -329,11 +349,27 @@ const BMICalculatorScreen = ({ navigation }) => {
         )}
         <View style={styles.sliderHeader}>
           <Text style={styles.sliderText}>Weight </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={styles.oneLine}>
+            <TouchableOpacity
+              onPress={() => setWeight(Number(weight)-1)}
+              style={styles.decBtn}
+            >
+              <AntDesign
+                name="minuscircle"
+                size={15}
+                color={colors.secondary}
+              />
+            </TouchableOpacity>
             <Text style={styles.measure}>{weight}</Text>
+            <TouchableOpacity
+              onPress={() => setWeight(Number(weight)+1)}
+              sstyle={styles.incBtn}
+            >
+              <AntDesign name="pluscircle" size={15} color={colors.secondary} />
+            </TouchableOpacity>
             <SwitchSelector
               height={30}
-              style={{ maxWidth: 80 }}
+              style={{ maxWidth: 80, marginLeft: 20 }}
               options={weightOptions}
               initial={0}
               buttonColor={colors.secondary}
@@ -366,7 +402,7 @@ const BMICalculatorScreen = ({ navigation }) => {
 };
 
 export default BMICalculatorScreen;
-export {BMIList}
+export { BMIList };
 
 const styles = StyleSheet.create({
   saveText: {
@@ -442,7 +478,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "bold",
     marginTop: 3,
-    marginRight: 10,
+    marginRight: 20,
   },
   container: {
     marginTop: 20,
@@ -461,5 +497,15 @@ const styles = StyleSheet.create({
     marginTop: "20%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  decBtn: {
+    marginRight: 15 ,
+  },
+  incBtn: {
+    marginRight: 20,
+  },
+  oneLine: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
