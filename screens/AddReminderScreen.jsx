@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Text, View, StyleSheet} from 'react-native'
 import TopBar from '../components/TopBar'
 import Screen from './Screen'
+
 const AddReminderScreen = ({navigation}) => {
   return (
     <Screen>

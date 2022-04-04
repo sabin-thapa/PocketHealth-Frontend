@@ -14,6 +14,7 @@ import Slider from "@react-native-community/slider";
 import colors from "../utils/colors";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
+import axios from 'axios';
 
 const { screenWidth, screenHeight } = Dimensions.get("window");
 
@@ -136,6 +137,7 @@ const BMIList = () => {
 
 const BMICalculatorScreen = ({ navigation }) => {
   const [bmiValue, setBmiValue] = useState(19.0);
+  const [data, setData] = useState(null);
   const [weight, setWeight] = useState(70);
   const [height, setHeight] = useState(180);
   const [heightFeet, setHeightFeet] = useState(5);
@@ -178,6 +180,19 @@ const BMICalculatorScreen = ({ navigation }) => {
   useEffect(() => {
     onChangeValues();
   }, [weight, height, heightUnit, weightUnit, heightFeet, heightInch]);
+
+  useEffect(() => {
+    axios.get('http://192.168.1.80:8000/api/trackers/bmi')
+      .then(res => {
+        console.log(res.data);
+        const {height_in_cm, weight_in_kg} = res.data[0]
+        setHeight(height_in_cm)
+        setWeight(weight_in_kg)
+      })
+      .catch(err => {
+        console.log(err, "Err")
+      })
+  }, [height, weight])
 
   const weightOptions = [
     { label: "kg", value: "kg" },
