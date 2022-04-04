@@ -192,7 +192,7 @@ const BMICalculatorScreen = ({ navigation }) => {
       .catch(err => {
         console.log(err, "Err")
       })
-  }, [height, weight])
+  }, [])
 
   const weightOptions = [
     { label: "kg", value: "kg" },

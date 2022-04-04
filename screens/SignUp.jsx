@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,7 @@ import Constants from "expo-constants";
 import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
 const { width, height } = Dimensions.get("screen");
+import axios from "axios";
 
 const registerValidationSchema = Yup.object().shape({
   name: Yup.string().required("Please provide your name").label("name"),
@@ -43,6 +44,15 @@ const SignUp = ({ navigation }) => {
   const registerHandler = (values) => {
     console.log(values);
   };
+
+useEffect(() => {
+  axios.get('http://192.168.1.80:8000/api/login')
+    .then(res => {
+      console.log(res.data, "register api response");
+    }).catch(err => {
+      console.log(`Error in retrieving register api data: ${err}`)
+    })
+}, [])
 
   return (
     <View style={styles.container}>
