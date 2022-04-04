@@ -6,27 +6,21 @@ import RoundIconBtn from "../components/RoundIconBtn";
 import NoteModal from "../components/NoteModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Note from "../components/Note";
-import {useNotes} from "../contexts/NoteProvider"
+import { useNotes } from "../contexts/NoteProvider";
 import colors from "../utils/colors";
 
 const NotesScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { notes, setNotes, findNotes } = useNotes();
 
-  const reverseData = data => {
-    return data.sort((a, b) => {
-      const aInt = parseInt(a.time);
-      const bInt = parseInt(b.time);
-      if (aInt < bInt) return 1;
-      if (aInt == bInt) return 0;
-      if (aInt > bInt) return -1;
-    });
+  const reverseData = (data) => {
+    return data.sort((a, b) => parseInt(b.time - a.time));
   };
 
-  const reverseNotes = reverseData(notes)
+  const reverseNotes = reverseData(notes);
 
-  const openNote = note => {
-    navigation.navigate('NoteDetail', { note });
+  const openNote = (note) => {
+    navigation.navigate("NoteDetail", { note });
   };
 
   const handleSubmit = async (title, desc) => {
@@ -34,37 +28,48 @@ const NotesScreen = ({ navigation }) => {
     const updatedNotes = [...notes, note];
     setNotes(updatedNotes);
     await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
-    setModalVisible(false)
+    setModalVisible(false);
   };
   return (
     <Screen>
-        <DrawerTopBar navigation={navigation} title="Notes" />
-        <RoundIconBtn
-          onPress={() => setModalVisible(true)}
-          antIconName="plus"
-          style={styles.addBtn}
+      <DrawerTopBar navigation={navigation} title="Notes" />
+      <RoundIconBtn
+        onPress={() => setModalVisible(true)}
+        antIconName="plus"
+        style={styles.addBtn}
+      />
+      <NoteModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleSubmit}
+      />
+      {notes.length === 0 ? (
+        <Text
+          style={{
+            alignSelf: "center",
+            marginTop: 20,
+            fontSize: 20,
+            color: colors.gray,
+          }}
+        >
+          Tap on the plus to add a new note
+        </Text>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={{ marginBottom: 10 }}
+          data={reverseNotes}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Note onPress={() => openNote(item)} item={item} />
+          )}
         />
-        <NoteModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          onSubmit={handleSubmit}
-        />
-        {notes.length ===0? <Text style={{alignSelf: 'center', marginTop: 20, fontSize: 20, color: colors.gray}}>Tap on the plus to add a new note</Text>: 
-          <FlatList 
-            showsVerticalScrollIndicator={false}
-            style={{marginBottom:10}}
-            data={reverseNotes}
-            numColumns={2}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-              marginBottom: 10,
-            }}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Note onPress={() => openNote(item)} item={item} />
-            )}
-          />
-        }
+      )}
     </Screen>
   );
 };
