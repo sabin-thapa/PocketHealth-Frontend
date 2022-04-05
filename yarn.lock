@@ -2989,6 +2989,15 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-sensors@~10.2.2":
+  "integrity" "sha512-kZZobyfQQPA7PwuTQ2+HwunZ1o2emWLKqWP9jYOBPI4toQAproSLzhlhKmpm2vRDOL1ctC12Fb0g9elv7r9Omg=="
+  "resolved" "https://registry.npmjs.org/expo-sensors/-/expo-sensors-10.2.2.tgz"
+  "version" "10.2.2"
+  dependencies:
+    "@expo/config-plugins" "^3.0.0"
+    "expo-modules-core" "~0.2.0"
+    "invariant" "^2.2.4"
+
 "expo-status-bar@~1.0.4":
   "integrity" "sha512-s7nc496D/Zn1NGiMJ5wu6HyIdXxbgGtmZZtbHm7rpbcmLdf28GmMSNHDx7M0t00BMhky7VAurTCUo+BJs8ugsw=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.0.4.tgz"
@@ -5175,6 +5184,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+
 "react-native-calendars@^1.1280.0":
   "integrity" "sha512-WXlFQ2D3qxB26H5DSN8o5kS+ZTSk075GPu60u6xCzgUYUm8+nwCJ4MaO2oPzK+nYBMWYXzgSufXQhtxisU4GNA=="
   "resolved" "https://registry.npmjs.org/react-native-calendars/-/react-native-calendars-1.1280.0.tgz"
@@ -5191,6 +5201,7 @@
     "xdate" "^0.8.0"
   optionalDependencies:
     "moment" "^2.24.0"
+
 
 "react-native-chart-kit@^6.11.0":
   "integrity" "sha512-mRSfW+mcyVSi0UZKFucru5h5TPB6UcWrMi/DphICRpPJWlvIVAv/6VYGFA57NFDLoRVufFjbsRRrms+TOq61jw=="
@@ -5234,6 +5245,11 @@
     "@react-native-picker/picker" "^1.8.3"
     "lodash.isequal" "^4.5.0"
 
+"react-native-proximity@^3.0.0":
+  "integrity" "sha512-OnFXxCAcA6veF9jd5i5J3v1RR/IwBnX0DHMfFWmdltqlwDOQQi0dgKwZMyB0FkAeGHdYo7UESzEzmxkJpeqhdQ=="
+  "resolved" "https://registry.npmjs.org/react-native-proximity/-/react-native-proximity-3.0.0.tgz"
+  "version" "3.0.0"
+
 "react-native-reanimated@>= 1.0.0", "react-native-reanimated@~2.2.0":
   "integrity" "sha512-Nn648MfEEnTCEiWsl1YmfkojiLyV0NMY0EiRdDRbZNfJVfxBuyqhCxI/4Jd7aBi162qpgf8XK2mByYgvF4zLrQ=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.2.4.tgz"
@@ -5262,6 +5278,11 @@
   "version" "3.4.0"
   dependencies:
     "warn-once" "^0.1.0"
+
+"react-native-shake@^4.0.2":
+  "integrity" "sha512-2niPeI2d5blkbtOwHZ9aoPEue5Uas2IViZKc3jMJ7NIycSQKBw/gRhEYl4mNagCOF6zD6b30lQRBEqhCZvkAoA=="
+  "resolved" "https://registry.npmjs.org/react-native-shake/-/react-native-shake-4.0.2.tgz"
+  "version" "4.0.2"
 
 "react-native-speedometer@^1.0.5":
   "integrity" "sha512-vloJbiIATVFBMayTZXE9Zf5GD8daBJsUxU83xxNo/vynfX84omu3nMgwYxpAqwO4oDOI1Nj86pFzPkU7kPqGIA=="
