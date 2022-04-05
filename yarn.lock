@@ -1932,6 +1932,13 @@
   "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   "version" "2.1.2"
 
+"axios@^0.26.1":
+  "integrity" "sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.26.1.tgz"
+  "version" "0.26.1"
+  dependencies:
+    "follow-redirects" "^1.14.8"
+
 "babel-plugin-dynamic-import-node@^2.3.3":
   "integrity" "sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ=="
   "resolved" "https://registry.npmjs.org/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz"
@@ -2982,6 +2989,15 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-sensors@~10.2.2":
+  "integrity" "sha512-kZZobyfQQPA7PwuTQ2+HwunZ1o2emWLKqWP9jYOBPI4toQAproSLzhlhKmpm2vRDOL1ctC12Fb0g9elv7r9Omg=="
+  "resolved" "https://registry.npmjs.org/expo-sensors/-/expo-sensors-10.2.2.tgz"
+  "version" "10.2.2"
+  dependencies:
+    "@expo/config-plugins" "^3.0.0"
+    "expo-modules-core" "~0.2.0"
+    "invariant" "^2.2.4"
+
 "expo-status-bar@~1.0.4":
   "integrity" "sha512-s7nc496D/Zn1NGiMJ5wu6HyIdXxbgGtmZZtbHm7rpbcmLdf28GmMSNHDx7M0t00BMhky7VAurTCUo+BJs8ugsw=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.0.4.tgz"
@@ -3250,6 +3266,11 @@
   dependencies:
     "locate-path" "^6.0.0"
     "path-exists" "^4.0.0"
+
+"follow-redirects@^1.14.8":
+  "integrity" "sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.9.tgz"
+  "version" "1.14.9"
 
 "fontfaceobserver@^2.1.0":
   "integrity" "sha512-ReOsO2F66jUa0jmv2nlM/s1MiutJx/srhAe2+TE8dJCMi02ZZOcCTxTCQFr3Yet+uODUtnr4Mewg+tNQ+4V1Ng=="
@@ -5123,6 +5144,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
+"react-native-accurate-step-counter@^2.0.4":
+  "integrity" "sha512-DHYboQ15QwKw2JUAwDgLG2aEvwYEewaUVL9sWXW4g6O74BtZ+3zKG7FaeBbl9hAfm3yHfD6Vwce+G3/ShSj7Ug=="
+  "resolved" "https://registry.npmjs.org/react-native-accurate-step-counter/-/react-native-accurate-step-counter-2.0.4.tgz"
+  "version" "2.0.4"
+  dependencies:
+    "react-native-shake" "^4.0.2"
+
 "react-native-chart-kit@^6.11.0":
   "integrity" "sha512-mRSfW+mcyVSi0UZKFucru5h5TPB6UcWrMi/DphICRpPJWlvIVAv/6VYGFA57NFDLoRVufFjbsRRrms+TOq61jw=="
   "resolved" "https://registry.npmjs.org/react-native-chart-kit/-/react-native-chart-kit-6.11.0.tgz"
@@ -5165,6 +5193,11 @@
     "@react-native-picker/picker" "^1.8.3"
     "lodash.isequal" "^4.5.0"
 
+"react-native-proximity@^3.0.0":
+  "integrity" "sha512-OnFXxCAcA6veF9jd5i5J3v1RR/IwBnX0DHMfFWmdltqlwDOQQi0dgKwZMyB0FkAeGHdYo7UESzEzmxkJpeqhdQ=="
+  "resolved" "https://registry.npmjs.org/react-native-proximity/-/react-native-proximity-3.0.0.tgz"
+  "version" "3.0.0"
+
 "react-native-reanimated@>= 1.0.0", "react-native-reanimated@~2.2.0":
   "integrity" "sha512-Nn648MfEEnTCEiWsl1YmfkojiLyV0NMY0EiRdDRbZNfJVfxBuyqhCxI/4Jd7aBi162qpgf8XK2mByYgvF4zLrQ=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.2.4.tgz"
@@ -5193,6 +5226,11 @@
   "version" "3.4.0"
   dependencies:
     "warn-once" "^0.1.0"
+
+"react-native-shake@^4.0.2":
+  "integrity" "sha512-2niPeI2d5blkbtOwHZ9aoPEue5Uas2IViZKc3jMJ7NIycSQKBw/gRhEYl4mNagCOF6zD6b30lQRBEqhCZvkAoA=="
+  "resolved" "https://registry.npmjs.org/react-native-shake/-/react-native-shake-4.0.2.tgz"
+  "version" "4.0.2"
 
 "react-native-speedometer@^1.0.5":
   "integrity" "sha512-vloJbiIATVFBMayTZXE9Zf5GD8daBJsUxU83xxNo/vynfX84omu3nMgwYxpAqwO4oDOI1Nj86pFzPkU7kPqGIA=="

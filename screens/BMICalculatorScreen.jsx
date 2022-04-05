@@ -205,7 +205,7 @@ const BMICalculatorScreen = ({ navigation }) => {
         }}
       >
         <View flexDirection="row">
-          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+          <TouchableOpacity onPress={() => navigation.pop()}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </TouchableOpacity>
           <View>
