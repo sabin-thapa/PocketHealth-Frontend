@@ -61,7 +61,7 @@ const options = [
   //   link: "ArticlesScreen",
   // },
   {
-    title: "Reminder",
+    title: "Medicine Reminder",
     url: reminderPic,
     background: "#6CB28E",
     labelColor: "#FFECCC",

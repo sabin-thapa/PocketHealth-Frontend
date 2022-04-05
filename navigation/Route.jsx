@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import Loading from '../components/Loading'
 
 const Route = () => {
-    const {authenticated, setIsAuthenticated, user, setUser} = useContext(AuthContext);
+    const {isAuthenticated, setIsAuthenticated, user, setUser} = useContext(AuthContext);
     const [initializing, setInitializing] = useState(true)
     const [loading, setLoading] = useState(false)
 
@@ -16,15 +16,15 @@ const Route = () => {
     }
 
     useEffect(() => {
-      console.log('changed');
-    }, [authenticated])
+      console.log('Authenticated: ', isAuthenticated);
+    }, [isAuthenticated])
 
     if (loading) {
         return <Loading />
     }   
   return (
     <NavigationContainer>
-    {!authenticated ? <AuthNavigator /> : <DrawerNavigator />}
+    {!isAuthenticated ? <AuthNavigator /> : <DrawerNavigator />}
   </NavigationContainer>
   )
 }

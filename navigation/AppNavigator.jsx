@@ -16,7 +16,6 @@ import SettingsScreen from '../screens/SettingsScreen';
 import ArticlesScreen from '../screens/ArticlesScreen';
 import MentalWellnessScreen from '../screens/MentalWellnessScreen';
 import SymptomsCheckerScreen from '../screens/SymptomsCheckerScreen';
-import ReminderScreen from '../screens/ReminderScreen';
 import ChatsScreen from '../screens/ChatsScreen';
 import QnAScreen from '../screens/QnAScreen';
 import ChatWithAIScreen from '../screens/ChatWithAIScreen';
@@ -29,6 +28,7 @@ import ExerciseDetailScreen from '../screens/ExerciseTrackerDetail';
 import PushupScreen from '../screens/PushupScreen';
 import PedometerScreen from '../screens/PedometerScreen';
 import AuthNavigator from './AuthNavigator';
+import ReminderNavigator from './ReminderNavigator';
 
 
 const Stack = createStackNavigator();
@@ -36,7 +36,7 @@ const AppNavigator = () => {
     return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Auth" component={AuthNavigator} />
+                {/* <Stack.Screen name="Auth" component={AuthNavigator} /> */}
                 <Stack.Screen name="Search" component={SearchScreen}/>
                 <Stack.Screen name="Trackers" component={TrackersScreen}/>
                 <Stack.Screen name="Sugar" component={SugarScreen}/>
@@ -54,7 +54,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="MentalWellness" component={MentalWellnessScreen}/>
                 <Stack.Screen name="ArticlesScreen" component={ArticlesScreen}/>
                 <Stack.Screen name="SymptomsChecker" component={SymptomsCheckerScreen}/>
-                <Stack.Screen name="Reminder" component={ReminderScreen}/>
+                <Stack.Screen name="Reminder" component={ReminderNavigator}/>
                 <Stack.Screen name="Chats" component={ChatsScreen}/>
                 <Stack.Screen name="QnA" component={QnAScreen}/>
                 <Stack.Screen name="ChatWithAI" component={ChatWithAIScreen}/>

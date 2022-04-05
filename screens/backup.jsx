@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         borderWidth: 2,
         borderRadius: 8,
-        borderColor: colors.gray
+        borderColor: colors.primary
     },
     btnText: {
         fontSize: 16,
