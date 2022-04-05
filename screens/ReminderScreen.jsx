@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import TopBar from "../components/TopBar";
 import colors from "../utils/colors";
@@ -12,56 +12,60 @@ import RoundIconBtn from "../components/RoundIconBtn";
 import Reminder from "../components/Reminder";
 import ReminderModal from "../components/ReminderModal";
 import img from "../assets/schedule.png";
+import {useReminders} from '../contexts/ReminderProvider'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ReminderContext} from '../contexts/ReminderProvider'
 
-const reminders = [
-  {
-    id: 1,
-    title: "Anti-Biotics",
-    time: "8AM",
-    frequency: ['Sun', 'Mon', 'Tue'],
-    type: "capsule",
-    startDate: 'April 1',
-    endDate: 'April 14'
-  },
-  {
-    id: 2,
-    title: "Protein",
-    time: "8AM",
-    frequency: ["Every Day"],
-    type: "tablet",
-    startDate: 'April 1',
-    endDate: 'April 14'
-  },
-  {
-    id: 3,
-    title: "Pantop",
-    time: "8AM",
-    frequency: ["Every Day"],
-    type: "tablet",
-    startDate: 'April 1',
-    endDate: 'April 14'
-  },
-  {
-    id: 4,
-    title: "Protein",
-    time: "8AM",
-    frequency: ["Every Day"],
-    type: "liquid",
-    startDate: 'April 1',
-    endDate: 'April 14'
-  },
-  {
-    id: 5,
-    title: "Pantop",
-    time: "8AM",
-    frequency: "Every Day",
-    type: "tablet",
-    startDate: 'April 1',
-    endDate: 'April 14'
-  },
-];
+// const reminders = [
+//   {
+//     id: 1,
+//     title: "Anti-Biotics",
+//     time: "8AM",
+//     frequency: ['Sun', 'Mon', 'Tue'],
+//     type: "capsule",
+//     startDate: 'April 1',
+//     endDate: 'April 14'
+//   },
+//   {
+//     id: 2,
+//     title: "Protein",
+//     time: "8AM",
+//     frequency: ["Every Day"],
+//     type: "tablet",
+//     startDate: 'April 1',
+//     endDate: 'April 14'
+//   },
+//   {
+//     id: 3,
+//     title: "Pantop",
+//     time: "8AM",
+//     frequency: ["Every Day"],
+//     type: "tablet",
+//     startDate: 'April 1',
+//     endDate: 'April 14'
+//   },
+//   {
+//     id: 4,
+//     title: "Protein",
+//     time: "8AM",
+//     frequency: ["Every Day"],
+//     type: "liquid",
+//     startDate: 'April 1',
+//     endDate: 'April 14'
+//   },
+//   {
+//     id: 5,
+//     title: "Pantop",
+//     time: "8AM",
+//     frequency: "Every Day",
+//     type: "tablet",
+//     startDate: 'April 1',
+//     endDate: 'April 14'
+//   },
+// ];
 
 const ReminderScreen = ({ navigation }) => {
+  const {reminders, setReminders, findReminders} = useContext(ReminderContext);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [items, setItems] = React.useState({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -111,9 +115,13 @@ const ReminderScreen = ({ navigation }) => {
     navigation.navigate("ReminderDetail", { reminder });
   };
 
-  const handleSubmit = async (title) => {
-    console.log("Submitted");
-  };
+  const handleSubmit = async (medicineName, dosePerDay, medicineType, startDate, endDate) => {
+    const rem = {medicineName, dosePerDay, medicineType, startDate, endDate}
+    const updatedReminders = [...reminders, rem]
+    setReminders(updatedReminders)
+    await AsyncStorage.setItem('reminders', JSON.stringify(updatedReminders))
+    setModalVisible(false)
+  }
 
   return (
     <Screen style={styles.container}>

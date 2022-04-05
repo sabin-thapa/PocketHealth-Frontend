@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Modal, Button } from "react-native";
-import React, { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import colors from "../utils/colors";
 import AppTextInput from "./AppTextInput";
@@ -9,13 +8,25 @@ import RNPickerSelect from "react-native-picker-select";
 
 const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [medicineName, setMedicineName] = useState("");
+  const [dosePerDay, setDosePerDay] = useState(3);
   const [medicineType, setMedicineType] = useState("tablet");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const onPressSubmit = () => {
+  const onPressSubmit = ({medicineName, dosePerDay, medicineType, startDate, endDate}) => {
     console.log("Submitted");
+    onSubmit(medicineName, dosePerDay, medicineType, startDate, endDate)
   };
+  useEffect(() => {
+    if (isEdit) {
+      setMedicineName(reminder.title);
+      setDosePerDay(reminder.desc);
+      setMedicineType(reminder.desc);
+      setStartDate(reminder.desc);
+      setEndDate(reminder.desc);
+    }
+  }, [isEdit]);
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.container}>
@@ -30,11 +41,15 @@ const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
         <AppTextInput
           placeholder="Medicine"
           style={{ backgroundColor: "white" }}
+          value = {medicineName}
+          onChangeText = {(val) => setMedicineName(val)}
         />
         <AppTextInput
           placeholder="Dose per day"
           style={{ backgroundColor: "white" }}
           keyboardType="numeric"
+          value = {dosePerDay}
+          onChangeText = {(val) => setDosePerDay(val)}
         />
         {/* Time Picker  */}
         {/* Day Picker  */}
@@ -118,9 +133,9 @@ const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
         <DateTimePicker mode="date" value={new Date(1598051730000)} /> */}
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={() => onPressSubmit(title, description)}
+          onPress={() => onPressSubmit(medicineName, dosePerDay, startDate, endDate, medicineType)}
         >
-          <Text style={styles.submitText}>Submit</Text>
+          <Text style={styles.submitText}>Save Reminder</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 30,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    marginLeft: 100,
   },
   submitText: {
     color: "white",
