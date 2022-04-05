@@ -14,6 +14,7 @@ import Screen from "./Screen";
 import backgroundPic from "../assets/bg2.png";
 import mentalHealthPic from "../assets/mental-health2.png";
 import BMIPic from "../assets/body-mass-index.png";
+import TrackersPic from "../assets/application.png"
 import SymptomCheckerPic from "../assets/stomachache.png";
 import ArticlesPic from "../assets/application.png";
 import reminderPic from "../assets/reminder.png";
@@ -33,13 +34,13 @@ const options = [
   //   link: "MentalWellness",
   // },
   {
-    title: "BMI Calculator",
-    url: BMIPic,
+    title: "Trackers",
+    url: TrackersPic,
     background: "#A3ABFF",
     labelColor: "#FEF9F3",
     height: 135,
     imageSize: { width: 60, height: 60 },
-    link: "BMI",
+    link: "Trackers",
   },
   // {
   //   title: "Symptom Checker",
