@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SignIn from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import DrawerNavigator from "./Drawer/DrawerNavigator";
+import SignUpDatabase from "../screens/SignUpDatabase";
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
@@ -14,6 +15,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="Home" component={Carousal} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SignUpDatabase" component={SignUpDatabase} />
       <Stack.Screen name="App" component={DrawerNavigator} />
     </Stack.Navigator>
   );

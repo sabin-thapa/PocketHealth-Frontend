@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,9 +20,10 @@ import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
 const { width, height } = Dimensions.get("screen");
 import axios from "axios";
+import SignUpDatabase from "./SignUpDatabase";
+
 
 const registerValidationSchema = Yup.object().shape({
-  name: Yup.string().required("Please provide your name").label("name"),
   email: Yup.string()
     .email("Please enter a valid email!")
     .required("Email is required!")
@@ -41,36 +42,43 @@ const registerValidationSchema = Yup.object().shape({
 });
 
 const SignUp = ({ navigation }) => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const PORT = process.env.REACT_APP_PORT;
+
   const registerHandler = (values) => {
     console.log(values);
-  };
-
-useEffect(() => {
-  axios.get('http://192.168.1.80:8000/api/login')
-    .then(res => {
-      console.log(res.data, "register api response");
-    }).catch(err => {
-      console.log(`Error in retrieving register api data: ${err}`)
+    axios
+    .post("http://192.168.1.80:8000/api/patient_register/", {
+      email: values.email,
+      password: values.password
     })
-}, [])
+    .then((res) => {
+      console.log(res, "patient register api response");
+      navigation.navigate('SignUpDatabase')
+    })
+    .catch((err) => {
+      console.log(`Error in posting register api data: ${err}`);
+    });
+  };
+  
+  useEffect(() => {
+    console.log(BASE_URL, ":", PORT);
+
+  }, []);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backBtn}
-        onPress={() => navigation.pop()}
-      >
+      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.pop()}>
         <Ionicons name="arrow-back" size={30} color={colors.primary} />
       </TouchableOpacity>
-      
+
       <Image
         source={SignUpIcon}
-        style={{ width: width / 4, height: width / 4,  }}
+        style={{ width: width / 4, height: width / 4 }}
       />
       <AuthHeader title="Create an account" />
       <AppForm
         initialValues={{
-          name: "",
           email: "",
           password: "",
           confirmPassword: "",
@@ -78,7 +86,6 @@ useEffect(() => {
         onSubmit={registerHandler}
         validationSchema={registerValidationSchema}
       >
-        <AppFormField name="name" placeholder="Username" />
         <AppFormField name="email" placeholder="Email" />
         <AppFormField name="password" placeholder="Password" secureTextEntry />
         <AppFormField
@@ -89,10 +96,12 @@ useEffect(() => {
         <SubmitButton title="Register" />
       </AppForm>
       <TouchableOpacity
-        style={{ marginTop: 17}}
+        style={{ marginTop: 17 }}
         onPress={() => navigation.navigate("SignIn")}
       >
-        <Text style={{color: '#555', fontSize: 14}}>Already have an account? Sign In</Text>
+        <Text style={{ color: "#555", fontSize: 14 }}>
+          Already have an account? Sign In
+        </Text>
       </TouchableOpacity>
       {/* <SocialIcons screen="Sign Up" /> */}
     </View>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: '#DDD',
+    backgroundColor: "#DDD",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
