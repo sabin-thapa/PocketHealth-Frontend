@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -22,7 +22,6 @@ const { width, height } = Dimensions.get("screen");
 import axios from "axios";
 import SignUpDatabase from "./SignUpDatabase";
 
-
 const registerValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email!")
@@ -41,29 +40,50 @@ const registerValidationSchema = Yup.object().shape({
     .label("ConfirmPassword"),
 });
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({ navigation, route }) => {
+  const { role } = route.params;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const PORT = process.env.REACT_APP_PORT;
+  const [error, setError] = useState('')
 
   const registerHandler = (values) => {
     console.log(values);
-    axios
-    .post("http://192.168.1.80:8000/api/patient_register/", {
-      email: values.email,
-      password: values.password
-    })
-    .then((res) => {
-      console.log(res, "patient register api response");
-      navigation.navigate('SignUpDatabase')
-    })
-    .catch((err) => {
-      console.log(`Error in posting register api data: ${err}`);
-    });
+    {
+      role === "patient" &&
+        axios
+          .post("http://192.168.1.80:8000/api/patient_register/", {
+            email: values.email,
+            password: values.password,
+          })
+          .then((res) => {
+            console.log(res, "patient register api response");
+            navigation.navigate("SignUpDatabase", { role: "test" });
+          })
+          .catch((err) => {
+            console.log(`Error in posting patient register api data: ${err}`);
+            setError(err.message)
+          });
+        }
+    {
+      role === "practitioner" &&
+        axios
+          .post("http://http://192.168.1.80:8000/api/practitioner_register/", {
+            email: values.email,
+            password: values.password,
+          })
+          .then((res) => {
+            console.log(res, "Practitioner register api response");
+            navigation.navigate("SignUpDatabase", { role: "test" });
+          })
+          .catch((err) => {
+            console.log(`Error in posting practitioner register api data: ${err.message}`);
+            setError(err.message)
+          });
+    }
   };
-  
-  useEffect(() => {
-    console.log(BASE_URL, ":", PORT);
 
+  useEffect(() => {
+    console.log(role, "Role - General Register Screen");
   }, []);
 
   return (
@@ -93,6 +113,7 @@ const SignUp = ({ navigation }) => {
           placeholder="Confirm password"
           secureTextEntry
         />
+        <Text style = {{color: colors.danger}}> {error} </Text>
         <SubmitButton title="Register" />
       </AppForm>
       <TouchableOpacity
