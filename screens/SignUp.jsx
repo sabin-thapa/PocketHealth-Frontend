@@ -14,7 +14,7 @@ import AppForm from "../components/form/AppForm";
 import * as Yup from "yup";
 import SubmitButton from "../components/form/SubmitButton";
 import SignUpIcon from "../assets/add-user.png";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
@@ -44,7 +44,8 @@ const SignUp = ({ navigation, route }) => {
   const { role } = route.params;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const PORT = process.env.REACT_APP_PORT;
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const registerHandler = (values) => {
     console.log(values);
@@ -57,13 +58,16 @@ const SignUp = ({ navigation, route }) => {
           })
           .then((res) => {
             console.log(res, "patient register api response");
-            navigation.navigate("SignUpDatabase", { role: "test" });
+            navigation.navigate("SignUpDatabase", {
+              role: "patient",
+              email: values.email,
+            });
           })
           .catch((err) => {
             console.log(`Error in posting patient register api data: ${err}`);
-            setError(err.message)
+            setError(err.message);
           });
-        }
+    }
     {
       role === "practitioner" &&
         axios
@@ -73,11 +77,16 @@ const SignUp = ({ navigation, route }) => {
           })
           .then((res) => {
             console.log(res, "Practitioner register api response");
-            navigation.navigate("SignUpDatabase", { role: "test" });
+            navigation.navigate("SignUpDatabase", {
+              role: "practitioner",
+              email: values.email,
+            });
           })
           .catch((err) => {
-            console.log(`Error in posting practitioner register api data: ${err.message}`);
-            setError(err.message)
+            console.log(
+              `Error in posting practitioner register api data: ${err.message}`
+            );
+            setError(err.message);
           });
     }
   };
@@ -107,13 +116,64 @@ const SignUp = ({ navigation, route }) => {
         validationSchema={registerValidationSchema}
       >
         <AppFormField name="email" placeholder="Email" />
-        <AppFormField name="password" placeholder="Password" secureTextEntry />
+        <AppFormField name="password" placeholder="Password" secureTextEntry = {!showPassword} />
+        {!showPassword ? (
+          <Entypo
+            name="eye-with-line"
+            size={20}
+            style={{
+              position: "absolute",
+              top: "51%",
+              left: "86%",
+              zIndex: 10,
+            }}
+            onPress={() => setShowPassword(true)}
+          />
+        ) : (
+          <Entypo
+            name="eye"
+            size={20}
+            style={{
+              position: "absolute",
+              top: "51%",
+              left: "86%",
+              zIndex: 10,
+            }}
+            onPress={() => setShowPassword(false)}
+          />
+        )}
+
         <AppFormField
           name="confirmPassword"
           placeholder="Confirm password"
-          secureTextEntry
+          secureTextEntry={!showPassword}
         />
-        <Text style = {{color: colors.danger}}> {error} </Text>
+        {!showPassword ? (
+          <Entypo
+            name="eye-with-line"
+            size={20}
+            style={{
+              position: "absolute",
+              top: "62%",
+              left: "86%",
+              zIndex: 10,
+            }}
+            onPress={() => setShowPassword(true)}
+          />
+        ) : (
+          <Entypo
+            name="eye"
+            size={20}
+            style={{
+              position: "absolute",
+              top: "62%",
+              left: "86%",
+              zIndex: 10,
+            }}
+            onPress={() => setShowPassword(false)}
+          />
+        )}
+        <Text style={{ color: colors.danger }}> {error} </Text>
         <SubmitButton title="Register" />
       </AppForm>
       <TouchableOpacity

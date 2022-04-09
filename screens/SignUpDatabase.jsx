@@ -44,7 +44,7 @@ const registerValidationSchema = Yup.object().shape({
 });
 
 const SignUpDatabase = ({ navigation, route }) => {
-  const { role } = route.params;
+  const { role, email } = route.params;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const PORT = process.env.REACT_APP_PORT;
 
@@ -64,7 +64,7 @@ const SignUpDatabase = ({ navigation, route }) => {
   const registerHandler = (values) => {
     console.log(values);
     axios
-      .post("http://192.168.1.80:8000/api/patient_register/", {
+      .post("http://192.168.1.80:8000/api/patient/register_model/", {
         email: values.email,
         password: values.password,
       })
@@ -80,14 +80,6 @@ const SignUpDatabase = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log(role, " ROLE");
-    axios
-      .get("http://192.168.1.80:8000/api/patient/register_model")
-      .then((res) => {
-        console.log(res.data, "response");
-      })
-      .catch((err) => {
-        console.log(`Error in posting patient register api data: ${err}`);
-      });
   }, []);
 
   return (

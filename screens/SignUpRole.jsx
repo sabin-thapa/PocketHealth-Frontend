@@ -72,6 +72,7 @@ const Square = ({ scrollX }) => {
 const AuthButtons = ({ navigation }) => {
   return (
     <View style={{ position: "absolute", bottom: "17%", flexDirection: "row" }}>
+
       <TouchableOpacity
         onPress={() => navigation.navigate("SignUp", {role: 'patient'})}
         activeOpacity={0.7}
@@ -104,7 +105,7 @@ const SignUpRole = ({ navigation }) => {
           resizeMode: "contain",
           marginBottom: height/1.5
         }}
-      />
+        />
       <AuthButtons navigation={navigation} />
     </View>
   );
