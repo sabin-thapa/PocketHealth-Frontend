@@ -12,7 +12,7 @@ import colors from "../../utils/colors";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const DrawerContent = (props) => {
-  const {setIsAuthenticated} = useContext(AuthContext)
+  const {setIsAuthenticated, logout} = useContext(AuthContext)
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
@@ -83,7 +83,7 @@ const DrawerContent = (props) => {
               Log Out
             </Text>
           )}
-          onPress={() => setIsAuthenticated(false)}
+          onPress={() => logout()}
         />
         <Text style={styles.copyRightText}>
           Copyright @ 2021 PocketHealth, Inc.All Rights Reserved{" "}

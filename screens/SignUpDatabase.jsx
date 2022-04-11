@@ -25,23 +25,7 @@ import { RadioButton } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
 import RNPickerSelect from "react-native-picker-select";
 
-const registerValidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Please enter a valid email!")
-    .required("Email is required!")
-    .label("Email"),
-  password: Yup.string()
-    .required("Password is required!")
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
-      "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    )
-    .label("Password"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords do not match!")
-    .required("Confirm Password is required!")
-    .label("ConfirmPassword"),
-});
+const registerValidationSchema = Yup.object().shape({});
 
 const SignUpDatabase = ({ navigation, route }) => {
   const { role, email } = route.params;
@@ -49,7 +33,10 @@ const SignUpDatabase = ({ navigation, route }) => {
   const PORT = process.env.REACT_APP_PORT;
 
   const [gender, setGender] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
+  const [maritalStatusLabel, setMaritalStatusLabel] = useState("");
+  const [nameLabel, setNameLabel] = useState("");
+  const [addressLabel, setAddressLabel] = useState("");
+  const [addressTypeLabel, setAddressTypeLabel] = useState("");
 
   const [firstPage, setFirstPage] = useState(true);
   const [secondPage, setSecondPage] = useState(false);
@@ -61,12 +48,44 @@ const SignUpDatabase = ({ navigation, route }) => {
   const [eighthPage, setEighthPage] = useState(false);
   const [ninthPage, setNinthPage] = useState(false);
 
-  const registerHandler = (values) => {
-    console.log(values);
+  const registerDatabaseHandler = (values) => {
+    // Collect all the data from the form
+    // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
+    const registerData = JSON.stringify({
+      Patient: email,
+      name: [{
+        use: nameLabel,
+        family: values.name.family,
+        given: {
+          label: values.name.given,
+        },
+        prefix: values.name.prefix,
+        suffix: values.name.suffix,
+      }],
+      gender: {
+        "label": gender,
+      },
+      birthDate: values.birthDate,
+      address: [{
+        use: addressLabel,
+        address_type: addressTypeLabel,
+        city: values.address.city,
+        country: values.address.country,
+        district: values.address.district,
+        state: values.address.state,
+      }],
+      maritalStatus: maritalStatusLabel,
+      contact: values.contact,
+    });
+    console.log(registerData, " Submission: Patient register model!!");
     axios
       .post("http://192.168.1.80:8000/api/patient/register_model/", {
-        email: values.email,
-        password: values.password,
+        registerData
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
       .then((res) => {
         console.log(res, "patient register api response");
@@ -78,9 +97,7 @@ const SignUpDatabase = ({ navigation, route }) => {
 
   const PrevNextNav = ({ prev, next }) => {};
 
-  useEffect(() => {
-    console.log(role, " ROLE");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>
@@ -90,26 +107,48 @@ const SignUpDatabase = ({ navigation, route }) => {
       <View style={{ alignItems: "center" }}>
         <AuthHeader title="Please fill in the form" />
       </View>
+      <Text
+        style={[
+          styles.title,
+          {
+            fontSize: 16,
+            textAlign: "center",
+            borderBottomWidth: 1,
+            borderBottomColor: colors.primary,
+            marginTop: -40,
+          },
+        ]}
+      >
+        User: {email}
+      </Text>
       <ScrollView>
         <AppForm
           initialValues={{
-            names: {},
-            address: "",
+            birthDate: "",
+
+            name: {
+              family: "",
+              given: "",
+              prefix: "",
+              suffix: "",
+            },
+            address: {
+              city: "",
+              district: "",
+              state: "",
+              country: "",
+            },
+            contact: "",
           }}
-          onSubmit={registerHandler}
+          onSubmit={registerDatabaseHandler}
           validationSchema={registerValidationSchema}
         >
           {/* General  */}
+
           <Text style={styles.title}> General </Text>
           {firstPage && (
             <>
               {/* Get current user's email  */}
-              <AppFormField
-                name={role}
-                placeholder={role}
-                style={styles.formField}
-              />
-
               <AppFormField
                 name="birthDate"
                 placeholder="Birth Date"
@@ -137,7 +176,7 @@ const SignUpDatabase = ({ navigation, route }) => {
             <RNPickerSelect
               placeholder={{ label: "Use", value: null }}
               style={{ inputAndroid: { color: colors.dark } }}
-              onValueChange={(value) => setGender(value)}
+              onValueChange={(value) => setNameLabel(value)}
               items={[
                 { label: "Official", value: "Official" },
                 { label: "Usual", value: "Usual" },
@@ -151,42 +190,42 @@ const SignUpDatabase = ({ navigation, route }) => {
           </View>
           <View style={styles.nameContainer}>
             <AppFormField
-              name="name"
+              name="name.family"
               placeholder="Family"
               style={styles.nameFormField}
             />
             <AppFormField
-              name="name"
+              name="name.given"
               placeholder="Given"
               style={styles.nameFormField}
             />
           </View>
           <View style={styles.nameContainer}>
             <AppFormField
-              name="name"
+              name="name.prefix"
               placeholder="Prefix"
               style={styles.nameFormField}
             />
             <AppFormField
-              name="name"
+              name="name.suffix"
               placeholder="Suffix"
               style={styles.nameFormField}
             />
           </View>
           {/* Telecoms  */}
-          <Text style={styles.title}> Telecoms </Text>
+          {/* <Text style={styles.title}> Telecoms </Text>
           <AppFormField
             name="telecom"
             placeholder="Telecom"
             style={styles.formField}
-          />
+          /> */}
           {/* Addresses  */}
           <Text style={styles.title}> Addresses </Text>
           <View style={styles.oneInput}>
             <RNPickerSelect
               placeholder={{ label: "Use", value: null }}
               style={{ inputAndroid: { color: colors.dark } }}
-              onValueChange={(value) => setGender(value)}
+              onValueChange={(value) => setAddressLabel(value)}
               items={[
                 { label: "Home", value: "Home" },
                 { label: "Work", value: "Work" },
@@ -199,7 +238,7 @@ const SignUpDatabase = ({ navigation, route }) => {
             <RNPickerSelect
               placeholder={{ label: "Address Type", value: null }}
               style={{ inputAndroid: { color: colors.dark } }}
-              onValueChange={(value) => setGender(value)}
+              onValueChange={(value) => setAddressTypeLabel(value)}
               items={[
                 { label: "Postal", value: "Postal" },
                 { label: "Physical", value: "Physical" },
@@ -207,14 +246,38 @@ const SignUpDatabase = ({ navigation, route }) => {
               ]}
             />
           </View>
+          <View style={styles.nameContainer}>
+            <AppFormField
+              name="address.city"
+              placeholder="City"
+              style={styles.nameFormField}
+            />
+            <AppFormField
+              name="address.district"
+              placeholder="District"
+              style={styles.nameFormField}
+            />
+          </View>
+          <View style={styles.nameContainer}>
+            <AppFormField
+              name="address.state"
+              placeholder="State"
+              style={styles.nameFormField}
+            />
+            <AppFormField
+              name="address.country"
+              placeholder="Country"
+              style={styles.nameFormField}
+            />
+          </View>
+
           {/* {Marital Status  */}
           <Text style={styles.title}> Marital Status </Text>
-
           <View style={styles.oneInput}>
             <RNPickerSelect
               placeholder={{ label: "Marital Status", value: null }}
               style={{ inputAndroid: { color: colors.dark } }}
-              onValueChange={(value) => setMaritalStatus(value)}
+              onValueChange={(value) => setMaritalStatusLabel(value)}
               items={[
                 { label: "Single", value: "Single" },
                 { label: "Married", value: "Married" },
@@ -231,7 +294,7 @@ const SignUpDatabase = ({ navigation, route }) => {
             />
           </View>
           {/* Contacts  */}
-          <Text style={styles.title}> Contacts </Text>
+          <Text style={styles.title}> Contact </Text>
           <AppFormField
             name="contact"
             placeholder="Contact"
@@ -239,26 +302,26 @@ const SignUpDatabase = ({ navigation, route }) => {
             style={styles.formField}
           />
           {/* Communications  */}
-          <Text style={styles.title}> Communications </Text>
+          {/* <Text style={styles.title}> Communications </Text>
           <AppFormField
             name="communication"
             placeholder="Communication"
             style={styles.formField}
-          />
+          /> */}
           {/* Organizations  */}
-          <Text style={styles.title}> Organizations </Text>
+          {/* <Text style={styles.title}> Organizations </Text>
           <AppFormField
             name="managingOrganization"
             placeholder="Managing Organization"
             style={styles.formField}
-          />
+          /> */}
           {/* Links  */}
-          <Text style={styles.title}> Links </Text>
+          {/* <Text style={styles.title}> Links </Text>
           <AppFormField
             name="link"
             placeholder="Link"
             style={styles.formField}
-          />
+          /> */}
 
           <View style={styles.genderContainer}>
             {/* <View style={styles.genderBtns}>

@@ -58,26 +58,26 @@ const SignUp = ({ navigation, route }) => {
           })
           .then((res) => {
             console.log(res, "patient register api response");
-            navigation.navigate("SignUpDatabase", {
+            navigation.navigate("SignIn", {
               role: "patient",
               email: values.email,
             });
           })
           .catch((err) => {
-            console.log(`Error in posting patient register api data: ${err}`);
-            setError(err.message);
+            console.log(`Error in posting patient register api data: ${err.message}`);
+            setError(`${err.message} - the user already exists [400]`);
           });
     }
     {
       role === "practitioner" &&
         axios
-          .post("http://http://192.168.1.80:8000/api/practitioner_register/", {
+          .post("http://192.168.1.80:8000/api/practitioner_register/", {
             email: values.email,
             password: values.password,
           })
           .then((res) => {
-            console.log(res, "Practitioner register api response");
-            navigation.navigate("SignUpDatabase", {
+            console.log(res.data, "Practitioner register api response");
+            navigation.navigate("SignIn", {
               role: "practitioner",
               email: values.email,
             });
@@ -93,6 +93,7 @@ const SignUp = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log(role, "Role - General Register Screen");
+    setError('')
   }, []);
 
   return (
@@ -116,7 +117,11 @@ const SignUp = ({ navigation, route }) => {
         validationSchema={registerValidationSchema}
       >
         <AppFormField name="email" placeholder="Email" />
-        <AppFormField name="password" placeholder="Password" secureTextEntry = {!showPassword} />
+        <AppFormField
+          name="password"
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+        />
         {!showPassword ? (
           <Entypo
             name="eye-with-line"
