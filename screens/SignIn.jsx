@@ -21,20 +21,32 @@ import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
 import { AuthContext } from "../contexts/AuthProvider";
 import * as axios from "axios";
+import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("screen");
 
 const loginValidationSchema = Yup.object().shape({
-  email: Yup.string().email('Please enter a valid email').required().label("Email"),
+  email: Yup.string()
+    .email("Please enter a valid email")
+    .required()
+    .label("Email"),
   password: Yup.string().required().label("Password"),
 });
 
 const SignIn = ({ navigation }) => {
-  const { isAuthenticated, setIsAuthenticated, user, setUser, token, setToken } = useContext(AuthContext);
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    user,
+    setUser,
+    token,
+    setToken,
+  } = useContext(AuthContext);
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   const LoginHandler = (values) => {
+    setLoading(true);
     axios
       .post("http://192.168.1.80:8000/api/login/", {
         email: values.email,
@@ -42,15 +54,16 @@ const SignIn = ({ navigation }) => {
       })
       .then((res) => {
         console.log(res.data.token, " login response");
-        setUser(res.data)
-        setToken(res.data.token)
-        setError('')
-        setIsAuthenticated(true)
-        console.log(user, ' user context var');
+        setUser(res.data);
+        setToken(res.data.token);
+        setError("");
+        setLoading(false)
+        setIsAuthenticated(true);
+        console.log(user, " user context var");
       })
       .catch((err) => {
         console.log(err.message);
-        setError(`Invalid credentials - ${err.message}`)
+        setError(`Invalid credentials - ${err.message}`);
       });
 
     //check credentials in datebase
@@ -59,8 +72,12 @@ const SignIn = ({ navigation }) => {
   };
 
   useEffect(() => {
-    setError('')
+    setError("");
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -80,7 +97,7 @@ const SignIn = ({ navigation }) => {
         validationSchema={loginValidationSchema}
       >
         <AppFormField name="email" placeholder="Email" />
-        <AppFormField name="password" placeholder="Password" secureTextEntry/>
+        <AppFormField name="password" placeholder="Password" secureTextEntry />
         <Text style={{ color: colors.danger }}> {error} </Text>
         <SubmitButton title="Login" />
       </AppForm>

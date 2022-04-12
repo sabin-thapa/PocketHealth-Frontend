@@ -33,7 +33,7 @@ const Backdrop = ({ scrollX }) => {
       <Animated.View
         style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
       ></Animated.View>
-      <Text style={styles.roleText}> Select your role in the app. </Text>
+      <Text style={styles.roleText}> Are you a patient or a practitioner? </Text>
     </>
   );
 };
@@ -71,23 +71,28 @@ const Square = ({ scrollX }) => {
 
 const AuthButtons = ({ navigation }) => {
   return (
-    <View style={{ position: "absolute", bottom: "17%", flexDirection: "row" }}>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("SignUp", {role: 'patient'})}
-        activeOpacity={0.7}
-        style={styles.authButton}
+    <>
+      <View
+        style={{ position: "absolute", bottom: "17%", flexDirection: "row" }}
       >
-        <Text style={styles.authText}>Patient</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("SignUp", {role: 'practitioner'})}
-        activeOpacity={0.7}
-        style={styles.authButton}
-      >
-        <Text style={styles.authText}>Practitioner</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SignUp", { role: "patient" })}
+          activeOpacity={0.7}
+          style={styles.authButton}
+        >
+          <Text style={styles.authText}>Patient</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("SignUp", { role: "practitioner" })
+          }
+          activeOpacity={0.7}
+          style={styles.authButton}
+        >
+          <Text style={styles.authText}>Practitioner</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -97,15 +102,20 @@ const SignUpRole = ({ navigation }) => {
     <View style={styles.container}>
       <Backdrop scrollX={scrollX} />
       <Square scrollX={scrollX} />
-      <Image
+      <View style={{ width, alignItems: "center", paddingHorizontal: 40 }}>
+        <View style={{ flex: 0.7, justifyContent: "center" }}>
+        <Image
         source={patient}
         style={{
           width: width / 2.4,
           height: height / 2,
           resizeMode: "contain",
-          marginBottom: height/1.5
+          marginBottom: height / 1.5,
         }}
-        />
+      />
+        </View>
+      </View>
+
       <AuthButtons navigation={navigation} />
     </View>
   );
@@ -148,6 +158,6 @@ const styles = StyleSheet.create({
     marginTop: 100,
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 20,
   },
 });

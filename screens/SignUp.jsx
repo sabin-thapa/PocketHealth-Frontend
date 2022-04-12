@@ -21,6 +21,7 @@ import BackSquare from "../components/BackSquare";
 const { width, height } = Dimensions.get("screen");
 import axios from "axios";
 import SignUpDatabase from "./SignUpDatabase";
+import Loading from "../components/Loading";
 
 const registerValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -46,9 +47,11 @@ const SignUp = ({ navigation, route }) => {
   const PORT = process.env.REACT_APP_PORT;
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const registerHandler = (values) => {
     console.log(values);
+    setLoading(true);
     {
       role === "patient" &&
         axios
@@ -58,18 +61,23 @@ const SignUp = ({ navigation, route }) => {
           })
           .then((res) => {
             console.log(res, "patient register api response");
-            navigation.navigate("SignIn", {
+            navigation.navigate("SignUpDatabase", {
               role: "patient",
               email: values.email,
             });
           })
           .catch((err) => {
-            console.log(`Error in posting patient register api data: ${err.message}`);
+            setLoading(false)
+            console.log(
+              `Error in posting patient register api data: ${err.message}`
+            );
             setError(`${err.message} - the user already exists [400]`);
           });
+      setLoading(false);
     }
     {
       role === "practitioner" &&
+      setLoading(true);
         axios
           .post("http://192.168.1.80:8000/api/practitioner_register/", {
             email: values.email,
@@ -77,24 +85,30 @@ const SignUp = ({ navigation, route }) => {
           })
           .then((res) => {
             console.log(res.data, "Practitioner register api response");
-            navigation.navigate("SignIn", {
+            navigation.navigate("SignUpDatabase", {
               role: "practitioner",
               email: values.email,
             });
           })
           .catch((err) => {
+            setLoading(false)
             console.log(
               `Error in posting practitioner register api data: ${err.message}`
             );
             setError(err.message);
           });
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     console.log(role, "Role - General Register Screen");
-    setError('')
+    setError("");
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
@@ -106,7 +120,11 @@ const SignUp = ({ navigation, route }) => {
         source={SignUpIcon}
         style={{ width: width / 4, height: width / 4 }}
       />
-      <AuthHeader title="Create an account" />
+      <View style={{ paddingTop: 20 }}>
+        <AuthHeader
+          title={`${role.charAt(0).toUpperCase() + role.slice(1)} Registration`}
+        />
+      </View>
       <AppForm
         initialValues={{
           email: "",
@@ -128,7 +146,7 @@ const SignUp = ({ navigation, route }) => {
             size={20}
             style={{
               position: "absolute",
-              top: "51%",
+              top: "52.5%",
               left: "86%",
               zIndex: 10,
             }}
@@ -140,7 +158,7 @@ const SignUp = ({ navigation, route }) => {
             size={20}
             style={{
               position: "absolute",
-              top: "51%",
+              top: "52.5%",
               left: "86%",
               zIndex: 10,
             }}
@@ -159,7 +177,7 @@ const SignUp = ({ navigation, route }) => {
             size={20}
             style={{
               position: "absolute",
-              top: "62%",
+              top: "63%",
               left: "86%",
               zIndex: 10,
             }}
@@ -171,7 +189,7 @@ const SignUp = ({ navigation, route }) => {
             size={20}
             style={{
               position: "absolute",
-              top: "62%",
+              top: "63%",
               left: "86%",
               zIndex: 10,
             }}

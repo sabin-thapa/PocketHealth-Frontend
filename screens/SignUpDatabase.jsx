@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import {
   StyleSheet,
   Text,
@@ -24,10 +24,12 @@ import axios from "axios";
 import { RadioButton } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
 import RNPickerSelect from "react-native-picker-select";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const registerValidationSchema = Yup.object().shape({});
 
 const SignUpDatabase = ({ navigation, route }) => {
+  const{setIsAuthenticated} = useContext(AuthContext)
   const { role, email } = route.params;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const PORT = process.env.REACT_APP_PORT;
@@ -51,48 +53,65 @@ const SignUpDatabase = ({ navigation, route }) => {
   const registerDatabaseHandler = (values) => {
     // Collect all the data from the form
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
-    const registerData = JSON.stringify({
-      Patient: email,
-      name: [{
-        use: nameLabel,
-        family: values.name.family,
-        given: {
-          label: values.name.given,
+
+    const registerData = {
+      active: null,
+      name: [
+        {
+          use: nameLabel,
+          text: "",
+          family: values.name.family,
+          given: values.name.given,
+          prefix: values.name.prefix,
+          suffix: values.name.suffix,
+          period: [],
         },
-        prefix: values.name.prefix,
-        suffix: values.name.suffix,
-      }],
-      gender: {
-        "label": gender,
-      },
+      ],
+      telecom: [],
+      gender: gender,
       birthDate: values.birthDate,
-      address: [{
-        use: addressLabel,
-        address_type: addressTypeLabel,
-        city: values.address.city,
-        country: values.address.country,
-        district: values.address.district,
-        state: values.address.state,
-      }],
-      maritalStatus: maritalStatusLabel,
-      contact: values.contact,
-    });
+      address: [
+        {
+          use: addressLabel,
+          address_type: addressTypeLabel,
+          text: null,
+          line: "",
+          city: values.address.city,
+          district: values.address.district,
+          state: values.address.state,
+          postalCode: null,
+          country: values.address.country,
+          period: [],
+        },
+      ],
+      maritalStatus: [
+        {
+          text: "D",
+        },
+      ],
+      contact: [],
+      communication: [],
+      managingOrganization: [],
+      link: [],
+    };
     console.log(registerData, " Submission: Patient register model!!");
     axios
       .post("http://192.168.1.80:8000/api/patient/register_model/", {
-        registerData
-      },
-      {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
-        }
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify(registerData),
       })
       .then((res) => {
-        console.log(res, "patient register api response");
+        console.log(res.data, "patient register api response");
       })
       .catch((err) => {
         console.log(`Error in posting register api data: ${err}`);
       });
+      setIsAuthenticated(true)
+
   };
 
   const PrevNextNav = ({ prev, next }) => {};
@@ -161,10 +180,10 @@ const SignUpDatabase = ({ navigation, route }) => {
                   style={{ inputAndroid: { color: colors.dark } }}
                   onValueChange={(value) => setGender(value)}
                   items={[
-                    { label: "Male", value: "Male" },
-                    { label: "Female", value: "Female" },
-                    { label: "Other", value: "Other" },
-                    { label: "Unknown", value: "Unknown" },
+                    { label: "Male", value: 0 },
+                    { label: "Female", value: 1 },
+                    { label: "Other", value: 2 },
+                    { label: "Unknown", value: 3 },
                   ]}
                 />
               </View>
@@ -227,10 +246,10 @@ const SignUpDatabase = ({ navigation, route }) => {
               style={{ inputAndroid: { color: colors.dark } }}
               onValueChange={(value) => setAddressLabel(value)}
               items={[
-                { label: "Home", value: "Home" },
-                { label: "Work", value: "Work" },
-                { label: "Temporary", value: "Temporary" },
-                { label: "Building", value: "Building" },
+                { label: "Home", value: 0 },
+                { label: "Work", value: 1 },
+                { label: "Temporary", value: 2 },
+                { label: "Building", value: 3 },
               ]}
             />
           </View>
@@ -240,9 +259,9 @@ const SignUpDatabase = ({ navigation, route }) => {
               style={{ inputAndroid: { color: colors.dark } }}
               onValueChange={(value) => setAddressTypeLabel(value)}
               items={[
-                { label: "Postal", value: "Postal" },
-                { label: "Physical", value: "Physical" },
-                { label: "Postal & Physical", value: "Postal & Physical" },
+                { label: "Postal", value: 0 },
+                { label: "Physical", value: 1 },
+                { label: "Postal & Physical", value: 2 },
               ]}
             />
           </View>

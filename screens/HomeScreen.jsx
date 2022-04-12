@@ -105,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
 
   const findTime = () => {
     const hrs = new Date().getHours();
-    if (hrs === 0 || hrs < 12) return setTime("Mornings");
+    if (hrs === 0 || hrs < 12) return setTime("Morning");
     if (hrs === 12 || hrs < 17) return setTime("Afternoon");
     setTime("Evening");
   };
