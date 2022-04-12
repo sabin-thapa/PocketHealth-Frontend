@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -22,6 +22,7 @@ import chatsPic from "../assets/chat.png";
 import chatBotPic from "../assets/chatbot.png";
 import QnAPic from "../assets/question1.png";
 import Recommendations from "../components/Recommendations";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const options = [
   // {
@@ -100,10 +101,11 @@ const options = [
 
 const HomeScreen = ({ navigation }) => {
   const [time, setTime] = useState("");
+  const {user} = useContext(AuthContext)
 
   const findTime = () => {
     const hrs = new Date().getHours();
-    if (hrs === 0 || hrs < 12) return setTime("Mornings");
+    if (hrs === 0 || hrs < 12) return setTime("Morning");
     if (hrs === 12 || hrs < 17) return setTime("Afternoon");
     setTime("Evening");
   };
@@ -120,7 +122,7 @@ const HomeScreen = ({ navigation }) => {
         style={styles.scrollViewWrapper}
       >
         <View style={styles.titleWrapper}>
-          <Text style={styles.helloText}>{`Good ${time}, User`}</Text>
+          <Text style={styles.helloText}>{`Good ${time}, ${user.email}`}</Text>
           <Text style={styles.welcomeText}>
             Please choose an option to get started.
           </Text>
@@ -210,7 +212,7 @@ const HomeScreen = ({ navigation }) => {
               onPress={() => navigation.navigate("Recommendations")}
             >
               <Text style={{ color: colors.primary, marginTop: 4 }}>
-                See all >>
+                {" See all >> "}
               </Text>
             </TouchableOpacity>
           </View>

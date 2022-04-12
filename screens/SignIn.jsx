@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,6 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  
 } from "react-native";
 import AppTextInput from "../components/AppTextInput";
 import AuthHeader from "../components/AuthHeader";
@@ -20,35 +19,72 @@ import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import SocialIcons from "../components/SocialIcons";
 import BackSquare from "../components/BackSquare";
-import {AuthContext} from '../contexts/AuthProvider'
+import { AuthContext } from "../contexts/AuthProvider";
+import * as axios from "axios";
+import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("screen");
 
 const loginValidationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
+  email: Yup.string()
+    .email("Please enter a valid email")
+    .required()
+    .label("Email"),
   password: Yup.string().required().label("Password"),
 });
 
 const SignIn = ({ navigation }) => {
-
-  const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    user,
+    setUser,
+    token,
+    setToken,
+  } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const LoginHandler = (values) => {
-    console.log(values, 'login credentials');
+    setLoading(true);
+    axios
+      .post("http://192.168.1.80:8000/api/login/", {
+        email: values.email,
+        password: values.password,
+      })
+      .then((res) => {
+        console.log(res.data.token, " login response");
+        setUser(res.data);
+        setToken(res.data.token);
+        setError("");
+        setLoading(false)
+        setIsAuthenticated(true);
+        console.log(user, " user context var");
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setError(`Invalid credentials - ${err.message}`);
+      });
+
     //check credentials in datebase
-    setIsAuthenticated(true)
-    navigation.navigate('App', {screen: 'Home'})
+    // setIsAuthenticated(true)
+    // navigation.navigate('App', {screen: 'Home'})
   };
+
+  useEffect(() => {
+    setError("");
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backBtn}
-        onPress={() => navigation.pop()}
-      >
+      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.pop()}>
         <Ionicons name="arrow-back" size={30} color={colors.primary} />
       </TouchableOpacity>
-      
+
       <Image
         source={SignInIcon}
         style={{ width: width / 4, height: width / 4, marginBottom: 20 }}
@@ -56,17 +92,18 @@ const SignIn = ({ navigation }) => {
 
       <AuthHeader title="Sign In" />
       <AppForm
-        initialValues={{ name: "", password: "" }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={LoginHandler}
         validationSchema={loginValidationSchema}
       >
-        <AppFormField name="name" placeholder="Username" />
-        <AppFormField name="password" placeholder="Password" />
+        <AppFormField name="email" placeholder="Email" />
+        <AppFormField name="password" placeholder="Password" secureTextEntry />
+        <Text style={{ color: colors.danger }}> {error} </Text>
         <SubmitButton title="Login" />
       </AppForm>
       <TouchableOpacity
         style={{ marginTop: 17 }}
-        onPress={() => navigation.navigate("SignUp")}
+        onPress={() => navigation.navigate("SignUpRole")}
       >
         <Text style={{ color: "#555", fontSize: 14 }}>
           Don't have an account? Sign Up
@@ -86,7 +123,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: '#DDD',
+    backgroundColor: "#DDD",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
