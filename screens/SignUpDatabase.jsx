@@ -106,11 +106,11 @@ const SignUpDatabase = ({ navigation, route }) => {
       })
       .then((res) => {
         console.log(res.data, "patient register api response");
+        navigation.navigate('SignIn')
       })
       .catch((err) => {
         console.log(`Error in posting register api data: ${err}`);
       });
-      setIsAuthenticated(true)
 
   };
 

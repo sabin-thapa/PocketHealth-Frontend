@@ -64,6 +64,7 @@ const SignIn = ({ navigation }) => {
       .catch((err) => {
         console.log(err.message);
         setError(`Invalid credentials - ${err.message}`);
+        setLoading(false)
       });
 
     //check credentials in datebase
