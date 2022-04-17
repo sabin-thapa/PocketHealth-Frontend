@@ -149,7 +149,7 @@ const AuthButtons = ({ navigation }) => {
   return (
     <View style={{ position: "absolute", bottom: "17%", flexDirection: "row" }}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("SignUp")}
+        onPress={() => navigation.navigate("SignUpRole")}
         activeOpacity={0.7}
         style={styles.authButton}
       >

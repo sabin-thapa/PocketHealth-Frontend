@@ -1,13 +1,19 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, View, Alert, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import colors from "../utils/colors";
 import NoteModal from "../components/NoteModal";
 import RoundIconBtn from "../components/RoundIconBtn";
 import Constants from "expo-constants";
-import { Ionicons } from '@expo/vector-icons'; 
-import {useNotes} from "../contexts/NoteProvider"
-
+import { Ionicons } from "@expo/vector-icons";
+import { useNotes } from "../contexts/NoteProvider";
 
 const formatDate = (ms) => {
   const date = new Date(ms);
@@ -74,7 +80,7 @@ const NoteDetail = (props) => {
     });
     setNotes(newNotes);
     await AsyncStorage.setItem("notes", JSON.stringify(newNotes));
-    handleOnClose()
+    handleOnClose();
   };
   const handleOnClose = () => setShowModal(false);
 
@@ -84,11 +90,11 @@ const NoteDetail = (props) => {
   };
 
   return (
-      <>
-      <ScrollView
-        contentContainerStyle={styles.container}
-      >
-      <TouchableOpacity onPress={()=>props.navigation.goBack()}><Ionicons name="arrow-back" size={24} color="black" /></TouchableOpacity>
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="black" />
+        </TouchableOpacity>
         <Text style={styles.time}>
           {note.isUpdated
             ? `Updated At ${formatDate(note.time)}`
@@ -99,11 +105,11 @@ const NoteDetail = (props) => {
       </ScrollView>
       <View style={styles.btnContainer}>
         <RoundIconBtn
-          antIconName='delete'
+          antIconName="delete"
           style={{ backgroundColor: colors.secondary, marginBottom: 15 }}
           onPress={displayDeleteAlert}
         />
-        <RoundIconBtn antIconName='edit' onPress={openEditModal} />
+        <RoundIconBtn antIconName="edit" onPress={openEditModal} />
       </View>
       <NoteModal
         isEdit={isEdit}
@@ -119,28 +125,28 @@ const NoteDetail = (props) => {
 export default NoteDetail;
 
 const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 20,
-        paddingTop: Constants.statusBarHeight + 20,
-      },
-      title: {
-        fontSize: 25,
-        color: colors.primary,
-        fontWeight: 'bold',
-        paddingTop: 15
-      },
-      desc: {
-        fontSize: 18,
-        opacity: 0.6,
-      },
-      time: {
-        textAlign: 'right',
-        fontSize: 12,
-        opacity: 0.5,
-      },
-      btnContainer: {
-        position: 'absolute',
-        right: 15,
-        bottom: 50,
-      },
+  container: {
+    paddingHorizontal: 20,
+    paddingTop: Constants.statusBarHeight + 20,
+  },
+  title: {
+    fontSize: 25,
+    color: colors.primary,
+    fontWeight: "bold",
+    paddingTop: 15,
+  },
+  desc: {
+    fontSize: 18,
+    opacity: 0.6,
+  },
+  time: {
+    textAlign: "right",
+    fontSize: 12,
+    opacity: 0.5,
+  },
+  btnContainer: {
+    position: "absolute",
+    right: 15,
+    bottom: 50,
+  },
 });
