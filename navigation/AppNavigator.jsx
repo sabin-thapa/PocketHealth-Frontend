@@ -12,6 +12,8 @@ import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ProfileSettingsScreen from '../screens/ProfileSettingsScreen';
+import AccountSettingsScreen from '../screens/AccountSettingsScreen';
 
 import ArticlesScreen from '../screens/ArticlesScreen';
 import MentalWellnessScreen from '../screens/MentalWellnessScreen';
@@ -51,6 +53,8 @@ const AppNavigator = () => {
                 <Stack.Screen name="ExerciseDetail" component={ExerciseDetailScreen}/>
                 <Stack.Screen name="Notification" component={NotificationScreen}/>
                 <Stack.Screen name="Settings" component={SettingsScreen}/>
+                <Stack.Screen name="ProfileSettings" component={ProfileSettingsScreen}/>
+                <Stack.Screen name="AccountSettings" component={AccountSettingsScreen}/>
                 <Stack.Screen name="MentalWellness" component={MentalWellnessScreen}/>
                 <Stack.Screen name="ArticlesScreen" component={ArticlesScreen}/>
                 <Stack.Screen name="SymptomsChecker" component={SymptomsCheckerScreen}/>

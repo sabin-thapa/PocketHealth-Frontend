@@ -203,8 +203,15 @@ const BMICalculatorScreen = ({ navigation }) => {
     { label: "ft-in", value: "ft-in" },
   ];
 
-  const onPressSave = () => {
+  const onPressSave = async () => {
     console.log("saved");
+    await axios.post(`http://192.168.1.11:8000/api/trackers/bmi/`, {
+      "weight_in_kg": weight,
+      "height_in_cm": height
+    })
+      .then(res => {
+        console.log(res.data);
+      })
     navigation.navigate("BMIDetail");
   };
 
