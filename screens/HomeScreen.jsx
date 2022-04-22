@@ -204,7 +204,7 @@ const HomeScreen = ({ navigation }) => {
             })}
           </View>
         </View>
-        <View style={[styles.recommendedWrapper]}>
+        {/* <View style={[styles.recommendedWrapper]}>
           <View style={[styles.recommendationHeader]}>
             <Text style={[styles.subHeading]}>Recommended For You</Text>
             <TouchableOpacity
@@ -217,7 +217,7 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Recommendations />
+        <Recommendations /> */}
       </ScrollView>
     </Screen>
   );
