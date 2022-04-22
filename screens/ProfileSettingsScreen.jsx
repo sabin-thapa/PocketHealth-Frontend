@@ -16,7 +16,6 @@ const ProfileSettingsScreen = ({ navigation }) => {
   return (
     <Screen style={styles.screen}>
       <TopBar title="Profile Settings" navigation={navigation} />
-       
       <View style={{marginBottom: 30}}>
         <ListItem
           title="John Doe"

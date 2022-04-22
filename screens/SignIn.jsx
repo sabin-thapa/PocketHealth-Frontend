@@ -48,7 +48,7 @@ const SignIn = ({ navigation }) => {
   const LoginHandler = (values) => {
     setLoading(true);
     axios
-      .post("http://192.168.1.80:8000/api/login/", {
+      .post("http://192.168.1.11:8000/api/login/", {
         email: values.email,
         password: values.password,
       })
