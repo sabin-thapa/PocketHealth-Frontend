@@ -17,6 +17,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {AuthContext} from '../contexts/AuthProvider'
+import {PORT, BASE_URL} from '@env'
 
 const { screenWidth, screenHeight } = Dimensions.get("window");
 
@@ -181,15 +182,14 @@ const BMICalculatorScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log(token, user.email, 'USER JWT');
     onChangeValues();
   }, [weight, height, heightUnit, weightUnit, heightFeet, heightInch]);
 
   useEffect(() => {
     axios
-      .get("http://192.168.1.80:8000/api/trackers/bmi/")
+      .get(`${BASE_URL}:${PORT}/api/trackers/bmi/`)
       .then((res) => {
-        console.log(res.data, "BMI Calculator screen data");
+        // console.log(res.data, "BMI Calculator screen data");
         const { height_in_cm, weight_in_kg, bmiResult } = res.data[0];
         setHeight(height_in_cm);
         setWeight(weight_in_kg);
@@ -202,17 +202,17 @@ const BMICalculatorScreen = ({ navigation }) => {
       });
   }, []);
 
-  const saveBmi = () => {
+  const saveBmi = async () => {
+    await axios
+    .post(`${BASE_URL}:${PORT}/api/trackers/bmi/`, {
+      user: 1,
+      weight_in_kg: weight,
+      height_in_cm: height,
+    })
+    .then((res) => {
+      console.log(res.data, "response from bmi POST");
+    });
     console.log("BMI Saved");
-    axios
-      .post("http://192.168.1.80:8000/api/trackers/bmi/", {
-        user: 1,
-        weight_in_kg: weight,
-        height_in_cm: height,
-      })
-      .then((res) => {
-        console.log(res.data, "response from bmi POST");
-      });
   };
 
   const weightOptions = [
