@@ -25,6 +25,8 @@ import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("screen");
 
+import {BASE_URL, PORT} from '@env'
+
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email")
@@ -48,7 +50,7 @@ const SignIn = ({ navigation }) => {
   const LoginHandler = (values) => {
     setLoading(true);
     axios
-      .post("http://192.168.1.11:8000/api/login/", {
+      .post(`${BASE_URL}:${PORT}/api/login/`, {
         email: values.email,
         password: values.password,
       })
