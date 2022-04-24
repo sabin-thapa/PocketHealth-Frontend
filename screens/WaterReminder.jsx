@@ -225,27 +225,16 @@ const WaterReminderScreen = ({ navigation }) => {
           }}
         >
           <TouchableOpacity
-            style={[
-              styles.notificationButton,
-              {
-                backgroundColor: colors.primary,
-              },
-            ]}
+      
             onPress={() => scheduleNotification()}
           >
-            <Text style={styles.notificationText}>Schedule Notification</Text>
+            <Text style={[styles.notificationText, {color: colors.primary}]}>Schedule Notification</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[
-              styles.notificationButton,
-              {
-                backgroundColor: colors.danger,
-              },
-            ]}
-            onPress={() => cancelNotifications()}
+                    onPress={() => cancelNotifications()}
           >
-            <Text style={styles.notificationText}>Cancel Notifications</Text>
+            <Text style={[styles.notificationText, {color: colors.secondary}]}>Cancel Notifications</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
