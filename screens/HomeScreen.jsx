@@ -70,6 +70,15 @@ const options = [
     imageSize: { width: 80, height: 80 },
     link: "Reminder",
   },
+  {
+    title: "Water Reminder",
+    url: reminderPic,
+    background: "#6CB28E",
+    labelColor: "#FFECCC",
+    height: 170,
+    imageSize: { width: 80, height: 80 },
+    link: "WaterReminder",
+  },
   // {
   //   title: "Chats",
   //   url: chatsPic,
