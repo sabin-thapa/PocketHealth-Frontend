@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Constants from "expo-constants";
@@ -12,13 +12,21 @@ import colors from "../../utils/colors";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const DrawerContent = (props) => {
-  const {setIsAuthenticated, logout, user} = useContext(AuthContext)
+  const { setIsAuthenticated, logout, user } = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         <View style={styles.userInfo}>
-          <Image source={userIcon} style={{width: 60, height: 60, marginRight: 15}} />
-          <Text style={{fontSize:20, fontWeight: 'bold', color: colors.darkgray}}>{user.email}</Text>
+          <Image
+            source={userIcon}
+            style={{ width: 60, height: 60, marginRight: 15 }}
+            onPress={() => props.navigation.navigate("Profile")}
+          />
+          <Text
+            style={{ fontSize: 20, fontWeight: "bold", color: colors.darkgray }}
+          >
+            {user.email}
+          </Text>
         </View>
         <View style={styles.topDrawerSection}>
           <DrawerItem
@@ -49,7 +57,11 @@ const DrawerContent = (props) => {
           /> */}
           <DrawerItem
             icon={() => (
-              <FontAwesome name="sticky-note" size={28} color={colors.primary} />
+              <FontAwesome
+                name="sticky-note"
+                size={28}
+                color={colors.primary}
+              />
             )}
             label={() => <Text style={styles.label}>Notes</Text>}
             onPress={() => props.navigation.navigate("Notes")}
@@ -129,11 +141,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
   },
-  userInfo:{
+  userInfo: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingBottom: 30
-  }
+    paddingBottom: 30,
+  },
 });

@@ -1,13 +1,16 @@
+import { StackActions } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import DrawerTopBar from '../components/DrawerTopBar'
-import Screen from '../screens/Screen'
+import ProfileScreen from '../screens/ProfileScreen'
+
+const Stack = createStackNavigator()
 
 const ProfileNavigator = ({navigation}) => {
     return (
-        <Screen>
-            <DrawerTopBar title="Profile" navigation={navigation} />
-        </Screen>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+        </Stack.Navigator>
     )
 }
 
