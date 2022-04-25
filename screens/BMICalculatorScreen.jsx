@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import Screen from "./Screen";
 import RNSpeedometer from "react-native-speedometer";
@@ -14,7 +15,9 @@ import Slider from "@react-native-community/slider";
 import colors from "../utils/colors";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
-import axios from 'axios';
+import axios from "axios";
+import {AuthContext} from '../contexts/AuthProvider'
+import {PORT, BASE_URL} from '@env'
 
 const { screenWidth, screenHeight } = Dimensions.get("window");
 
@@ -136,6 +139,7 @@ const BMIList = () => {
 };
 
 const BMICalculatorScreen = ({ navigation }) => {
+  const {token, user} = useContext(AuthContext)
   const [bmiValue, setBmiValue] = useState(19.0);
   const [data, setData] = useState(null);
   const [weight, setWeight] = useState(70);
@@ -182,17 +186,34 @@ const BMICalculatorScreen = ({ navigation }) => {
   }, [weight, height, heightUnit, weightUnit, heightFeet, heightInch]);
 
   useEffect(() => {
-    axios.get('http://192.168.1.80:8000/api/trackers/bmi')
-      .then(res => {
-        console.log(res.data);
-        const {height_in_cm, weight_in_kg} = res.data[0]
-        setHeight(height_in_cm)
-        setWeight(weight_in_kg)
+    axios
+      .get(`${BASE_URL}:${PORT}/api/trackers/bmi/`)
+      .then((res) => {
+        // console.log(res.data, "BMI Calculator screen data");
+        const { height_in_cm, weight_in_kg, bmiResult } = res.data[0];
+        setHeight(height_in_cm);
+        setWeight(weight_in_kg);
+        const bmi = weight_in_kg / ((height_in_cm * height_in_cm) / 10000);
+
+        setBmiValue(bmi);
       })
-      .catch(err => {
-        console.log(err, "Err")
-      })
-  }, [])
+      .catch((err) => {
+        console.log(err, "Err");
+      });
+  }, []);
+
+  const saveBmi = async () => {
+    await axios
+    .post(`${BASE_URL}:${PORT}/api/trackers/bmi/`, {
+      user: 1,
+      weight_in_kg: weight,
+      height_in_cm: height,
+    })
+    .then((res) => {
+      console.log(res.data, "response from bmi POST");
+    });
+    console.log("BMI Saved");
+  };
 
   const weightOptions = [
     { label: "kg", value: "kg" },
@@ -230,8 +251,23 @@ const BMICalculatorScreen = ({ navigation }) => {
           style={{ marginTop: 5, marginRight: 15 }}
           onPress={() => navigation.navigate("BMIDetail")}
         >
-          <Text style={{ textDecorationLine: "underline", fontSize: 17 }}>
+          <Text style={{textDecorationLine: "underline", fontSize: 17 }}>
             Statistics
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{  marginRight: 10, display: "flex", alignItems: "flex-end" }}>
+        <TouchableOpacity onPress={saveBmi}>
+          <Text
+            style={{
+              color: colors.primary,
+              fontSize: 18,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.secondary,
+            }}
+          >
+            {" "}
+            Save{" "}
           </Text>
         </TouchableOpacity>
       </View>
@@ -366,7 +402,7 @@ const BMICalculatorScreen = ({ navigation }) => {
           <Text style={styles.sliderText}>Weight </Text>
           <View style={styles.oneLine}>
             <TouchableOpacity
-              onPress={() => setWeight(Number(weight)-1)}
+              onPress={() => setWeight(Number(weight) - 1)}
               style={styles.decBtn}
             >
               <AntDesign
@@ -377,7 +413,7 @@ const BMICalculatorScreen = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={styles.measure}>{weight}</Text>
             <TouchableOpacity
-              onPress={() => setWeight(Number(weight)+1)}
+              onPress={() => setWeight(Number(weight) + 1)}
               sstyle={styles.incBtn}
             >
               <AntDesign name="pluscircle" size={15} color={colors.secondary} />
@@ -514,7 +550,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   decBtn: {
-    marginRight: 15 ,
+    marginRight: 15,
   },
   incBtn: {
     marginRight: 20,
