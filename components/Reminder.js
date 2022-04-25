@@ -5,9 +5,9 @@ import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../utils/colors";
 
 const Reminder = ({ item, onPress }) => {
-  const {startDate, endDate, title} = item
+  const {medicineName, selectedHours, medicineType, frequency} = item
   useEffect(() => {
-    console.log(startDate, endDate, title, "Reminder");
+    console.log(medicineName, "Reminder");
   }, []);
   return (
     <View>
@@ -15,21 +15,21 @@ const Reminder = ({ item, onPress }) => {
         <Card.Content>
           <TouchableOpacity onPress={onPress} style={styles.mainContent}>
             <View style={styles.icon}>
-              {item.type === "tablet" && (
+              {medicineType === "tablet" && (
                 <FontAwesome5
                   name="tablets"
                   size={24}
                   color={colors.secondary}
                 />
               )}
-              {item.type === "capsule" && (
+              {medicineType === "capsule" && (
                 <FontAwesome5
                   name="capsules"
                   size={24}
                   color={colors.secondary}
                 />
               )}
-              {item.type === "liquid" && (
+              {medicineType === "liquid" && (
                 <MaterialCommunityIcons
                   name="bottle-tonic-plus"
                   size={24}
@@ -38,10 +38,10 @@ const Reminder = ({ item, onPress }) => {
               )}
             </View>
             <View style={styles.textContent}>
-              <Text style={styles.titleText}>{item.title}</Text>
-              <Text>{item.dosePerDay}</Text>
-              <Text>{item.time} | {item.startDate}</Text>
-              <Text>From {item.startDate} to {item.endDate}</Text>
+              <Text style={styles.titleText}>{medicineName}</Text>
+              <Text>{selectedHours}</Text>
+              <Text>{frequency}</Text>
+              <Text>{medicineType}</Text>
             </View>
           </TouchableOpacity>
         </Card.Content>

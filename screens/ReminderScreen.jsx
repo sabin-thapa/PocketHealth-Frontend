@@ -1,20 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import TopBar from "../components/TopBar";
 import colors from "../utils/colors";
 import Screen from "./Screen";
-import { Agenda } from "react-native-calendars";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Card } from "react-native-paper";
-import DrawerTopBar from "../components/DrawerTopBar";
+
 import RoundIconBtn from "../components/RoundIconBtn";
 import Reminder from "../components/Reminder";
 import ReminderModal from "../components/ReminderModal";
 import img from "../assets/schedule.png";
-import {useReminders} from '../contexts/ReminderProvider'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {ReminderContext} from '../contexts/ReminderProvider'
+import {useReminders} from "../contexts/ReminderProvider"
 
 // const reminders = [
 //   {
@@ -65,9 +61,7 @@ import {ReminderContext} from '../contexts/ReminderProvider'
 // ];
 
 const ReminderScreen = ({ navigation }) => {
-  const {reminders, setReminders, findReminders} = useContext(ReminderContext);
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [items, setItems] = React.useState({});
+  const {reminders, setReminders, findReminders} = useReminders();
   const [modalVisible, setModalVisible] = useState(false);
   const timeToString = (time) => {
     const date = new Date(time);
@@ -111,12 +105,17 @@ const ReminderScreen = ({ navigation }) => {
   //     );
   //   };
 
+  useEffect(() => {
+    findReminders()
+    console.log(reminders);
+  }, [])
+
   const openReminder = (reminder) => {
     navigation.navigate("ReminderDetail", { reminder });
   };
 
-  const handleSubmit = async (medicineName, dosePerDay, medicineType, startDate, endDate) => {
-    const rem = {medicineName, dosePerDay, medicineType, startDate, endDate}
+  const handleSubmit = async (medicineName, medicineType, frequency, selectedHours) => {
+    const rem = {medicineName, medicineType, frequency, selectedHours}
     const updatedReminders = [...reminders, rem]
     setReminders(updatedReminders)
     await AsyncStorage.setItem('reminders', JSON.stringify(updatedReminders))
@@ -186,7 +185,7 @@ const ReminderScreen = ({ navigation }) => {
           data={reminders}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Reminder onPress={() => openReminder(item)} item={item} />
+            <Reminder onPress={() => openReminder(item)} item={item} key={item => item.toString()}/>
           )}
         />
       )}

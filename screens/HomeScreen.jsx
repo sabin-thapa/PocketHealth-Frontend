@@ -73,11 +73,20 @@ const options = [
   {
     title: "Water Reminder",
     url: reminderPic,
-    background: "#6CB28E",
+    background: '#5abcd8',
     labelColor: "#FFECCC",
     height: 170,
     imageSize: { width: 80, height: 80 },
     link: "WaterReminder",
+  },
+  {
+    title: "Vaccine Reminder",
+    url: reminderPic,
+    background: colors.medium,
+    labelColor: "#FFECCC",
+    height: 170,
+    imageSize: { width: 80, height: 80 },
+    link: "VaccineReminder",
   },
   // {
   //   title: "Chats",

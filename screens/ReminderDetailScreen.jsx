@@ -24,7 +24,7 @@ const ReminderDetailScreen = (props) => {
 
   const handleOnClose = () => setShowModal(false);
 
-  const handleUpdate = async (medicineName, startDate, endDate, dosePerDay, medicineType) => {
+  const handleUpdate = async (medicineName, frequency, selectedHours, medicineType) => {
     const result = await AsyncStorage.getItem("reminders");
     let reminders = [];
     if (result !== null) reminders = JSON.parse(result);
@@ -32,10 +32,9 @@ const ReminderDetailScreen = (props) => {
     const newReminders = reminders.filter((n) => {
       if (n.id === reminder.id) {
         n.medicineName = medicineName;
-        n.startDate = startDate;
-        n.endDate = endDate;
-        n.dosePerDay = dosePerDay;
+        n.frequency = frequency;
         n.medicineType = medicineType;
+        n.selectedHours = selectedHours;
 
         setReminder(n);
       }
@@ -85,8 +84,8 @@ const ReminderDetailScreen = (props) => {
         <Card>
           <Card.Content>
             <View style={styles.textContent}>
-              <Text style={styles.titleText}>{reminder.title}</Text>
-              <Text>{reminder.time}</Text>
+              <Text style={styles.titleText}>{reminder.medicineName}</Text>
+              <Text>{reminder.selectedHours}</Text>
               <Text>{reminder.frequency}</Text>
             </View>
           </Card.Content>
