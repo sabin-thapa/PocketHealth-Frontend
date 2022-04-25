@@ -12,15 +12,15 @@ const TopBar = ({ navigation }) => {
         <Image style={styles.hamburgerIcon} source={hanburgerIcon} />
       </TouchableOpacity>
       <View style={styles.rightTopSection}>
-        <TouchableOpacity onPress={() => navigation.navigate({name: "Search", params: {from: 'stack'}})}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate({name: "Search", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={searchIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
           <Image style={styles.otherIcon} source={notificationIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate({name: "Settings", params: {from: 'stack'}})}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate({name: "Settings", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={settingsIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

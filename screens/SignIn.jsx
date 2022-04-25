@@ -14,11 +14,9 @@ import colors from "../utils/colors";
 import AppForm from "../components/form/AppForm";
 import AppFormField from "../components/form/AppFormField";
 import SubmitButton from "../components/form/SubmitButton";
-import SignInIcon from "../assets/login.png";
+import SignInIcon from "../assets/login1.png";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import SocialIcons from "../components/SocialIcons";
-import BackSquare from "../components/BackSquare";
 import { AuthContext } from "../contexts/AuthProvider";
 import * as axios from "axios";
 import Loading from "../components/Loading";
@@ -48,7 +46,7 @@ const SignIn = ({ navigation }) => {
   const LoginHandler = (values) => {
     setLoading(true);
     axios
-      .post("http://192.168.1.11:8000/api/login/", {
+      .post("http://172.17.0.88:8000/api/login/", {
         email: values.email,
         password: values.password,
       })
@@ -88,7 +86,7 @@ const SignIn = ({ navigation }) => {
 
       <Image
         source={SignInIcon}
-        style={{ width: width / 4, height: width / 4, marginBottom: 20 }}
+        style={{ width: width / 1.6, height: width / 1.8, marginBottom: 20 }}
       />
 
       <AuthHeader title="Sign In" />
@@ -124,7 +122,6 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: "#DDD",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

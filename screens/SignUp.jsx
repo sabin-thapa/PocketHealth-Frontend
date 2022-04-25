@@ -13,14 +13,12 @@ import colors from "../utils/colors";
 import AppForm from "../components/form/AppForm";
 import * as Yup from "yup";
 import SubmitButton from "../components/form/SubmitButton";
-import SignUpIcon from "../assets/add-user.png";
+import patientPic from "../assets/patient.png";
+import practitionerPic from "../assets/doctor.png";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import SocialIcons from "../components/SocialIcons";
-import BackSquare from "../components/BackSquare";
 const { width, height } = Dimensions.get("screen");
 import axios from "axios";
-import SignUpDatabase from "./SignUpDatabase";
 import Loading from "../components/Loading";
 
 const registerValidationSchema = Yup.object().shape({
@@ -47,6 +45,7 @@ const SignUp = ({ navigation, route }) => {
   const PORT = process.env.REACT_APP_PORT;
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const registerHandler = (values) => {
@@ -55,7 +54,7 @@ const SignUp = ({ navigation, route }) => {
     {
       role === "patient" &&
         axios
-          .post("http://192.168.1.80:8000/api/patient_register/", {
+          .post("http://172.17.0.88:8000/api/patient_register/", {
             email: values.email,
             password: values.password,
           })
@@ -79,7 +78,7 @@ const SignUp = ({ navigation, route }) => {
       role === "practitioner" &&
       setLoading(true);
         axios
-          .post("http://192.168.1.80:8000/api/practitioner_register/", {
+          .post("http://172.17.0.88:8000/api/practitioner_register/", {
             email: values.email,
             password: values.password,
           })
@@ -116,10 +115,16 @@ const SignUp = ({ navigation, route }) => {
         <Ionicons name="arrow-back" size={30} color={colors.primary} />
       </TouchableOpacity>
 
+      {role =='patient' ?
       <Image
-        source={SignUpIcon}
-        style={{ width: width / 4, height: width / 4 }}
-      />
+        source={patientPic}
+        style={{ width: width/1.2, height: width/2, marginTop:30 }}
+      />:
+      <Image
+      source={practitionerPic}
+      style={{ width: width/1.8, height: width/2, marginTop:30 }}
+    />
+      }
       <View style={{ paddingTop: 20 }}>
         <AuthHeader
           title={`${role.charAt(0).toUpperCase() + role.slice(1)} Registration`}
@@ -135,68 +140,58 @@ const SignUp = ({ navigation, route }) => {
         validationSchema={registerValidationSchema}
       >
         <AppFormField name="email" placeholder="Email" />
-        <AppFormField
-          name="password"
-          placeholder="Password"
-          secureTextEntry={!showPassword}
-        />
-        {!showPassword ? (
-          <Entypo
-            name="eye-with-line"
-            size={20}
-            style={{
-              position: "absolute",
-              top: "52.5%",
-              left: "86%",
-              zIndex: 10,
-            }}
-            onPress={() => setShowPassword(true)}
-          />
-        ) : (
-          <Entypo
-            name="eye"
-            size={20}
-            style={{
-              position: "absolute",
-              top: "52.5%",
-              left: "86%",
-              zIndex: 10,
-            }}
-            onPress={() => setShowPassword(false)}
-          />
-        )}
+        <View style={{flexDirection:'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <View style={{width: '90%'}}>
+            <AppFormField
+              name="password"
+              placeholder="Password"
+              secureTextEntry={!showPassword}
+              style={{marginLeft: -20}}
+            />
+          </View>
+          <View style={{marginLeft: -25}}>
+            {!showPassword ? (
+              <Entypo
+                name="eye-with-line"
+                size={20}
+                onPress={() => setShowPassword(true)}
+              />
+            ) : (
+              <Entypo
+                name="eye"
+                size={20}
+                onPress={() => setShowPassword(false)}
+              />
+            )}
+          </View>
+        </View>
 
-        <AppFormField
-          name="confirmPassword"
-          placeholder="Confirm password"
-          secureTextEntry={!showPassword}
-        />
-        {!showPassword ? (
-          <Entypo
-            name="eye-with-line"
-            size={20}
-            style={{
-              position: "absolute",
-              top: "63%",
-              left: "86%",
-              zIndex: 10,
-            }}
-            onPress={() => setShowPassword(true)}
-          />
-        ) : (
-          <Entypo
-            name="eye"
-            size={20}
-            style={{
-              position: "absolute",
-              top: "63%",
-              left: "86%",
-              zIndex: 10,
-            }}
-            onPress={() => setShowPassword(false)}
-          />
-        )}
+        <View style={{flexDirection:'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <View style={{width: '90%'}}>
+            <AppFormField
+              name="confirmPassword"
+              placeholder="Confirm password"
+              secureTextEntry={!showCPassword}
+              style={{marginLeft: -17}}
+            />
+          </View>
+          <View style={{marginLeft: -25}}>
+            {!showCPassword ? (
+              <Entypo
+                name="eye-with-line"
+                size={20}
+                onPress={() => setShowCPassword(true)}
+              />
+            ) : (
+              <Entypo
+                name="eye"
+                size={20}
+                onPress={() => setShowCPassword(false)}
+              />
+            )}
+          </View>
         <Text style={{ color: colors.danger }}> {error} </Text>
+        </View>
         <SubmitButton title="Register" />
       </AppForm>
       <TouchableOpacity
@@ -221,7 +216,6 @@ const styles = StyleSheet.create({
     left: 20,
   },
   container: {
-    backgroundColor: "#DDD",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,

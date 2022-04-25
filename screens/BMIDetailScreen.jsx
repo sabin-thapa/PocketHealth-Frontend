@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Dimensions,
   ScrollView,
@@ -14,7 +14,8 @@ import colors from "../utils/colors";
 import { Rect, Ellipse, Text as TextSVG, Svg } from "react-native-svg";
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
-import moment from 'moment'
+import {AuthContext} from '../contexts/AuthProvider'
+import {PORT, BASE_URL} from '@env'
 
 let dummyData = [
   {
@@ -200,9 +201,8 @@ const BMIDetailScreen = ({ navigation }) => {
   });
   const [year, setYear] = useState("2021");
   const [month, setMonth] = useState("Jan");
-  const [loading, setLoading] = useState(false);
-  const BMIData = []
-  const graphData = []
+  const [notDummyData, setNotDummyData] = useState([]);
+  const {token, user} = useContext(AuthContext)
 
   // need to refactor this mess
   var xLabels = ["Null"];
@@ -212,7 +212,7 @@ const BMIDetailScreen = ({ navigation }) => {
   const calculateValues = () => {
     var i = 0;
 
-    dummyData.forEach((item, index, array) => {
+    notDummyData.forEach((item, index, array) => {
       if (item.date.split(", ")[1] === year) {
         if (item.date.split(" ")[0] === month) {
           if (i == 0) {
@@ -228,40 +228,40 @@ const BMIDetailScreen = ({ navigation }) => {
       }
     });
   };
-  // .........
   calculateValues();
-
+  // .........
+  
   useEffect(() => {
-    // let m = moment('2022-04-04T12:12:37.585074Z', 'YYYY-MM-DD').format('MMM DD, YYYY')
     const getData = async () => {
-      await axios.get('http://192.168.1.80:8000/api/trackers/bmi')
+      var dataContainer = []
+      await axios.get(`http://172.17.0.88:8000/api/trackers/bmi/`)
       .then(res => {
-        const {created_at, bmi_result, weight_in_kg} = res.data[0];
         const val = res.data
-        val?.map((vl) => (
-          BMIData.push({
-            // date: moment(`'${created_at}', 'YYYY-MM-DD'`).format('MMM DD, YYYY'),
-            date: vl.created_at,
-            bmiValue: vl.bmi_result,
+        console.log(val);
+        val?.map((vl) => {
+          var datestring = new Date(vl.created_at).toDateString()
+          var datearray = datestring.split(" ")
+          var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
+
+          return dataContainer.push({
+            date: date,
+            bmiValue: vl.bmi_result.toFixed(2),
             weight: vl.weight_in_kg
           })
-          ))
-          graphData.push(BMIData)
         })
-        .catch(err => {
-          console.log(err, "Err")
-        })
+        setNotDummyData(dataContainer)
+      })
+      .catch(err => {
+        console.log(err, "Err")}
+        )
       }
       getData()
-  }, [])
-
-  useEffect(() => {
-    console.log(graphData, 'datum');
-    BMIData.forEach(bmi => {
-      console.log(bmi.date, "date test");
-    })
-
-  }, [])
+      const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const currentDate = new Date();
+      let currentMonth = month[currentDate.getMonth()]
+      setMonth(currentMonth.toString())
+      setYear(currentDate.getFullYear().toString())
+    }, [])
 
   return (
     <Screen style={styles.container}>

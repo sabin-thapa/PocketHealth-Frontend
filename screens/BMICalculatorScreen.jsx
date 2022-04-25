@@ -185,35 +185,23 @@ const BMICalculatorScreen = ({ navigation }) => {
     onChangeValues();
   }, [weight, height, heightUnit, weightUnit, heightFeet, heightInch]);
 
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}:${PORT}/api/trackers/bmi/`)
-      .then((res) => {
-        // console.log(res.data, "BMI Calculator screen data");
-        const { height_in_cm, weight_in_kg, bmiResult } = res.data[0];
-        setHeight(height_in_cm);
-        setWeight(weight_in_kg);
-        const bmi = weight_in_kg / ((height_in_cm * height_in_cm) / 10000);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}:${PORT}/api/trackers/bmi/`)
+  //     .then((res) => {
+  //       // console.log(res.data, "BMI Calculator screen data");
+  //       const { height_in_cm, weight_in_kg, bmiResult } = res.data[0];
+  //       setHeight(height_in_cm);
+  //       setWeight(weight_in_kg);
+  //       const bmi = weight_in_kg / ((height_in_cm * height_in_cm) / 10000);
 
-        setBmiValue(bmi);
-      })
-      .catch((err) => {
-        console.log(err, "Err");
-      });
-  }, []);
+  //       setBmiValue(bmi);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "Err");
+  //     });
+  // }, []);
 
-  const saveBmi = async () => {
-    await axios
-    .post(`${BASE_URL}:${PORT}/api/trackers/bmi/`, {
-      user: 1,
-      weight_in_kg: weight,
-      height_in_cm: height,
-    })
-    .then((res) => {
-      console.log(res.data, "response from bmi POST");
-    });
-    console.log("BMI Saved");
-  };
 
   const weightOptions = [
     { label: "kg", value: "kg" },
@@ -225,16 +213,16 @@ const BMICalculatorScreen = ({ navigation }) => {
   ];
 
   const onPressSave = async () => {
+    await axios
+    .post(`http://172.17.0.88:8000/api/trackers/bmi/`, {
+      user: 2,
+      weight_in_kg: weight,
+      height_in_cm: height,
+    })
+    .then((res) => {
+      console.log(res.data, "response from bmi POST");
+    })
     console.log("BMI Saved");
-    axios
-      .post("http://192.168.1.11:8000/api/trackers/bmi/", {
-        user: 2,
-        weight_in_kg: weight,
-        height_in_cm: height,
-      })
-      .then((res) => {
-        console.log(res.data, "response from bmi POST");
-      });
   };
 
   return (
@@ -305,7 +293,7 @@ const BMICalculatorScreen = ({ navigation }) => {
             {heightUnit === "cm" ? (
               <>
                 <TouchableOpacity
-                  onPress={() => setHeight(Number(height) - 1)}
+                  onPress={() => setHeight((Number(height) - 0.1).toFixed(1))}
                   style={styles.decBtn}
                 >
                   <AntDesign
@@ -316,7 +304,7 @@ const BMICalculatorScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text style={styles.measure}>{height}</Text>
                 <TouchableOpacity
-                  onPress={() => setHeight(Number(height) + 1)}
+                  onPress={() => setHeight((Number(height) + 0.1).toFixed(1))}
                   sstyle={styles.incBtn}
                 >
                   <AntDesign
@@ -395,7 +383,7 @@ const BMICalculatorScreen = ({ navigation }) => {
           <Text style={styles.sliderText}>Weight </Text>
           <View style={styles.oneLine}>
             <TouchableOpacity
-              onPress={() => setWeight(Number(weight) - 1)}
+              onPress={() => setWeight((Number(weight) - 0.1).toFixed(1))}
               style={styles.decBtn}
             >
               <AntDesign
@@ -406,7 +394,7 @@ const BMICalculatorScreen = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={styles.measure}>{weight}</Text>
             <TouchableOpacity
-              onPress={() => setWeight(Number(weight) + 1)}
+              onPress={() => setWeight((Number(weight) + 0.1).toFixed(1))}
               sstyle={styles.incBtn}
             >
               <AntDesign name="pluscircle" size={15} color={colors.secondary} />
@@ -438,7 +426,10 @@ const BMICalculatorScreen = ({ navigation }) => {
         />
       </View>
       <BMIList />
-      <TouchableOpacity style={styles.saveBtn} onPress={onPressSave}>
+      <TouchableOpacity style={styles.saveBtn} onPress={()=>{
+        onPressSave()
+        navigation.navigate('BMIDetail')
+      }}>
         <Text style={styles.saveText}>Save Record</Text>
       </TouchableOpacity>
     </Screen>

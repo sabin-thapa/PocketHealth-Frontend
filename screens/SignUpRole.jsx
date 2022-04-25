@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   roleText: {
     textAlign: "center",
-    marginTop: 100,
+    marginTop: 220,
     color: "#fff",
     fontWeight: "bold",
     fontSize: 20,

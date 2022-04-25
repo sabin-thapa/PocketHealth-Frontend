@@ -11,6 +11,7 @@ import { LineChart } from "react-native-chart-kit";
 import colors from "../utils/colors";
 import { Rect, Ellipse, Text as TextSVG, Svg } from "react-native-svg";
 import RNPickerSelect from "react-native-picker-select";
+import axios from 'axios'
 
 import Screen from "./Screen";
 
@@ -104,6 +105,7 @@ const PressureDetailScreen = ({navigation}) => {
     value: 0,
   });
   const [year, setYear] = useState("2021");
+  const [notDummyData, setNotDummyData] = useState([]);
   const [month, setMonth] = useState("Jan");
   var xLabels = ["Null"];
   var systolicData = [0];
@@ -111,7 +113,7 @@ const PressureDetailScreen = ({navigation}) => {
   var pulseData = [0];
   const calculateValues = () => {
     var i = 0;
-    dummyData.forEach((item, index, array) => {
+    notDummyData.forEach((item, index, array) => {
       if (item.date.split(", ")[1] === year) {
         if (item.date.split(" ")[0] === month) {
           if (i == 0) {
@@ -132,6 +134,38 @@ const PressureDetailScreen = ({navigation}) => {
   // .........
   calculateValues();
 
+  useEffect(() => {
+    const getData = async () => {
+      var dataContainer = []
+      await axios.get(`http://172.17.0.88:8000/api/trackers/pressure/`)
+      .then(res => {
+        const val = res.data
+        console.log(val);
+        val?.map((vl) => {
+          var datestring = new Date(vl.created_at).toDateString()
+          var datearray = datestring.split(" ")
+          var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
+
+          return dataContainer.push({
+            date: date,
+            systolicValue: vl.systolic_value,
+            diastolicValue: vl.diastolic_value,
+            pulse: vl.pulse_value
+          })
+        })
+        setNotDummyData(dataContainer)
+      })
+      .catch(err => {
+        console.log(err, "Err")}
+        )
+      }
+      getData()
+      const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const currentDate = new Date();
+      let currentMonth = month[currentDate.getMonth()]
+      setMonth(currentMonth.toString())
+      setYear(currentDate.getFullYear().toString())
+    }, [])
 
   return (
     <Screen style={styles.container}>

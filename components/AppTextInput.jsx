@@ -14,7 +14,7 @@ const AppTextInput = ({ style, placeholder, ...otherProps }) => {
             text: "#000",
             underlineColor: "#000",
             primary: "#000",
-            background: "#DDD",
+            background: "#FFF",
           },
           roundness: 10,
         }}

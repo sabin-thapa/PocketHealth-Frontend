@@ -12,6 +12,8 @@ import pressurePic from "../assets/hypertension.png";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../utils/colors";
+import axios from "axios";
+
 
 const getDate = () => {
   const dateday = new Date().getDate();
@@ -22,10 +24,26 @@ const getDate = () => {
 
 const SugarScreen = ({ navigation }) => {
   const [time, setTime] = useState(null);
-  const [bloodSugar, setBloodSugar] = useState(0)
-  const onPressSave = () => {
-    console.log("saved");
-    navigation.navigate("PressureDetail");
+  const [systolic, setSystolic] = useState(0)
+  const [diastolic, setDiastolic] = useState(0)
+  const [pulse, setPulse] = useState(0)
+  const [bodypos, setBodypos] = useState('')
+  const [arm, setArm] = useState('')
+
+  const onPressSave = async () => {
+    await axios
+    .post(`http://172.17.0.88:8000/api/trackers/pressure/`, {
+      user: 2,
+      systolic_value: systolic,
+      diastolic_value: diastolic,
+      pulse_value: pulse,
+      position_value: bodypos,
+      arm: arm,
+    })
+    .then((res) => {
+      console.log(res.data, "response from pressure POST");
+    })
+    console.log("Pressure data Saved");
   };
   return (
     <Screen style={styles.container}>
@@ -61,6 +79,7 @@ const SugarScreen = ({ navigation }) => {
         <TextInput
             underlineColor="#000"
             mode="outlined"
+            onChangeText={setSystolic}
             theme={{
             colors: {
                 text: "#000",
@@ -80,6 +99,7 @@ const SugarScreen = ({ navigation }) => {
         <TextInput
             underlineColor="#000"
             mode="outlined"
+            onChangeText={setDiastolic}
             theme={{
             colors: {
                 text: "#000",
@@ -99,6 +119,7 @@ const SugarScreen = ({ navigation }) => {
         <TextInput
             underlineColor="#000"
             mode="outlined"
+            onChangeText={setPulse}
             theme={{
             colors: {
                 text: "#000",
@@ -120,7 +141,7 @@ const SugarScreen = ({ navigation }) => {
           <RNPickerSelect
             placeholder={{ label: "Body Position", value: null }}
             style={{ inputAndroid: { color: "black" } }}
-            onValueChange={(value) => setTime(value)}
+            onValueChange={(value) => setBodypos(value)}
             items={[
               { label: "Seated", value: "S" },
               { label: "Lying", value: "L" },
@@ -133,7 +154,7 @@ const SugarScreen = ({ navigation }) => {
           <RNPickerSelect
             placeholder={{ label: "Arm", value: null }}
             style={{ inputAndroid: { color: "black" } }}
-            onValueChange={(value) => setTime(value)}
+            onValueChange={(value) => setArm(value)}
             items={[
               { label: "Left", value: "Left" },
               { label: "Right", value: "Right" },

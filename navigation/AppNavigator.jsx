@@ -30,11 +30,12 @@ import ExerciseDetailScreen from '../screens/ExerciseTrackerDetail';
 import PushupScreen from '../screens/PushupScreen';
 import PedometerScreen from '../screens/PedometerScreen';
 import ReminderNavigator from './ReminderNavigator';
-
+import NoteProvider from "../contexts/NoteProvider";
 
 const Stack = createStackNavigator();
 const AppNavigator = () => {
     return (
+        <NoteProvider>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Search" component={SearchScreen}/>
@@ -62,6 +63,8 @@ const AppNavigator = () => {
                 <Stack.Screen name="ChatWithAI" component={ChatWithAIScreen}/>
                 <Stack.Screen name="Recommendations" component={RecommendationsScreen}/>
             </Stack.Navigator>
+
+        </NoteProvider>
     )
 }
 
