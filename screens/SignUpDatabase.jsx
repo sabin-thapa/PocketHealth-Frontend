@@ -40,7 +40,7 @@ const SignUpDatabase = ({ navigation, route }) => {
   const [nameLabel, setNameLabel] = useState("");
   const [addressLabel, setAddressLabel] = useState("");
   const [addressTypeLabel, setAddressTypeLabel] = useState("");
-
+  const [error, setError] = useState("");
   const [firstPage, setFirstPage] = useState(true);
   const [secondPage, setSecondPage] = useState(false);
   const [thirdPage, setThirdPage] = useState(false);
@@ -51,7 +51,7 @@ const SignUpDatabase = ({ navigation, route }) => {
   const [eighthPage, setEighthPage] = useState(false);
   const [ninthPage, setNinthPage] = useState(false);
 
-  const registerDatabaseHandler = async (values) => {
+  const registerDatabaseHandler = (values) => {
     // Collect all the data from the form
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
 
@@ -102,7 +102,7 @@ const SignUpDatabase = ({ navigation, route }) => {
     };
     {
       role === "patient"
-        ? await axios
+        ? axios
             .post(
               `${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/patient/register_model/`,
               registerData,
@@ -114,9 +114,10 @@ const SignUpDatabase = ({ navigation, route }) => {
             })
             .catch((error) => {
               console.log(error.message, 'ERROR!');
+              setError(error.message)
 
             })
-        : await axios
+        : axios
             .post(
               `${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/practitioner/register_model/`,
               registerData,
@@ -128,6 +129,7 @@ const SignUpDatabase = ({ navigation, route }) => {
             })
             .catch((error) => {
               console.log(error.message, 'ERROR!');
+              setError(error.message)
             });
     }
   };
@@ -390,6 +392,7 @@ const SignUpDatabase = ({ navigation, route }) => {
               </View>
             </View> */}
           </View>
+          <Text style={{ color: colors.danger, textAlign: 'center' }}> {error} </Text>
           <View style={{ alignItems: "center", marginBottom: 10 }}>
             <SubmitButton title="Submit" />
           </View>
