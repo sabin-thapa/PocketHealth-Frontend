@@ -25,7 +25,7 @@ import Loading from "../components/Loading";
 
 const { width, height } = Dimensions.get("screen");
 
-import {BASE_URL, PORT} from '@env'
+import {REACT_APP_PORT,REACT_APP_BASE_URL, BASE_URL} from '@env'
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -50,7 +50,7 @@ const SignIn = ({ navigation }) => {
   const LoginHandler = (values) => {
     setLoading(true);
     axios
-      .post(`${BASE_URL}:${PORT}/api/login/`, {
+      .post(`${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/login/`, {
         email: values.email,
         password: values.password,
       })
@@ -76,6 +76,7 @@ const SignIn = ({ navigation }) => {
 
   useEffect(() => {
     setError("");
+    console.log(REACT_APP_BASE_URL, REACT_APP_PORT," BASE_URL and PORT");
   }, []);
 
   if (loading) {

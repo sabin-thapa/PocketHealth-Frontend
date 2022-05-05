@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -26,13 +26,14 @@ import AppTextInput from "../components/AppTextInput";
 import RNPickerSelect from "react-native-picker-select";
 import { AuthContext } from "../contexts/AuthProvider";
 
+import { REACT_APP_BASE_URL, REACT_APP_PORT } from "@env";
+
 const registerValidationSchema = Yup.object().shape({});
 
 const SignUpDatabase = ({ navigation, route }) => {
-  const{setIsAuthenticated} = useContext(AuthContext)
+  const { setIsAuthenticated } = useContext(AuthContext);
   const { role, email } = route.params;
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const PORT = process.env.REACT_APP_PORT;
+  const { token } = useContext(AuthContext);
 
   const [gender, setGender] = useState("");
   const [maritalStatusLabel, setMaritalStatusLabel] = useState("");
@@ -50,16 +51,14 @@ const SignUpDatabase = ({ navigation, route }) => {
   const [eighthPage, setEighthPage] = useState(false);
   const [ninthPage, setNinthPage] = useState(false);
 
-  const registerDatabaseHandler = (values) => {
+  const registerDatabaseHandler = async (values) => {
     // Collect all the data from the form
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
 
     const registerData = {
-      active: null,
       name: [
         {
           use: nameLabel,
-          text: "",
           family: values.name.family,
           given: values.name.given,
           prefix: values.name.prefix,
@@ -67,14 +66,13 @@ const SignUpDatabase = ({ navigation, route }) => {
           period: [],
         },
       ],
-      telecom: [],
+      // telecom: [],
       gender: gender,
-      birthDate: values.birthDate,
+      // birthDate: values.birthDate,
       address: [
         {
           use: addressLabel,
           address_type: addressTypeLabel,
-          text: null,
           line: "",
           city: values.address.city,
           district: values.address.district,
@@ -86,7 +84,7 @@ const SignUpDatabase = ({ navigation, route }) => {
       ],
       maritalStatus: [
         {
-          text: "D",
+          text: maritalStatusLabel,
         },
       ],
       contact: [],
@@ -94,29 +92,52 @@ const SignUpDatabase = ({ navigation, route }) => {
       managingOrganization: [],
       link: [],
     };
-    console.log(registerData, " Submission: Patient register model!!");
-    axios
-      .post("http://192.168.1.80:8000/api/patient/register_model/", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(registerData),
-      })
-      .then((res) => {
-        console.log(res.data, "patient register api response");
-        navigation.navigate('SignIn')
-      })
-      .catch((err) => {
-        console.log(`Error in posting register api data: ${err}`);
-      });
 
+    const config = {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    {
+      role === "patient"
+        ? await axios
+            .post(
+              `${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/patient/register_model/`,
+              registerData,
+              config.headers
+            )
+            .then((res) => {
+              console.log(res.data, "patient register api response");
+              // navigation.navigate('SignIn')
+            })
+            .catch((error) => {
+              console.log(error.message, 'ERROR!');
+
+            })
+        : await axios
+            .post(
+              `${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/practitioner/register_model/`,
+              registerData,
+              config.headers
+            )
+            .then((res) => {
+              console.log(res.data, "practitioner register api response");
+              // navigation.navigate('SignIn')
+            })
+            .catch((error) => {
+              console.log(error.message, 'ERROR!');
+            });
+    }
   };
 
   const PrevNextNav = ({ prev, next }) => {};
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // console.log(REACT_APP_BASE_URL, REACT_APP_PORT);
+    console.log(role, "role");
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -144,7 +165,6 @@ const SignUpDatabase = ({ navigation, route }) => {
         <AppForm
           initialValues={{
             birthDate: "",
-
             name: {
               family: "",
               given: "",
@@ -170,7 +190,7 @@ const SignUpDatabase = ({ navigation, route }) => {
               {/* Get current user's email  */}
               <AppFormField
                 name="birthDate"
-                placeholder="Birth Date"
+                placeholder="Birth Date: {Eg: 1999-01-01}"
                 style={styles.formField}
               />
 
@@ -197,13 +217,13 @@ const SignUpDatabase = ({ navigation, route }) => {
               style={{ inputAndroid: { color: colors.dark } }}
               onValueChange={(value) => setNameLabel(value)}
               items={[
-                { label: "Official", value: "Official" },
-                { label: "Usual", value: "Usual" },
-                { label: "Temp", value: "Temp" },
-                { label: "Nickname", value: "Nickname" },
-                { label: "Anonynomous", value: "Anonynomous" },
-                { label: "Maiden", value: "Maiden" },
-                { label: "Old", value: "Old" },
+                { label: "Official", value: 1 },
+                { label: "Usual", value: 2 },
+                { label: "Temp", value: 3 },
+                { label: "Nickname", value: 4 },
+                { label: "Anonynomous", value: 5 },
+                { label: "Maiden", value: 6 },
+                { label: "Old", value: 7 },
               ]}
             />
           </View>
@@ -298,17 +318,17 @@ const SignUpDatabase = ({ navigation, route }) => {
               style={{ inputAndroid: { color: colors.dark } }}
               onValueChange={(value) => setMaritalStatusLabel(value)}
               items={[
-                { label: "Single", value: "Single" },
-                { label: "Married", value: "Married" },
-                { label: "Divorced", value: "Divorced" },
-                { label: "Widowed", value: "Widowed" },
-                { label: "Annuled", value: "Annuled" },
-                { label: "Interlocutory", value: "Interlocutory" },
-                { label: "Legally Separated", value: "Legally Separated" },
-                { label: "Polygamous", value: "Polygamous" },
-                { label: "Never Married", value: "Never Married" },
-                { label: "Domestic Partner", value: "Domestic Partner" },
-                { label: "Unknown", value: "Unknown" },
+                { label: "Single", value: "S" },
+                { label: "Married", value: "M" },
+                { label: "Divorced", value: "D" },
+                { label: "Widowed", value: "W" },
+                { label: "Annuled", value: "A" },
+                { label: "Interlocutory", value: "I" },
+                { label: "Legally Separated", value: "L" },
+                { label: "Polygamous", value: "P" },
+                { label: "Never Married", value: "S" },
+                { label: "Domestic Partner", value: "T" },
+                { label: "Unknown", value: "UNK" },
               ]}
             />
           </View>
