@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, FlatList, StyleSheet, View, Image } from "react-native";
 import Screen from "../screens/Screen";
 import DrawerTopBar from "../components/DrawerTopBar";
@@ -9,48 +9,67 @@ import ListItem from "../components/ListItem";
 import colors from "../utils/colors";
 import { AuthContext } from "../contexts/AuthProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-const ProfileItems = [
-  {
-    title: "Dhulikhel-4, Kavrepalanchok",
-    icon: {
-      name: "map-marker",
-      color: colors.secondary,
-    },
-  },
-  {
-    title: "+977-9845977921",
-    icon: {
-      name: "phone",
-      color: colors.secondary,
-    },
-  },
-  {
-    title: "Male",
-    icon: {
-      name: "account",
-      color: colors.secondary,
-    },
-  },
-  {
-    title: "johndoe@gmail.com",
-    icon: {
-      name: "email",
-      color: colors.secondary,
-    },
-  },
-
-  {
-    title: "07 Dec, 1999",
-    icon: {
-      name: "cake",
-      color: colors.secondary,
-    },
-  },
-];
+import axios from "axios";
+import { REACT_APP_BASE_URL, REACT_APP_PORT } from "@env";
 
 const Profile = ({ navigation, route }) => {
-  const { logout } = useContext(AuthContext);
+  const { logout, user, userData, setUserData } = useContext(AuthContext);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${REACT_APP_BASE_URL}:${REACT_APP_PORT}/api/patient/register_model/`,
+        {
+          params: {
+            ID: user.pk,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response.data[0], "user profile response");
+        setUserData(response.data[0]);
+      });
+  }, []);
+
+  const ProfileItems = [
+    {
+      title: `${userData?.address[0].city}  ${userData?.address[0].district}` || 'address here',
+      icon: {
+        name: "map-marker",
+        color: colors.secondary,
+      },
+    },
+    {
+      title: userData.contact[0] || '9845977921',
+      icon: {
+        name: "phone",
+        color: colors.secondary,
+      },
+    },
+    {
+      title: userData?.gender || 'gender here',
+      icon: {
+        name: "account",
+        color: colors.secondary,
+      },
+    },
+    {
+      title: user.email || 'email here',
+      icon: {
+        name: "email",
+        color: colors.secondary,
+      },
+    },
+
+    {
+      title: userData?.birthDate || 'birth date here',
+      icon: {
+        name: "cake",
+        color: colors.secondary,
+      },
+    },
+  ];
+
   return (
     <>
       <Screen>
@@ -59,7 +78,10 @@ const Profile = ({ navigation, route }) => {
         <View style={styles.container}>
           <Image source={require("../assets/sajan.png")} style={styles.logo} />
         </View>
-        <Text style={styles.name}> John Doe </Text>
+        <Text style={styles.name}>
+          {" "}
+          {userData?.name?.given} {userData?.name?.family}{" "}
+        </Text>
 
         <FlatList
           data={ProfileItems}

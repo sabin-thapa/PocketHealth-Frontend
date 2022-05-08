@@ -58,8 +58,8 @@ const SignUpDatabase = ({ navigation, route }) => {
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
     setLoading(true)
     const registerData = {
-      ...(role === 'patient') &&  {patient: user.pk},
       ...(role === 'practitioner') &&  {practitioner: user.pk},
+      ...(role === 'patient') &&  {patient: user.pk},
       name: [
         {
           use: nameLabel,
@@ -72,7 +72,7 @@ const SignUpDatabase = ({ navigation, route }) => {
       ],
       // telecom: [],
       gender: gender,
-      // birthDate: values.birthDate,
+      birthDate: values.birthDate,
       address: [
         {
           use: addressLabel,
