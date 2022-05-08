@@ -34,7 +34,7 @@ const registerValidationSchema = Yup.object().shape({});
 const SignUpDatabase = ({ navigation, route }) => {
   const { setIsAuthenticated } = useContext(AuthContext);
   const { role, email } = route.params;
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false)
   const [gender, setGender] = useState("");
@@ -58,6 +58,8 @@ const SignUpDatabase = ({ navigation, route }) => {
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
     setLoading(true)
     const registerData = {
+      ...(role === 'patient') &&  {patient: user.pk},
+      ...(role === 'practitioner') &&  {practitioner: user.pk},
       name: [
         {
           use: nameLabel,

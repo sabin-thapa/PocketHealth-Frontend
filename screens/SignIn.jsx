@@ -61,7 +61,7 @@ const SignIn = ({ navigation }) => {
         setError("");
         setLoading(false)
         setIsAuthenticated(true);
-        console.log(user, " user context var");
+        console.log(res.data, " user context var");
       })
       .catch((err) => {
         console.log(err.message);
