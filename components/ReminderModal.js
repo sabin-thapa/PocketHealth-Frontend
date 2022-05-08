@@ -19,6 +19,12 @@ const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
   const [frequency, setFrequency] = useState(null);
   const [selectedHours, setSelectedHours] = useState(0);
 
+  const frequencyData = [
+    {value: 'daily', label: "Daily"},
+    {value: 'weekly', label: "Weekly"},
+    {value: 'monthly', label: "Monthly"},
+  ]
+
   const hoursData = [
     { value: "1", label: "1 AM" },
     { value: "2", label: "2 AM" },
@@ -46,16 +52,16 @@ const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
     { value: "24", label: "24 PM" },
   ];
 
-  const onPressSubmit = ({
+  const onPressSubmit = (
     medicineName,
     frequency,
     medicineType,
     selectedHours,
-  }) => {
+  ) => {
     console.log("Submitted");
     if (isEdit) {
       onSubmit(medicineName, frequency, medicineType, selectedHours),
-        Daten.now();
+        Date.now();
     } else {
       onSubmit(medicineName, frequency, medicineType, selectedHours);
     }
@@ -131,7 +137,7 @@ const ReminderModal = ({ visible, onSubmit, onClose, reminder, isEdit }) => {
             alignItems: "center",
           }}
         >
-          <Text> Remind me at </Text>
+          <Text> Time </Text>
           <View style={styles.oneInput}>
             <RNPickerSelect
               placeholder={{ label: "Time", value: null }}

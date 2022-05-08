@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, Alert } from "react-native";
 import TopBar from "../components/TopBar";
 import colors from "../utils/colors";
 import Screen from "./Screen";
@@ -9,8 +9,10 @@ import Reminder from "../components/Reminder";
 import ReminderModal from "../components/ReminderModal";
 import img from "../assets/schedule.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {ReminderContext} from '../contexts/ReminderProvider'
-import {useReminders} from "../contexts/ReminderProvider"
+import { ReminderContext } from "../contexts/ReminderProvider";
+import { useReminders } from "../contexts/ReminderProvider";
+import * as Notifications from "expo-notifications";
+
 
 // const reminders = [
 //   {
@@ -61,96 +63,88 @@ import {useReminders} from "../contexts/ReminderProvider"
 // ];
 
 const ReminderScreen = ({ navigation }) => {
-  const {reminders, setReminders, findReminders} = useReminders();
+  const { reminders, setReminders, findReminders } = useReminders();
   const [modalVisible, setModalVisible] = useState(false);
   const timeToString = (time) => {
     const date = new Date(time);
     return date.toISOString().split("T")[0];
   };
 
-  //   const loadItems = (day) => {
-  //     setTimeout(() => {
-  //       for (let i = 0; i < 10; i++) {
-  //         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-  //         const strTime = timeToString(time);
+  // Notifications
 
-  //         if (!items[strTime]) {
-  //           items[strTime] = [];
-  //             items[strTime].push({
-  //               name: "Reminder for " + strTime + " #" ,
-  //               height: Math.max(50, Math.floor(Math.random() * 5)),
-  //               day: strTime,
-  //             });
-  //         }
-  //       }
-  //       const newItems = {};
-  //       Object.keys(items).forEach((key) => {
-  //         newItems[key] = items[key];
-  //       });
-  //       setItems(newItems)
-  //     }, 1000);
-  //   };
+  async function scheduleNotification(hour) {
+    var today = new Date()
+    const curr = today.getHours()
+    let tyam;
 
-  //   const renderItem = (item) => {
-  //     return (
-  //       <TouchableOpacity style={{ marginTop: 40 }}>
-  //         <Card>
-  //           <Card.Content>
-  //             <View style={styles.itemContainer}>
-  //               <Text> {item.name}</Text>
-  //             </View>
-  //           </Card.Content>
-  //         </Card>
-  //       </TouchableOpacity>
-  //     );
-  //   };
+    if(curr < hour) {
+      tyam = parseInt(hour) - parseInt(curr)
+    } else {
+      tyam = 24-parseInt(curr)+parseInt(hour)
+    }
+
+
+    const secs = tyam*60*60 
+    
+    await Notifications.requestPermissionsAsync().then((permission) => {
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "💊 Medicine Reminder",
+          subtitle: "Time to take your meds!",
+        },
+        trigger: {
+          repeats: true,
+          seconds: secs,
+        },
+      });
+    });
+    Alert.alert("Notification scheduled!!");
+  }
+
+  const cancelNotifications = () => {
+    Notifications.cancelAllScheduledNotificationsAsync();
+    Alert.alert("All notifications cancelled!");
+  };
 
   useEffect(() => {
-    findReminders()
+    findReminders();
     console.log(reminders);
-  }, [])
+  }, []);
 
   const openReminder = (reminder) => {
     navigation.navigate("ReminderDetail", { reminder });
   };
 
-  const handleSubmit = async (medicineName, medicineType, frequency, selectedHours) => {
-    const rem = {medicineName, medicineType, frequency, selectedHours}
-    const updatedReminders = [...reminders, rem]
-    setReminders(updatedReminders)
-    await AsyncStorage.setItem('reminders', JSON.stringify(updatedReminders))
-    setModalVisible(false)
-  }
+  const revData = (rem) => {
+    return rem.sort((a, b) => parseInt(b.time - a.time));
+  };
+
+  const reverseReminders = revData(reminders);
+
+  const handleSubmit = async (
+    medicineName,
+    medicineType,
+    frequency,
+    selectedHours
+  ) => {
+    const rem = {
+      id: Date.now(),
+      medicineName,
+      medicineType,
+      frequency,
+      selectedHours,
+      time: Date.now(),
+    };
+    const updatedReminders = [...reminders, rem];
+    setReminders(updatedReminders);
+    await AsyncStorage.setItem("reminders", JSON.stringify(updatedReminders));
+    setModalVisible(false);
+    scheduleNotification(selectedHours)
+  };
 
   return (
     <Screen style={styles.container}>
       <TopBar title="Reminders" navigation={navigation} />
-      {/* <Agenda
-        items={items}
-        // renderItem={renderItem}
-        // loadItemsForMonth={loadItems}
-        // onCalendarToggled={(calOpen) => setCalendarOpen(!calOpen)}
-      /> */}
-      {/* <View style={styles.addSection}>
-        <MaterialCommunityIcons
-          style={styles.calendarIcon}
-          name="calendar-multiple-check"
-          size={96}
-          color={colors.primary}
-        />
-        <Text style={styles.mainText}> Add Reminder </Text>
-        <Text style={styles.descriptionText}>
-          {" "}
-          Take your medication on time with the help of our reminder{" "}
-        </Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => navigation.navigate("AddReminder")}
-        >
-          <Text style={styles.btnText}> Add Medicine Reminder </Text>
-        </TouchableOpacity>
-      </View> */}
-
       <RoundIconBtn
         onPress={() => {
           setModalVisible(true);
@@ -182,10 +176,10 @@ const ReminderScreen = ({ navigation }) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           style={{ marginBottom: 10 }}
-          data={reminders}
+          data={reverseReminders}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Reminder onPress={() => openReminder(item)} item={item} key={item => item.toString()}/>
+            <Reminder onPress={() => openReminder(item)} item={item} />
           )}
         />
       )}
@@ -249,10 +243,9 @@ const styles = StyleSheet.create({
     right: 40,
   },
   image: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 10
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
-  
 });

@@ -5,7 +5,7 @@ import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../utils/colors";
 
 const Reminder = ({ item, onPress }) => {
-  const {medicineName, selectedHours, medicineType, frequency} = item
+  const { medicineName, selectedHours, medicineType, frequency } = item;
   useEffect(() => {
     console.log(medicineName, "Reminder");
   }, []);
@@ -38,10 +38,13 @@ const Reminder = ({ item, onPress }) => {
               )}
             </View>
             <View style={styles.textContent}>
-              <Text style={styles.titleText}>{medicineName}</Text>
-              <Text>{selectedHours}</Text>
-              <Text>{frequency}</Text>
-              <Text>{medicineType}</Text>
+              <Text style={[styles.titleText, styles.item]}>Medicine: {medicineName}</Text>
+              <Text style = {styles.item}>
+                Time: {selectedHours}{" "}
+                {selectedHours > 1 && selectedHours < 12 ? `AM` : `PM`}{" "}
+              </Text>
+              <Text  style = {styles.item}>Repeat: {frequency}</Text>
+              <Text style = {styles.item}>Medicine Type: {medicineType}</Text>
             </View>
           </TouchableOpacity>
         </Card.Content>
@@ -58,6 +61,9 @@ const styles = StyleSheet.create({
   },
   textContent: {
     marginLeft: 50,
+  },
+  item: {
+    marginBottom: 10
   },
   icon: {
     display: "flex",
