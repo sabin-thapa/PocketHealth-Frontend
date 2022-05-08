@@ -51,7 +51,7 @@ const SignUp = ({ navigation, route }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {setToken} = useContext(AuthContext)
+  const {setToken, setUser} = useContext(AuthContext)
 
   const registerHandler = (values) => {
     console.log(values);
@@ -66,10 +66,13 @@ const SignUp = ({ navigation, route }) => {
           .then((res) => {
             console.log(res.data, "patient register api response");
             setToken(res.data.token)
+            setUser(res.data);
             navigation.navigate("SignUpDatabase", {
               role: "patient",
               email: values.email,
             });
+            setLoading(false)
+
           })
           .catch((err) => {
             setLoading(false)
@@ -77,9 +80,9 @@ const SignUp = ({ navigation, route }) => {
               `Error in posting patient register api data: ${err.message}`
             );
             setError(`${err.message} - the user already exists [400]`);
+            setLoading(false);
           });
-      setLoading(false);
-    }
+        }
     {
       role === "practitioner" &&
       setLoading(true);
@@ -91,10 +94,13 @@ const SignUp = ({ navigation, route }) => {
           .then((res) => {
             console.log(res.data, "Practitioner register api response");
             setToken(res.data.token)
+            setUser(res.data);
             navigation.navigate("SignUpDatabase", {
               role: "practitioner",
               email: values.email,
             });
+            setLoading(false)
+
           })
           .catch((err) => {
             setLoading(false)
@@ -103,7 +109,6 @@ const SignUp = ({ navigation, route }) => {
             );
             setError(err.message);
           });
-      setLoading(false);
     }
   };
 

@@ -25,6 +25,7 @@ import { RadioButton } from "react-native-paper";
 import AppTextInput from "../components/AppTextInput";
 import RNPickerSelect from "react-native-picker-select";
 import { AuthContext } from "../contexts/AuthProvider";
+import Loading from '../components/Loading'
 
 import { REACT_APP_BASE_URL, REACT_APP_PORT } from "@env";
 
@@ -35,6 +36,7 @@ const SignUpDatabase = ({ navigation, route }) => {
   const { role, email } = route.params;
   const { token } = useContext(AuthContext);
 
+  const [loading, setLoading] = useState(false)
   const [gender, setGender] = useState("");
   const [maritalStatusLabel, setMaritalStatusLabel] = useState("");
   const [nameLabel, setNameLabel] = useState("");
@@ -54,7 +56,7 @@ const SignUpDatabase = ({ navigation, route }) => {
   const registerDatabaseHandler = (values) => {
     // Collect all the data from the form
     // const registerData = {...values, gender, maritalStatusLabel, nameLabel, addressLabel, addressTypeLabel}
-
+    setLoading(true)
     const registerData = {
       name: [
         {
@@ -110,11 +112,14 @@ const SignUpDatabase = ({ navigation, route }) => {
             )
             .then((res) => {
               console.log(res.data, "patient register api response");
-              // navigation.navigate('SignIn')
+              setIsAuthenticated(true)
+              setLoading(false)
             })
             .catch((error) => {
               console.log(error.message, 'ERROR!');
               setError(error.message)
+              setLoading(false)
+
 
             })
         : axios
@@ -125,11 +130,15 @@ const SignUpDatabase = ({ navigation, route }) => {
             )
             .then((res) => {
               console.log(res.data, "practitioner register api response");
-              // navigation.navigate('SignIn')
+              setIsAuthenticated(true)
+              setLoading(false)
+
             })
             .catch((error) => {
               console.log(error.message, 'ERROR!');
               setError(error.message)
+              setLoading(false)
+
             });
     }
   };
@@ -140,6 +149,10 @@ const SignUpDatabase = ({ navigation, route }) => {
     // console.log(REACT_APP_BASE_URL, REACT_APP_PORT);
     console.log(role, "role");
   }, []);
+
+  if(loading){
+    return <Loading />
+  }
 
   return (
     <View style={styles.container}>
