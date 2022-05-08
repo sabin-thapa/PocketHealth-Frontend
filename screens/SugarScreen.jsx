@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,9 @@ import Screen from "./Screen";
 import sugarPic from "../assets/sugar.png";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
+import {AuthContext} from '../contexts/AuthProvider'
 import colors from "../utils/colors";
 import axios from "axios";
-
 
 const getDate = () => {
   const dateday = new Date().getDate();
@@ -23,14 +23,15 @@ const getDate = () => {
 };
 
 const SugarScreen = ({ navigation }) => {
+  const {token, user, id} = useContext(AuthContext)
   const [time, setTime] = useState(null);
   const [glucose, setGlucose] = useState(0)
   const [ketone, setKetone] = useState(0)
   const [haemoglobin, setHaemoglobin] = useState(0)
   const onPressSave = async () => {
     await axios
-    .post(`http://172.17.0.88:8000/api/trackers/bloodsugar/`, {
-      user: 2,
+    .post(`http://192.168.1.11:8000/api/trackers/bloodsugar/`, {
+      user: user.pk,
       glucose_value: glucose,
       ketone_value: ketone,
       haemoglobin_value: haemoglobin,

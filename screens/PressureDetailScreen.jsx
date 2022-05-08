@@ -5,11 +5,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";import React, {useState, useEffect} from 'react'
+} from "react-native";import React, {useState, useEffect, useContext} from 'react'
 import { Ionicons } from "@expo/vector-icons";
 import { LineChart } from "react-native-chart-kit";
 import colors from "../utils/colors";
 import { Rect, Ellipse, Text as TextSVG, Svg } from "react-native-svg";
+import {AuthContext} from '../contexts/AuthProvider'
 import RNPickerSelect from "react-native-picker-select";
 import axios from 'axios'
 
@@ -24,14 +25,14 @@ let dummyData = [
   },
 
   {
-    systolicValue: 130,
-    diastolicValue: 90,
+    systolicValue: 120,
+    diastolicValue: 80,
     pulse: 65,
     date: "Sep 1, 2020",
   },
   {
     systolicValue: 120,
-    diastolicValue: 90,
+    diastolicValue: 75,
     pulse: 60,
     date: "Sep 2, 2020",
   },
@@ -42,7 +43,7 @@ let dummyData = [
     date: "Oct 1, 2021",
   },
   {
-    systolicValue: 130,
+    systolicValue: 120,
     diastolicValue: 70,
     pulse: 70,
     date: "Oct 2, 2021",
@@ -107,6 +108,7 @@ const PressureDetailScreen = ({navigation}) => {
   const [year, setYear] = useState("2021");
   const [notDummyData, setNotDummyData] = useState([]);
   const [month, setMonth] = useState("Jan");
+  const {token, user} = useContext(AuthContext)
   var xLabels = ["Null"];
   var systolicData = [0];
   var diastolicData = [0];
@@ -137,21 +139,23 @@ const PressureDetailScreen = ({navigation}) => {
   useEffect(() => {
     const getData = async () => {
       var dataContainer = []
-      await axios.get(`http://172.17.0.88:8000/api/trackers/pressure/`)
+      await axios.get(`http://192.168.1.11:8000/api/trackers/pressure/`)
       .then(res => {
         const val = res.data
         console.log(val);
         val?.map((vl) => {
-          var datestring = new Date(vl.created_at).toDateString()
-          var datearray = datestring.split(" ")
-          var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
-
-          return dataContainer.push({
-            date: date,
-            systolicValue: vl.systolic_value,
-            diastolicValue: vl.diastolic_value,
-            pulse: vl.pulse_value
-          })
+          if(vl.user==user.pk){
+            var datestring = new Date(vl.created_at).toDateString()
+            var datearray = datestring.split(" ")
+            var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
+  
+            return dataContainer.push({
+              date: date,
+              systolicValue: vl.systolic_value,
+              diastolicValue: vl.diastolic_value,
+              pulse: vl.pulse_value
+            })
+          }
         })
         setNotDummyData(dataContainer)
       })

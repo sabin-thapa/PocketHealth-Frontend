@@ -7,6 +7,7 @@ import {
   FontAwesome,
   MaterialCommunityIcons,
   Ionicons,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import colors from "../../utils/colors";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -34,6 +35,13 @@ const DrawerContent = (props) => {
             )}
             label={() => <Text style={styles.label}>Profile</Text>}
             onPress={() => props.navigation.navigate("Profile")}
+          />
+          <DrawerItem
+            icon={() => (
+              <FontAwesome5 name="file-medical" size={28} color={colors.primary} />
+            )}
+            label={() => <Text style={styles.label}>Medical Reports</Text>}
+            onPress={() => props.navigation.navigate("Reports")}
           />
           {/* <DrawerItem
             icon={() => (

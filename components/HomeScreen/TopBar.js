@@ -15,9 +15,9 @@ const TopBar = ({ navigation }) => {
         {/* <TouchableOpacity onPress={() => navigation.navigate({name: "Search", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={searchIcon} />
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
           <Image style={styles.otherIcon} source={notificationIcon} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* <TouchableOpacity onPress={() => navigation.navigate({name: "Settings", params: {from: 'stack'}})}>
           <Image style={styles.otherIcon} source={settingsIcon} />
         </TouchableOpacity> */}

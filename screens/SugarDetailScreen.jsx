@@ -5,11 +5,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";import React, {useState, useEffect} from 'react'
+} from "react-native";import React, {useState, useEffect, useContext} from 'react'
 import { Ionicons } from "@expo/vector-icons";
 import { LineChart } from "react-native-chart-kit";
 import colors from "../utils/colors";
 import { Rect, Ellipse, Text as TextSVG, Svg } from "react-native-svg";
+import {AuthContext} from '../contexts/AuthProvider'
 import axios from 'axios'
 
 import RNPickerSelect from "react-native-picker-select";
@@ -103,6 +104,8 @@ const SugarDetailScreen = ({navigation}) => {
   const [year, setYear] = useState("2021");
   const [notDummyData, setNotDummyData] = useState([]);
   const [month, setMonth] = useState("Jan");
+  const {token, user} = useContext(AuthContext)
+
   var xLabels = ["Null"];
   var glucoseData = [0];
   var haemoglobinData = [0];
@@ -133,21 +136,23 @@ const SugarDetailScreen = ({navigation}) => {
   useEffect(() => {
     const getData = async () => {
       var dataContainer = []
-      await axios.get(`http://172.17.0.88:8000/api/trackers/bloodsugar/`)
+      await axios.get(`http://192.168.1.11:8000/api/trackers/bloodsugar/`)
       .then(res => {
         const val = res.data
         console.log(val);
         val?.map((vl) => {
-          var datestring = new Date(vl.created_at).toDateString()
-          var datearray = datestring.split(" ")
-          var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
-
-          return dataContainer.push({
-            date: date,
-            glucose: vl.glucose_value,
-            haemoglobin: vl.haemoglobin_value,
-            ketone: vl.ketone_value
-          })
+          if (vl.user == user.pk){
+            var datestring = new Date(vl.created_at).toDateString()
+            var datearray = datestring.split(" ")
+            var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
+  
+            return dataContainer.push({
+              date: date,
+              glucose: vl.glucose_value,
+              haemoglobin: vl.haemoglobin_value,
+              ketone: vl.ketone_value
+            })
+          }
         })
         setNotDummyData(dataContainer)
       })

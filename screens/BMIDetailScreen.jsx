@@ -234,20 +234,22 @@ const BMIDetailScreen = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       var dataContainer = []
-      await axios.get(`http://172.17.0.88:8000/api/trackers/bmi/`)
+      await axios.get(`http://192.168.1.11:8000/api/trackers/bmi/`)
       .then(res => {
         const val = res.data
         console.log(val);
         val?.map((vl) => {
-          var datestring = new Date(vl.created_at).toDateString()
-          var datearray = datestring.split(" ")
-          var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
-
-          return dataContainer.push({
-            date: date,
-            bmiValue: vl.bmi_result.toFixed(2),
-            weight: vl.weight_in_kg
-          })
+          if (vl.user == user.pk){
+            var datestring = new Date(vl.created_at).toDateString()
+            var datearray = datestring.split(" ")
+            var date = datearray[1] + " " + datearray[2] + ", " + datearray[3] 
+  
+            return dataContainer.push({
+              date: date,
+              bmiValue: Math.round((vl.bmi_result + Number.EPSILON) * 100) / 100,
+              weight: vl.weight_in_kg
+            })
+          }
         })
         setNotDummyData(dataContainer)
       })

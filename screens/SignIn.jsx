@@ -46,7 +46,7 @@ const SignIn = ({ navigation }) => {
   const LoginHandler = (values) => {
     setLoading(true);
     axios
-      .post("http://172.17.0.88:8000/api/login/", {
+      .post("http://192.168.1.11:8000/api/login/", {
         email: values.email,
         password: values.password,
       })
@@ -57,7 +57,7 @@ const SignIn = ({ navigation }) => {
         setError("");
         setLoading(false)
         setIsAuthenticated(true);
-        console.log(user, " user context var");
+        console.log(res.data, " user context var");
       })
       .catch((err) => {
         console.log(err.message);

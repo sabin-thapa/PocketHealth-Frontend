@@ -29,6 +29,7 @@ import ExerciseScreen from '../screens/ExerciseTracker';
 import ExerciseDetailScreen from '../screens/ExerciseTrackerDetail';
 import PushupScreen from '../screens/PushupScreen';
 import PedometerScreen from '../screens/PedometerScreen';
+import ReportScreen from '../screens/ReportScreen';
 import ReminderNavigator from './ReminderNavigator';
 import NoteProvider from "../contexts/NoteProvider";
 
@@ -54,6 +55,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="Settings" component={SettingsScreen}/>
                 <Stack.Screen name="ProfileSettings" component={ProfileSettingsScreen}/>
                 <Stack.Screen name="AccountSettings" component={AccountSettingsScreen}/>
+                <Stack.Screen name="ReportScreen" component={ReportScreen}/>
                 <Stack.Screen name="MentalWellness" component={MentalWellnessScreen}/>
                 <Stack.Screen name="ArticlesScreen" component={ArticlesScreen}/>
                 <Stack.Screen name="SymptomsChecker" component={SymptomsCheckerScreen}/>

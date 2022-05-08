@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,7 @@ import Screen from "./Screen";
 import pressurePic from "../assets/hypertension.png";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
+import {AuthContext} from '../contexts/AuthProvider'
 import colors from "../utils/colors";
 import axios from "axios";
 
@@ -23,7 +24,7 @@ const getDate = () => {
 };
 
 const SugarScreen = ({ navigation }) => {
-  const [time, setTime] = useState(null);
+  const {token, user, id} = useContext(AuthContext)
   const [systolic, setSystolic] = useState(0)
   const [diastolic, setDiastolic] = useState(0)
   const [pulse, setPulse] = useState(0)
@@ -32,8 +33,8 @@ const SugarScreen = ({ navigation }) => {
 
   const onPressSave = async () => {
     await axios
-    .post(`http://172.17.0.88:8000/api/trackers/pressure/`, {
-      user: 2,
+    .post(`http://192.168.1.11:8000/api/trackers/pressure/`, {
+      user: user.pk,
       systolic_value: systolic,
       diastolic_value: diastolic,
       pulse_value: pulse,

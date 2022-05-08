@@ -2950,6 +2950,15 @@
     "expo-modules-core" "~0.2.0"
     "uuid" "^3.3.2"
 
+"expo-document-picker@~9.2.4":
+  "integrity" "sha512-j8hmk1LqGVRpYbjMVsg26DOcBo8B1r5/SpLfNNb9X8AiPx7ceQ5HC3kC0BFwk+Ad2/NHHRQ4jFQFnkvMuDkhEg=="
+  "resolved" "https://registry.npmjs.org/expo-document-picker/-/expo-document-picker-9.2.4.tgz"
+  "version" "9.2.4"
+  dependencies:
+    "@expo/config-plugins" "^3.0.0"
+    "expo-modules-core" "~0.2.0"
+    "uuid" "^3.3.2"
+
 "expo-error-recovery@~2.2.0":
   "integrity" "sha512-HKbu6VHAlfhoP7y+HaGJwJizoUTY2eBTBHAi1RE7l/r4sc+cAegTmwwqf/3AOR8C7VntDvuQKtW7NZIyA+62KQ=="
   "resolved" "https://registry.npmjs.org/expo-error-recovery/-/expo-error-recovery-2.2.0.tgz"
@@ -3001,6 +3010,11 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
+"expo-permissions@^13.2.0":
+  "integrity" "sha512-fAvutJjlUjlmyR2jjI9uQT0LXQ+A3U8hZnA4twQG8eXEURR3/V5WSGkx5wwX+7OF6qWR68rvs7Xjkd3ghsCm4w=="
+  "resolved" "https://registry.npmjs.org/expo-permissions/-/expo-permissions-13.2.0.tgz"
+  "version" "13.2.0"
+
 "expo-sensors@~10.2.2":
   "integrity" "sha512-kZZobyfQQPA7PwuTQ2+HwunZ1o2emWLKqWP9jYOBPI4toQAproSLzhlhKmpm2vRDOL1ctC12Fb0g9elv7r9Omg=="
   "resolved" "https://registry.npmjs.org/expo-sensors/-/expo-sensors-10.2.2.tgz"
@@ -3015,7 +3029,7 @@
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.0.4.tgz"
   "version" "1.0.4"
 
-"expo@~42.0.1":
+"expo@*", "expo@~42.0.1":
   "integrity" "sha512-i1QvMb3cIXdsx7OQh0/N0KJHkPwFlBGEGsXRr/IF2DJFHMWd/J4DR8IaAnTAhx0ifborWHmENgXj5hgWJgirog=="
   "resolved" "https://registry.npmjs.org/expo/-/expo-42.0.4.tgz"
   "version" "42.0.4"

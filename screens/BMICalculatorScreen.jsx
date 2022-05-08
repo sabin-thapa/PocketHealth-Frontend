@@ -139,7 +139,7 @@ const BMIList = () => {
 };
 
 const BMICalculatorScreen = ({ navigation }) => {
-  const {token, user} = useContext(AuthContext)
+  const {token, user, id} = useContext(AuthContext)
   const [bmiValue, setBmiValue] = useState(19.0);
   const [data, setData] = useState(null);
   const [weight, setWeight] = useState(70);
@@ -214,14 +214,14 @@ const BMICalculatorScreen = ({ navigation }) => {
 
   const onPressSave = async () => {
     await axios
-    .post(`http://172.17.0.88:8000/api/trackers/bmi/`, {
-      user: 2,
+    .post(`http://192.168.1.11:8000/api/trackers/bmi/`, {
+      user: user.pk,
       weight_in_kg: weight,
       height_in_cm: height,
     })
     .then((res) => {
       console.log(res.data, "response from bmi POST");
-    })
+    }).catch((err)=>console.log(err))
     console.log("BMI Saved");
   };
 

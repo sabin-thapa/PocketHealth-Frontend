@@ -19,7 +19,7 @@ import SugarPic from "../assets/sugar-blood-level.png";
 import PressurePic from "../assets/blood-pressure.png";
 import MainPic from "../assets/main.png";
 import MedicineRemPic from "../assets/appointment.png";
-import VaccineRemPic from "../assets/vaccine.png";
+import VaccineRemPic from "../assets/water.png";
 import DueRemPic from "../assets/deadline.png";
 
 const tracker_options = [
@@ -55,17 +55,10 @@ const reminder_options = [
     link: "Sugar",
   },
   {
-    title: "Vaccine",
+    title: "Water",
     url: VaccineRemPic,
     background: "#FEB18F",
     labelColor: "#3F414E",
-    link: "Pressure",
-  },
-  {
-    title: "Due Date",
-    url: DueRemPic,
-    background: "#6CB28E",
-    labelColor: "#FFECCC",
     link: "Pressure",
   },
 ]
@@ -143,11 +136,12 @@ const HomeScreen = ({ navigation }) => {
             })}
           </View>
           <Text style={styles.cardHeader}>Reminders</Text>
-          <View style={styles.cardLevel}>
+          <View style={styles.cardLevel1}>
             {reminder_options.map((item, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.7}
+                    disabled={true}
                     key={`cardItem - ${index}`}
                     onPress={() => navigation.navigate(item.link)}
                   >
@@ -216,6 +210,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection:'row',
     justifyContent: 'space-around'
+  },
+  cardLevel1:{
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection:'row',
   },
   cardHeader:{
     fontSize: 16,
